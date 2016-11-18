@@ -1,0 +1,12 @@
+extends layout
+
+block content
+  h1= title
+  p.class-p Welcome to 
+   a(href='#') #{title}
+   - for (var i = 0; i < 3; i++)
+    div.article 
+     a(href='#') #{article[i]}
+    div.article-abstract 文章摘要...
+   
+  footer.footer © COPYRIGHT BY Pureweber 2016
