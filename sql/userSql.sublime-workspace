@@ -180,70 +180,6 @@
 	"buffers":
 	[
 		{
-			"file": "/C/Users/11272/Desktop/myapp/app.js",
-			"settings":
-			{
-				"buffer_size": 1347,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/Users/11272/Desktop/myapp/package.json",
-			"settings":
-			{
-				"buffer_size": 325,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/Users/11272/Desktop/myapp/views/index.jade",
-			"settings":
-			{
-				"buffer_size": 253,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/Users/11272/Desktop/myapp/public/stylesheets/style.css",
-			"settings":
-			{
-				"buffer_size": 142,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/Users/11272/Desktop/myapp/routes/index.js",
-			"settings":
-			{
-				"buffer_size": 236,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "",
-			"file": "/C/Program Files (x86)/Rising/RAV/wbshelper64.dll",
-			"file_size": 309528,
-			"file_write_time": 131240107244919689,
-			"settings":
-			{
-				"buffer_size": 0,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/C/Users/11272/Desktop/app/app/app.js",
-			"settings":
-			{
-				"buffer_size": 1257,
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "/C/Users/11272/Desktop/myapp/conf/db.js",
 			"settings":
 			{
@@ -254,39 +190,67 @@
 			}
 		},
 		{
-			"file": "userSqlMapping.js",
+			"file": "userSql.js",
 			"settings":
 			{
-				"buffer_size": 305,
+				"buffer_size": 2436,
 				"encoding": "UTF-8",
 				"line_ending": "Windows",
-				"name": "// dao/userSqlMapping.js"
+				"name": "// dao/userDao.js"
 			}
 		},
 		{
-			"contents": "// dao/userDao.js\n// 实现与MySQL交互\nvar mysql = require('mysql');\nvar $conf = require('../conf/conf');\nvar $util = require('../util/util');\nvar $sql = require('./userSqlMapping');\n \n// 使用连接池，提升性能\nvar pool  = mysql.createPool($util.extend({}, $conf.mysql));\n \n// 向前台返回JSON方法的简单封装\nvar jsonWrite = function (res, ret) {\n\tif(typeof ret === 'undefined') {\n\t\tres.json({\n\t\t\tcode:'1',\n\t\t\tmsg: '操作失败'\n\t\t});\n\t} else {\n\t\tres.json(ret);\n\t}\n};\n \nmodule.exports = {\n\tadd: function (req, res, next) {\n\t\tpool.getConnection(function(err, connection) {\n\t\t\t// 获取前台页面传过来的参数\n\t\t\tvar param = req.query || req.params;\n \n\t\t\t// 建立连接，向表中插入值\n\t\t\t// 'INSERT INTO user(id, name, age) VALUES(0,?,?)',\n\t\t\tconnection.query($sql.insert, [param.name, param.age], function(err, result) {\n\t\t\t\tif(result) {\n\t\t\t\t\tresult = {\n\t\t\t\t\t\tcode: 200,\n\t\t\t\t\t\tmsg:'增加成功'\n\t\t\t\t\t};    \n\t\t\t\t}\n \n\t\t\t\t// 以json形式，把操作结果返回给前台页面\n\t\t\t\tjsonWrite(res, result);\n \n\t\t\t\t// 释放连接 \n\t\t\t\tconnection.release();\n\t\t\t});\n\t\t});\n\t}\n};",
+			"file": "/C/Users/11272/Desktop/myapp/views/index.jade",
 			"settings":
 			{
-				"buffer_size": 949,
-				"line_ending": "Windows",
-				"name": "// dao/userDao.js"
+				"buffer_size": 243,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Users/11272/Desktop/myapp/views/layout.jade",
+			"settings":
+			{
+				"buffer_size": 117,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/C/Users/11272/Desktop/myapp/views/updateUser.jade",
+			"settings":
+			{
+				"buffer_size": 344,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		},
+		{
+			"file": "/C/Users/11272/Desktop/myapp/views/suc.jade",
+			"settings":
+			{
+				"buffer_size": 54,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
 			}
 		},
 		{
 			"file": "/C/Users/11272/Desktop/myapp/routes/users.js",
 			"settings":
 			{
-				"buffer_size": 289,
+				"buffer_size": 739,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/C/Users/11272/Desktop/myapp/routes/test.js",
+			"file": "/C/Users/11272/Desktop/myapp/routes/index.js",
 			"settings":
 			{
-				"buffer_size": 256,
-				"line_ending": "Windows"
+				"buffer_size": 235,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
 			}
 		}
 	],
@@ -313,13 +277,13 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 269.0,
+		"height": 490.0,
 		"last_filter": "js",
 		"selected_items":
 		[
 			[
 				"js",
-				"Project: Save As"
+				"Set Syntax: JavaScript"
 			],
 			[
 				"html",
@@ -381,23 +345,30 @@
 		"side_bar_visible": false,
 		"status_bar_visible": false
 	},
-	"expanded_folders":
-	[
-		"/C/Users/11272/Desktop/myapp",
-		"/C/Users/11272/Desktop/myapp/public/stylesheets",
-		"/C/Users/11272/Desktop/myapp/routes",
-		"/C/Users/11272/Desktop/myapp/sql"
-	],
 	"file_history":
 	[
-		"/C/Users/11272/Desktop/app/app/.gitignore",
+		"/C/Users/11272/Desktop/demoApp/views/updateUser.jade",
+		"/C/Users/11272/Desktop/myapp/views/layout.jade",
+		"/C/Users/11272/Desktop/myapp/views/updateUser.jade",
+		"/C/Users/11272/Desktop/myapp/views/suc.jade",
+		"/C/Users/11272/Desktop/demoApp/routes/index.js",
+		"/C/Users/11272/Desktop/demoApp/routes/users.js",
+		"/C/Users/11272/Desktop/myapp/app.js",
+		"/C/Users/11272/Desktop/demoApp/util/util.js",
+		"/C/Users/11272/Desktop/myapp/routes/test.js",
+		"/C/Users/11272/Desktop/myapp/package.json",
+		"/C/Users/11272/Desktop/app/app/routes/index.js",
 		"/C/Users/11272/Desktop/myapp/routes/users.js",
+		"/C/Users/11272/Desktop/myapp/sql/userSqlMapping.js",
+		"/C/Users/11272/Desktop/myapp/views/index.jade",
+		"/C/Users/11272/Desktop/myapp/public/stylesheets/style.css",
+		"/C/Users/11272/Desktop/myapp/routes/index.js",
+		"/C/Program Files (x86)/Rising/RAV/wbshelper64.dll",
+		"/C/Users/11272/Desktop/app/app/app.js",
+		"/C/Users/11272/Desktop/app/app/.gitignore",
 		"/C/Users/11272/Desktop/myapp/新建文本文档.txt",
 		"/C/Users/11272/Documents/Visual Studio 2015/Projects/ConsoleApplication2/ConsoleApplication2/test.pcm",
-		"/C/Users/11272/Desktop/myapp/routes/test.js",
-		"/C/Users/11272/Desktop/myapp/views/layout.jade",
 		"/C/Users/11272/Desktop/myapp/views/error.jade",
-		"/C/Users/11272/Desktop/myapp/views/index.jade",
 		"/C/Users/11272/Desktop/myapp/bin/www",
 		"/E/program/Blast/data/asn2ff.prt",
 		"/E/program/Blast/data/16SMicrobial.nsq",
@@ -406,7 +377,6 @@
 		"/E/program/Blast/data/16SMicrobial.nnd",
 		"/E/program/Blast/data/16SMicrobial.nni",
 		"/E/program/Blast/data/16SMicrobial.nsd",
-		"/C/Users/11272/Desktop/myapp/package.json",
 		"/C/Users/11272/Desktop/Blast/test_query.fa",
 		"/E/program/Blast/query.fa",
 		"/E/program/Blast/know_seqs.fa",
@@ -504,20 +474,7 @@
 		"/C/Users/11272/Desktop/RecordDemo/SoundCapturer/Test.wav",
 		"/C/Users/11272/Desktop/VoiMe/app/m/pbc_m.php",
 		"/C/Users/11272/Desktop/VoiMe/app/m/usr_m.php",
-		"/C/Users/11272/Desktop/VoiMe/index.php",
-		"/C/Users/11272/Desktop/recorderWorker.js",
-		"/C/Users/11272/Desktop/recorder.js",
-		"/C/Users/11272/Desktop/sound.html",
-		"/C/Users/11272/Desktop/PMS/user/index.html",
-		"/C/Users/11272/Desktop/PMS/public/css/user.css",
-		"/C/Users/11272/Desktop/PMS/user/user.html",
-		"/C/Users/11272/Desktop/startbootstrap-sb-admin-gh-pages/index.html",
-		"/C/Users/11272/Desktop/startbootstrap-sb-admin-gh-pages/css/plugins/morris.css",
-		"/C/Users/11272/Desktop/startbootstrap-sb-admin-gh-pages/css/sb-admin-rtl.css",
-		"/C/Users/11272/Desktop/PMS/index/index.html",
-		"/C/Users/11272/Desktop/startbootstrap-sb-admin-gh-pages/font-awesome/css/font-awesome.css",
-		"/C/Users/11272/Desktop/startbootstrap-sb-admin-gh-pages/charts.html",
-		"/C/Users/11272/Desktop/PMS/public/css/style.css"
+		"/C/Users/11272/Desktop/VoiMe/index.php"
 	],
 	"find":
 	{
@@ -535,6 +492,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"{",
 			"userSqlMapping",
 			":['",
 			"ffef",
@@ -617,146 +575,60 @@
 	"groups":
 	[
 		{
-			"selected": 9,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/C/Users/11272/Desktop/myapp/app.js",
+					"file": "/C/Users/11272/Desktop/myapp/conf/db.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1347,
+						"buffer_size": 171,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								365,
-								365
+								171,
+								171
 							]
 						],
 						"settings":
 						{
-							"auto_complete": false,
+							"auto_name": "// conf/db.js",
 							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 8,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "/C/Users/11272/Desktop/myapp/package.json",
+					"file": "userSql.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 325,
+						"buffer_size": 2436,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								95,
-								91
+								549,
+								549
 							]
 						],
 						"settings":
 						{
-							"auto_complete": true,
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/C/Users/11272/Desktop/myapp/views/index.jade",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 253,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								207,
-								207
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 10,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/C/Users/11272/Desktop/myapp/public/stylesheets/style.css",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 142,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								136,
-								136
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/CSS/CSS.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 11,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "/C/Users/11272/Desktop/myapp/routes/index.js",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 236,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								236,
-								236
-							]
-						],
-						"settings":
-						{
-							"auto_complete": false,
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+							"auto_name": "// dao/userDao.js",
+							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -766,20 +638,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 5,
-					"file": "/C/Program Files (x86)/Rising/RAV/wbshelper64.dll",
+					"buffer": 2,
+					"file": "/C/Users/11272/Desktop/myapp/views/index.jade",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 0,
+						"buffer_size": 243,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								134,
+								134
 							]
 						],
 						"settings":
@@ -794,25 +666,25 @@
 					"type": "text"
 				},
 				{
-					"buffer": 6,
-					"file": "/C/Users/11272/Desktop/app/app/app.js",
+					"buffer": 3,
+					"file": "/C/Users/11272/Desktop/myapp/views/layout.jade",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1257,
+						"buffer_size": 117,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								41,
+								39
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -822,26 +694,25 @@
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "/C/Users/11272/Desktop/myapp/conf/db.js",
+					"buffer": 4,
+					"file": "/C/Users/11272/Desktop/myapp/views/updateUser.jade",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 171,
+						"buffer_size": 344,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								165,
-								165
+								324,
+								324
 							]
 						],
 						"settings":
 						{
-							"auto_name": "// conf/db.js",
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -851,84 +722,52 @@
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "userSqlMapping.js",
+					"buffer": 5,
+					"file": "/C/Users/11272/Desktop/myapp/views/suc.jade",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 305,
+						"buffer_size": 54,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								305,
-								305
+								25,
+								25
 							]
 						],
 						"settings":
 						{
-							"auto_name": "// dao/userSqlMapping.js",
-							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
+							"syntax": "Packages/Text/Plain text.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 949,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								312,
-								312
-							]
-						],
-						"settings":
-						{
-							"auto_name": "// dao/userDao.js",
-							"default_dir": "C:\\Users\\11272\\Desktop\\myapp\\sql",
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 10,
+					"buffer": 6,
 					"file": "/C/Users/11272/Desktop/myapp/routes/users.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 289,
+						"buffer_size": 739,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								262,
-								262
+								200,
+								200
 							]
 						],
 						"settings":
 						{
-							"auto_complete": false,
 							"syntax": "Packages/JavaScript/JavaScript.sublime-syntax"
 						},
 						"translation.x": 0.0,
@@ -939,20 +778,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 11,
-					"file": "/C/Users/11272/Desktop/myapp/routes/test.js",
+					"buffer": 7,
+					"file": "/C/Users/11272/Desktop/myapp/routes/index.js",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 256,
+						"buffer_size": 235,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								131,
+								131
 							]
 						],
 						"settings":
@@ -963,7 +802,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 1,
 					"type": "text"
 				}
 			]
