@@ -49,7 +49,7 @@ const App = React.createClass({
 		  		<MuiThemeProvider  muiTheme={getMuiTheme()}>
 			  		<Card style = {{width: '50%'}}>
 							<TextField
-								hintText="在这里编辑题目"
+								hintText="在这里编辑题目000"
 		      					floatingLabelText="在这里编辑题目"
 								value = {this.state.title}
 								onChange = {this.title_change}
