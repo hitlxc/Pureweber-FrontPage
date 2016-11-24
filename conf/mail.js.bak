@@ -1,0 +1,12 @@
+// smtp邮箱发送配置
+module.exports = {
+	mailsetting: {
+		host: "smtp.sina.com", // 主机
+		secureConnection: false, // 使用 SSL
+		port: 25, // SMTP 端口
+		auth: {
+		user: "xx@sina.com", // 账号
+		pass: "xx" // 密码
+		}
+	}
+}

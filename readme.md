@@ -10,7 +10,5 @@
 4. `npm start` or `supervisor ./bin/www`
 5. visit localhost:3000
 
-### 已知问题
-1. route的写法，放在app.js里很不雅
-2. tag,cat里API那么写可好？？
-3. 如何调用API...23333
+### smtp设置
+修改conf/mail.js.bak里的配置项，另存为一份mail.js即可
