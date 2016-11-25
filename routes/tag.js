@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-
+var $sql = require('./apisql');
 var mysql = require('mysql');
 var $conf = require('../conf/db');
 
@@ -23,7 +23,7 @@ var jsonWrite = function (res, ret) {
 
 router.get('/getAll', function(req, res, next) {
 	pool.getConnection(function(err, connection) {
-		connection.query("SELECT name, count(name) as times FROM tag as t inner join blogtags as bt on t.id = bt.tid  group by name"
+		connection.query($sql.tag_getAll
 			, function(err, result) {
 			jsonWrite(res, result);
 			connection.release();
@@ -34,7 +34,7 @@ router.get('/getAll', function(req, res, next) {
 router.get('/get', function(req, res, next) {
 	pool.getConnection(function(err, connection) {
 		var param = req.query || req.params;
-		connection.query("select t.name from tag t inner join blogtags bt on t.id = bt.tid where bt.bid= ?"
+		connection.query($sql.tag_get
 			,[param.bid], function(err, result) {
 			jsonWrite(res, result);
 			connection.release();

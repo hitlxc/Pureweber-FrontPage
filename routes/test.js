@@ -1,13 +1,24 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
+var mysql = require('mysql');
+var $conf = require('../conf/db');
+ 
+
+
 router.get('/', function(req, res, next) {
-  res.send('test');
+	var connection = mysql.createConnection($conf.mysql);
+
+	connection.connect();
+
+	connection.query('SELECT 1 + 1 AS solution', function(err, rows, fields) {
+	  if (err) throw err;
+	  console.log('The solution is: ', rows[0].solution);	
+	});
+	connection.end();
+	// res.send(rows[0].solution);
+
 });
 
-router.get('/11', function(req, res, next) {
-  res.send('test11');
-});
 
 module.exports = router;
