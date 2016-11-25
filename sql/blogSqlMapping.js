@@ -5,7 +5,8 @@ var blog = {
 	// update:'update user set name=?, age=? where id=?',
 	delete: 'delete from blog where id=?',
 	queryById: 'select * from blog where id=?',
-	queryAll: 'select * from blog'
+	queryAll: 'select * from blog',
+	querys: 'select * from blog limit ? , ?',
 };
  
 module.exports = blog;

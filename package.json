@@ -15,6 +15,7 @@
     "serve-favicon": "~2.3.0",
     "mysql": "latest",
     "marked": "latest",
-    "nodemailer": "0.7.1"
+    "nodemailer": "0.7.1",
+    "crypto": "0.0.3"
   }
 }

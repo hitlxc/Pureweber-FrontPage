@@ -13,6 +13,7 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/save', function(req, res, next) {
+	// 加密?判断登录?
 	blogSql.add(req, res, next);
 });
 
@@ -20,8 +21,12 @@ router.post('/save', function(req, res, next) {
 // 	blogSql.queryById(req, res, next);
 // });
 
+router.get('/gets', function(req, res, next) {
+	blogSql.querys(req, res, next);
+});
+
 router.get('/show', function(req, res, next) {
-	blogSql.queryById(req, res, next)	
+	blogSql.queryById(req, res, next);
 });
 
 module.exports = router;

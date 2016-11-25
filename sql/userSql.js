@@ -5,6 +5,7 @@ var $conf = require('../conf/db');
 //var $util = require('../util/util');
 var $sql = require('./userSqlMapping');
  
+var crypto = require('crypto');
 // 使用连接池，提升性能
 var pool  = mysql.createPool($conf.mysql);
  
@@ -19,16 +20,42 @@ var jsonWrite = function (res, ret) {
 		res.json(ret);
 	}
 };
- 
+
 module.exports = {
+	intro: function(req, res, next) {
+		pool.getConnection(function(err, connection) {
+			// 获取前台页面传过来的参数
+			var param = req.query || req.params;
+			var code = Math.random().toString(36).substr(2)
+			connection.query($sql.intro, [param.email, code], function(err, result) {
+				if(result) {
+					result = {
+						code: 200,
+						msg:'增加成功',
+						id: result.insertId,
+						acode: code
+					};    
+				}
+ 
+				// 以json形式，把操作结果返回给前台页面
+				jsonWrite(res, result);
+ 
+				// 释放连接 
+				connection.release();
+			});
+		});
+	},
 	add: function (req, res, next) {
 		pool.getConnection(function(err, connection) {
 			// 获取前台页面传过来的参数
 			var param = req.query || req.params;
- 
-			// 建立连接，向表中插入值
-			// 'INSERT INTO user(id, name, age) VALUES(0,?,?)',
-			connection.query($sql.insert, [param.name, param.age], function(err, result) {
+
+			var content = param.pwd;//加密的明文；
+			var md5 = crypto.createHash('md5');//定义加密方式:md5不可逆,此处的md5可以换成任意hash加密的方法名称；
+			md5.update(content);
+			 var d = md5.digest('hex');  //加密后的值d
+
+			connection.query($sql.update, [param.name, d, param.code, +param.id], function(err, result) {
 				if(result) {
 					result = {
 						code: 200,
@@ -61,33 +88,6 @@ module.exports = {
 				connection.release();
 			});
 		});
-	},
-	update: function (req, res, next) {
-		// update by id
-		// 为了简单，要求同时传name和age两个参数
-		var param = req.body;
-		if(param.name == null || param.age == null || param.id == null) {
-			jsonWrite(res, undefined);
-			return;
-		}
- 
-		pool.getConnection(function(err, connection) {
-			connection.query($sql.update, [param.name, param.age, +param.id], function(err, result) {
-				// 使用页面进行跳转提示
-				if(result.affectedRows > 0) {
-					res.render('suc', {
-						result: result
-					}); // 第二个参数可以直接在jade中使用
-				} else {
-					res.render('fail',  {
-						result: result
-					});
-				}
- 
-				connection.release();
-			});
-		});
- 
 	},
 	queryById: function (req, res, next) {
 		var id = +req.query.id; // 为了拼凑正确的sql语句，这里要转下整数

@@ -96,19 +96,29 @@ module.exports = {
 		var id = +req.query.id; // 为了拼凑正确的sql语句，这里要转下整数
 		pool.getConnection(function(err, connection) {
 			connection.query($sql.queryById, id, function(err, result) {
-				// jsonWrite(res, result);
+				jsonWrite(res, result);
 				connection.release();
-				res.send(marked(result[0]['content']));
-				// console.log(result[0]['content']);
+				// res.send(marked(result[0]['content']));
 			});
 		});
 	},
-	queryAll: function (req, res, next) {
+	querys: function (req, res, next) {
 		pool.getConnection(function(err, connection) {
-			connection.query($sql.queryAll, function(err, result) {
-				jsonWrite(res, result);
-				connection.release();
-			});
+			var param = req.query || req.params;
+			if (param.num == null) {
+				connection.query($sql.queryAll, function(err, result) {
+					jsonWrite(res, result);
+					connection.release();
+				});
+			}
+			else{
+				var start = parseInt((param.page-1)*param.num);
+				connection.query($sql.querys, [start, parseInt(param.num)], function(err, result) {
+					jsonWrite(res, result);
+					connection.release();
+				});				
+			}
+
 		});
 	}
 };
