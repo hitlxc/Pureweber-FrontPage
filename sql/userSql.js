@@ -27,7 +27,9 @@ module.exports = {
 			// 获取前台页面传过来的参数
 			var param = req.query || req.params;
 			var code = Math.random().toString(36).substr(2)
+			console.log(code);
 			connection.query($sql.intro, [param.email, code], function(err, result) {
+				console.log(err);
 				if(result) {
 					result = {
 						code: 200,
@@ -53,7 +55,7 @@ module.exports = {
 			var content = param.pwd;//加密的明文；
 			var md5 = crypto.createHash('md5');//定义加密方式:md5不可逆,此处的md5可以换成任意hash加密的方法名称；
 			md5.update(content);
-			 var d = md5.digest('hex');  //加密后的值d
+			var d = md5.digest('hex');  //加密后的值d
 
 			connection.query($sql.update, [param.name, d, param.code, +param.id], function(err, result) {
 				if(result) {
@@ -70,6 +72,52 @@ module.exports = {
 				connection.release();
 			});
 		});
+	},
+	logout: function (req, res, next) {
+		// console.log(req.session.username);
+		req.session.destroy(); 
+	    jsonWrite(res, {
+					code: 200,
+					msg:'已退出'
+				});
+	},
+	login: function (req, res, next) {
+		// console.log(req.session.uid);
+		if (typeof req.session.uid === 'undefined') {
+			var param = req.query || req.params;
+
+			var name = req.query.name;
+
+			var content = param.pwd;//加密的明文；
+			var md5 = crypto.createHash('md5');//定义加密方式:md5不可逆,此处的md5可以换成任意hash加密的方法名称；
+			md5.update(content);
+			var rpwd = md5.digest('hex');  //加密后的值d
+			// console.log(rpwd);
+			pool.getConnection(function(err, connection) {
+				connection.query($sql.login, [name, rpwd], function(err, result) {
+					// console.log(result);
+					if (result.length == 0) {
+						jsonWrite(res, {
+							code:'1',
+							msg: '账号或密码错误'
+						});
+					}
+					else {
+						req.session.uid=result[0].id;
+						jsonWrite(res, result);
+					}
+					connection.release();
+	 
+				});
+			});
+		}
+		else{
+		    jsonWrite(res, {
+						code: 200,
+						msg:'已登陆',
+						id: req.session.uid
+					});
+		}
 	},
 	delete: function (req, res, next) {
 		// delete by Id

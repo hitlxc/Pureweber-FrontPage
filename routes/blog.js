@@ -9,7 +9,8 @@ var blogSql = require('../sql/blogSql');
 /* GET blog page. */
 
 router.get('/', function(req, res, next) {
-	res.render('writedown');
+	// res.render('writedown');
+	res.render('md');
 });
 
 router.post('/save', function(req, res, next) {

@@ -1,0 +1,8 @@
+#edit-container{
+	display: flex;
+	flex-direction: row ;
+}
+
+#preview{
+	margin-top: 10px;
+}

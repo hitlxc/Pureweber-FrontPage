@@ -7,7 +7,14 @@ router.get('/', function(req, res, next) {
   	res.render('updateUser');
 });
 
-//http://localhost:3000/users/addUser?name=xyz&age=18
+router.get('/login', function(req, res, next) {
+	// 验证
+	userSql.login(req, res, next);
+});
+router.get('/logout', function(req, res, next) {
+	// 验证
+	userSql.logout(req, res, next);
+});
 router.get('/addUser', function(req, res, next) {
 	// 验证
 	userSql.add(req, res, next);

@@ -6,7 +6,8 @@ var user = {
 	update:'update user set name=?, pwd=?, state = 1, auth = 1 WHERE state = 0 and code = ? and id = ?',
 	delete: 'delete from user where id=?',
 	queryById: 'select * from user where id=?',
-	queryAll: 'select * from user'
+	queryAll: 'select * from user',
+	login: 'select * from user where name=? and pwd=?',
 };
  
 module.exports = user;
