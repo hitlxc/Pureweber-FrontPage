@@ -9,6 +9,9 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import $ from 'jquery';
+
+var FileUpload = require('react-fileupload');
+
 injectTapEventPlugin();
 //import Marker from 'marked';
 
@@ -32,7 +35,22 @@ marked.setOptions({
 const App = React.createClass({
   
 	getInitialState: function() {
-    	return {title: '',content: '',preview:'',tag:1};
+    	return {
+    		title: '',
+    		content: '[file](http://127.0.0.1/file)',
+    		preview:'',
+    		tag:1 ,
+    		uploadOption : {
+		        baseUrl:'http://127.0.0.1',
+		        param:{
+		            fid:0
+		        },
+		        multiple:true,
+			    numberLimit: 9,
+			    chooseAndUpload: true
+		    },
+		    
+    	};
   	},
 
   	marked: function(event){
@@ -50,10 +68,26 @@ const App = React.createClass({
 		});
 
   	},
+  	addFileString:function(){
+  		var newcontent = this.state.content + "[file](http://127.0.0.1/file)"
+  		return newcontent;
+  	},
+  	uploadFile:function(){
+  		//var newcontent = this.state.content += "[file](http://127.0.0.1/file)"
+  		this.setState({
+  			content: this.state.content+"[file](http://127.0.0.1/file)"
+  				
+  			//preview:  marked(this.state.content)
+  		})
+  		
+
+  		//console.log(newcontent)
+  	},
   	submit:function(){
   		$.post('/save',{title:this.state.title , content:this.state.content , tag:this.state.tag }, function(result){
   			console.log(result);
   		});
+
   	},
   	tag_change:function(event, index, value){
   		this.setState({tag:value});
@@ -106,14 +140,29 @@ const App = React.createClass({
 								/>
 					</MuiThemeProvider>
 				</div>
-				<div id="edit-submit-container">
-				
+
+				<div id="edit-header-container">
+					<FileUpload options={this.state.uploadOption} ref="fileUpload">
+			            <div ref="chooseAndUpload">
+			            	<MuiThemeProvider  muiTheme={getMuiTheme()}>
+				            	<FlatButton 
+									label="上传附件"
+									primary={true} 
+									onClick={this.uploadFile}
+									//onClick = {this.submit}
+								/>
+							</MuiThemeProvider>
+			            </div>
+			            
+			        </FileUpload>
+
+
 					<MuiThemeProvider  muiTheme={getMuiTheme()}>
 
 						<SelectField
 				          	value={this.state.tag}
 				          	onChange={this.tag_change}
-				          	maxHeight={200}
+				          	maxHeight={200} 
 				          	style={{width: 150}}
 				        >
 				          	<MenuItem value={1} primaryText="前端" />
@@ -123,6 +172,9 @@ const App = React.createClass({
 				          	<MenuItem value={5} primaryText="杂谈" />
 				        </SelectField>
 				    </MuiThemeProvider>
+
+				    
+
 				    <MuiThemeProvider  muiTheme={getMuiTheme()}>
 						<FlatButton 
 							label="提交"
@@ -132,16 +184,15 @@ const App = React.createClass({
 
 					</MuiThemeProvider>
 				</div>
+
 				<div id="edit-content-container">
-		  		<MuiThemeProvider  muiTheme={getMuiTheme()}>
-		  					
+		  		<MuiThemeProvider  muiTheme={getMuiTheme()}>			
 			  		<Card style = {{width: '50%'}}>
-							
 							<br/>
 			    		<TextField
-				      		content={this.state.content}
+				      		value={this.state.content}
 				     	 	multiLine={true}
-				      		rows={12}
+				      		rows={14}
 				      		rowsMax={14}
 				      		type="textarea"
 				      		id="text-input"
@@ -150,7 +201,6 @@ const App = React.createClass({
 		      				floatingLabelText="在这里编辑内容"
 		      				onChange={this.marked}
 		      				fullWidth={true}
-
 		    			/>
 		    		</Card>
 				</MuiThemeProvider>
