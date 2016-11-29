@@ -30,8 +30,9 @@ module.exports = {
  			var param = req.body;
 			// 建立连接，向表中插入值
 			// 'INSERT INTO user(id, name, age) VALUES(0,?,?)',
+			
 			console.log(param);
-			connection.query($sql.insert, [param.title, param.uid, param.cid, param.content], function(err, result) {
+			connection.query($sql.insert, [param.title, req.session.uid, param.cid, param.content], function(err, result) {
 				if(result) {
 					result = {
 						code: 200,
