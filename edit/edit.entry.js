@@ -19,9 +19,9 @@ marked.setOptions({
   renderer: new marked.Renderer(),
   gfm: true,
   tables: true,
-  breaks: false,
+  breaks: true,
   pedantic: false,
-  sanitize: true,
+  sanitize: false,
   smartLists: true,
   smartypants: false,
   highlight: function (code) {
@@ -58,6 +58,34 @@ const App = React.createClass({
   	tag_change:function(event, index, value){
   		this.setState({tag:value});
   	},
+  	enableTab : function() {
+  		var el = ReactDOM.findDOMNode(this.refs.textInput);
+  		//var el = document.getElementById(id);
+	    el.onkeydown = function(e) {
+	        if (e.keyCode === 9) { // tab was pressed
+
+	            // get caret position/selection
+	            var val = event.target.value,
+	                start = event.target.selectionStart,
+	                end = event.target.selectionEnd;
+
+	            // set textarea value to: text before caret + tab + text after caret
+	            event.target.value = val.substring(0, start) + '\t' + val.substring(end);
+				///console.log(val)
+	            //console.log(event.target.value)
+	            // put caret at right position again
+	            event.target.selectionStart = event.target.selectionEnd = start + 1;
+
+	            // prevent the focus lose
+	            return false;
+
+	        }
+	    };
+    },
+  	componentDidMount:function(){
+  		console.log('222')
+  		this.enableTab();
+  	},
   	render: function(){
   		return (
 		  	<div id='edit-container'>
@@ -86,6 +114,7 @@ const App = React.createClass({
 				          	value={this.state.tag}
 				          	onChange={this.tag_change}
 				          	maxHeight={200}
+				          	style={{width: 150}}
 				        >
 				          	<MenuItem value={1} primaryText="前端" />
 				          	<MenuItem value={2} primaryText="后端" />
@@ -116,6 +145,7 @@ const App = React.createClass({
 				      		rowsMax={14}
 				      		type="textarea"
 				      		id="text-input"
+				      		ref="textInput"
 				      		hintText="在这里编辑内容"
 		      				floatingLabelText="在这里编辑内容"
 		      				onChange={this.marked}
@@ -127,8 +157,10 @@ const App = React.createClass({
 				<MuiThemeProvider  muiTheme={getMuiTheme()}>
 					<Card style = {{width: '50%'}}>
 						
-					    <CardText id="preview"
-					    	style = {{height:'354px',overflow: 'scroll'}}
+					    <CardText 
+					        id = "preview"
+					        className = "markdown-body"
+					    	style = {{height:'354px',overflow: 'auto'}}
 					    >
 					    </CardText>
 					</Card>

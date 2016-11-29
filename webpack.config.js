@@ -5,6 +5,7 @@ module.exports = {
         edit:'./edit/edit.app.js',
         //login:'./login/login.entry.js'
         //show_article:'./show_article/show_article.entry.js'
+
     },
     output: {
         path: path.join(__dirname, '/dist'),
@@ -15,7 +16,8 @@ module.exports = {
     },
     module: {
         loaders: [
-            { test: /\.jsx?$/, loaders: ['babel'] }
+            { test: /\.jsx?$/, loaders: ['babel'] },
+            { test: /\.json$/, loader: 'json'},
         ]
     }
 }
