@@ -11,7 +11,7 @@ import $ from 'jquery';
 injectTapEventPlugin();
 //import Marker from 'marked';
 
-const App = React.createClass({
+const Login = React.createClass({
   
 	getInitialState: function() {
     	return {open: false,ac:'',pw:''};
@@ -79,6 +79,4 @@ const App = React.createClass({
 	}
 });
 
-let app = document.createElement('div');
-ReactDOM.render(<App  />, app);
-document.body.appendChild(app);
+module.exports = App;

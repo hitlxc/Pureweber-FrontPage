@@ -2,10 +2,10 @@ var path = require('path');
 
 module.exports = {
     entry: {
-        edit:'./edit/edit.app.js',
-        //login:'./login/login.entry.js'
-        //show_article:'./show_article/show_article.entry.js'
-
+        //edit:'./edit/edit.app.js',
+        //login:'./login/login.app.js'
+        //articlecard:'./articlecard/articlecard.app.js'
+        invite:'./invite/invite.app.js'
     },
     output: {
         path: path.join(__dirname, '/dist'),
