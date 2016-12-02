@@ -9,15 +9,20 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import $ from 'jquery';
+import marked from 'marked';
+import FileUpload from 'react-fileupload';
 
-var FileUpload = require('react-fileupload');
+require('./md-edit.css');
+require('./github-markdown.css');
+require('./monokai_sublime.min.css'); 
+//var FileUpload = require('react-fileupload');
 
 injectTapEventPlugin();
 //import Marker from 'marked';
 
 
 
-var marked = require('marked');
+//var marked = require('marked');
 marked.setOptions({
   renderer: new marked.Renderer(),
   gfm: true,
