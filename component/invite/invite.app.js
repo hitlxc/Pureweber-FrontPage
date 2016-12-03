@@ -1,11 +1,12 @@
 import React from 'react';
 
-import {render} from 'react-dom';
+import ReactDOM from 'react-dom'
+
 
 import Invite from './invite.entry' 
 
 let app = document.createElement('div');
-render(<Invite  />, app);
+ReactDOM.render(<Invite  />, app);
 document.body.appendChild(app);
 
 

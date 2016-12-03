@@ -37,7 +37,7 @@ marked.setOptions({
   }
 });
 
-const App = React.createClass({
+const Edit = React.createClass({
   
 	getInitialState: function() {
     	return {
@@ -227,7 +227,7 @@ const App = React.createClass({
 	}
 });
 
-module.exports = App;
+module.exports = Edit;
 
 /*let app = document.createElement('div');
 ReactDOM.render(<App  />, app);

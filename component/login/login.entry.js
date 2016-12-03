@@ -7,7 +7,6 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import $ from 'jquery';
 injectTapEventPlugin();
 //import Marker from 'marked';
 
@@ -79,4 +78,4 @@ const Login = React.createClass({
 	}
 });
 
-module.exports = App;
+module.exports = Login;
