@@ -15,9 +15,10 @@ var jsonWrite = function (res, ret) {
 	}
 };
 
-router.get('/signup', function(req, res, next) {
+router.all('/signup', function(req, res, next) {
 	var smtpTransport = nodemailer.createTransport("SMTP",$mail_conf.mailsetting);
-	var param = req.query || req.params;
+	// var param = req.query || req.params;
+	var param = req.body;
 	var mail_url = $mail_conf.mailsetting.auth.user;
 	var urlparam = "?code=" + param.code + "&id=" +param.id;
 	// ?code=param.acode&id=param.id
@@ -25,7 +26,7 @@ router.get('/signup', function(req, res, next) {
 	  from: "Pureweber Manager <"+mail_url+">", // 发件地址
 	  to: param.tomail, // 收件列表
 	  subject: "欢迎成为Pureweber的一员", // 标题
-	  html: "<p><b>thanks a for visiting!</b> 世界，你好！</p><p>点击<a href='http://localhost:3000/user/signup"+urlparam+"' >该链接</a>成为我们正义的伙伴吧</p>" // html 内容
+	  html: "<p><b>thanks a for visiting!</b> 世界，你好！</p><p>点击<a href='http://localhost:3000/users/addUser"+urlparam+"' >该链接</a>成为我们正义的伙伴吧</p>" // html 内容
 	}
 	smtpTransport.sendMail(mailOptions, function(error, response){
 	  if(error){

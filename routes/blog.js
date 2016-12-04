@@ -22,6 +22,12 @@ router.post('/save', function(req, res, next) {
 // 	blogSql.queryById(req, res, next);
 // });
 
+router.get('/index', function(req, res, next) {
+	// blogSql.querys(req, res, next);
+	res.render("card");
+});
+
+
 router.get('/gets', function(req, res, next) {
 	blogSql.querys(req, res, next);
 });

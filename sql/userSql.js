@@ -25,7 +25,9 @@ module.exports = {
 	intro: function(req, res, next) {
 		pool.getConnection(function(err, connection) {
 			// 获取前台页面传过来的参数
-			var param = req.query || req.params;
+			// var param = req.query || req.params;
+			// 验证权限auth
+			var param = req.body;
 			var code = Math.random().toString(36).substr(2)
 			console.log(code);
 			connection.query($sql.intro, [param.email, code], function(err, result) {
@@ -58,6 +60,7 @@ module.exports = {
 			var d = md5.digest('hex');  //加密后的值d
 
 			connection.query($sql.update, [param.name, d, param.code, +param.id], function(err, result) {
+				console.log(err);
 				if(result) {
 					result = {
 						code: 200,
@@ -84,9 +87,9 @@ module.exports = {
 	login: function (req, res, next) {
 		// console.log(req.session.uid);
 		if (typeof req.session.uid === 'undefined') {
-			var param = req.query || req.params;
-
-			var name = req.query.name;
+			// var param = req.query || req.params;
+			var param = req.body;
+			var name = param.name;
 
 			var content = param.pwd;//加密的明文；
 			var md5 = crypto.createHash('md5');//定义加密方式:md5不可逆,此处的md5可以换成任意hash加密的方法名称；

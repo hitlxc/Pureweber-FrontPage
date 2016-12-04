@@ -8,18 +8,27 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/login', function(req, res, next) {
+	res.render('login');
+});
+
+router.get('/invite', function(req, res, next) {
+	res.render('invite');
+});
+
+router.all('/api/login', function(req, res, next) {
 	// 验证
 	userSql.login(req, res, next);
 });
+
 router.get('/logout', function(req, res, next) {
 	// 验证
 	userSql.logout(req, res, next);
 });
 router.get('/addUser', function(req, res, next) {
-	// 验证
+	// http://localhost:3000/users/addUser?name=qq&pwd=qq&code=xsgst2kzpxgh9f6r&id=3
 	userSql.add(req, res, next);
 });
-router.get('/intro', function(req, res, next) {
+router.all('/intro', function(req, res, next) {
 	// 验证
 	userSql.intro(req, res, next);
 });
