@@ -2,9 +2,12 @@ var path = require('path');
 
 module.exports = {
     entry: {
-        //edit:'./edit/edit.entry.js',
-        //login:'./login/login.entry.js'
-        show_article:'./show_article/show_article.entry.js'
+        edit:'./component/edit/edit.app.js',
+        login:'./component/login/login.app.js',
+        articlecard:'./component/articlecard/articlecard.app.js',
+        invite:'./component/invite/invite.app.js',
+        appbar:'./component/appbar/appbar.app.js',
+        app:'view/app.entry.js'
     },
     output: {
         path: path.join(__dirname, '/dist'),
@@ -15,7 +18,9 @@ module.exports = {
     },
     module: {
         loaders: [
-            { test: /\.jsx?$/, loaders: ['babel'] }
+            { test: /\.jsx?$/, loaders: ['babel'] },
+            { test: /\.json$/, loader: 'json'},
+            { test: /\.css$/, loaders: ['style', 'css']}
         ]
     }
 }

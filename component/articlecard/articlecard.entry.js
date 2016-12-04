@@ -8,7 +8,7 @@ import RaisedButton from 'material-ui/RaisedButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 //import Marker from 'marked';
 
-const App = React.createClass({
+const ArticleCard = React.createClass({
   	jump:function(){
   		console.log('123')
   	},
@@ -43,6 +43,6 @@ const App = React.createClass({
 	}
 });
 
-let app = document.createElement('div');
-ReactDOM.render(<App  author='hitlxc' tag='js' avatar='http://p3.wmpic.me/article/2015/03/16/1426483394_eJakzHWr.jpeg' title='文章标题' abstract='文章摘要。。。。。。。。' pic='https://www.baris-sagdic.com/file/2016/06/javascript-1.png'/>, app);
-document.body.appendChild(app);
+
+module.exports = ArticleCard;
+
