@@ -6,10 +6,9 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import Snackbar from 'material-ui/Snackbar';
 import $ from 'jquery';
-injectTapEventPlugin();
+
 //import Marker from 'marked';
 
 const Invite = React.createClass({
@@ -73,9 +72,8 @@ const Invite = React.createClass({
     	]
   		return ( 	
 		  	<div id='login-container'>
-		  		<MuiThemeProvider  muiTheme={getMuiTheme()}>
-		  			<div>
-				  		<RaisedButton label="邀请新成员" onClick={this.handleOpen} />
+		  		
+				  		<FlatButton label="邀请新成员" onClick={this.handleOpen} />
 
 				        <Dialog
 				        	actions={actions}
@@ -104,8 +102,6 @@ const Invite = React.createClass({
 				          	autoHideDuration={2000}
 				          	onRequestClose={this.handleSnackbarClose}
 				        />
-			        </div>
-				</MuiThemeProvider>
 				
 		    </div>
 		)

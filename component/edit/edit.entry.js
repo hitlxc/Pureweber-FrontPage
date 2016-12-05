@@ -7,7 +7,6 @@ import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'mat
 import FlatButton from 'material-ui/FlatButton';
 import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import $ from 'jquery';
 import marked from 'marked';
 import FileUpload from 'react-fileupload';
@@ -17,7 +16,7 @@ require('./github-markdown.css');
 require('./monokai_sublime.min.css'); 
 //var FileUpload = require('react-fileupload');
 
-injectTapEventPlugin();
+
 //import Marker from 'marked';
 
 

@@ -15,10 +15,9 @@ const ArticleCard = React.createClass({
 	
   	render: function(){
   		return ( 	
-		  	<div id='show-article-container'>
-		  		<MuiThemeProvider  muiTheme={getMuiTheme()}>
+		  	
 			  		<Card
-						style = {{width: '50%',  cursor: 'pointer'}}
+						style = {{width: '100%',  cursor: 'pointer'}}
 						onClick = {this.jump}
 			  		>
 			  			<CardHeader
@@ -36,9 +35,7 @@ const ArticleCard = React.createClass({
 					    </CardText>
 
 			  		</Card>
-				</MuiThemeProvider>
 				
-		    </div>
 		)
 	}
 });

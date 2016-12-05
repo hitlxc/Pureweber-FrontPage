@@ -6,8 +6,8 @@ module.exports = {
         //login:'./component/login/login.app.js'
         //articlecard:'./component/articlecard/articlecard.app.js'
         //invite:'./component/invite/invite.app.js'
-        appbar:'./component/appbar/appbar.app.js'
-        //app:'view/app.entry.js'
+        //appbar:'./component/appbar/appbar.app.js'
+        app:'./view/app.entry.js'
     },
     output: {
         path: path.join(__dirname, '/dist'),

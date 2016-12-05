@@ -3,27 +3,28 @@ import ReactDOM from 'react-dom';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
-
-
 import IconMenu from 'material-ui/IconMenu';
 import MenuItem from 'material-ui/MenuItem';
 import IconButton from 'material-ui/IconButton';
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert';
 import NavigationClose from 'material-ui/svg-icons/navigation/close';
-
+import Login from '../login/login.entry';
+import Invite from '../invite/invite.entry' 
 import injectTapEventPlugin from 'react-tap-event-plugin';
+import FlatButton from 'material-ui/FlatButton';
 
 
-injectTapEventPlugin();
-class Login extends Component {
+class Login2 extends Component {
   static muiName = 'FlatButton';
 
   render() {
     return (
-      <FlatButton {...this.props} label="Login" />
+      /*<FlatButton {...this.props} label="Login" />*/
+      <Login {...this.props} />
     );
   }
 }
+
 
 const Logged = (props) => (
   <IconMenu
@@ -34,30 +35,34 @@ const Logged = (props) => (
     targetOrigin={{horizontal: 'right', vertical: 'top'}}
     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
   >
-    <MenuItem primaryText="Refresh" />
-    <MenuItem primaryText="Help" />
-    <MenuItem primaryText="Sign out" />
+    
+    	<Invite />
+
+     
+    <MenuItem primaryText="编辑新文章" />
+    <MenuItem primaryText="管理文章" />
   </IconMenu>
 );
 Logged.muiName = 'IconMenu';
 
 
 const MyAppBar = React.createClass({
+	getInitialState: function() {
+    	return {
+    		logged : true
+    	};
+  	},
   	render: function(){
   		return ( 	
-  		<div>
-		  	<MuiThemeProvider  muiTheme={getMuiTheme()}>
+  		
 		  		<AppBar
-		  			style={{width:'100%'}}
+		  			style={{width:'100%',boxShadow:'none',   position: 'fixed'}}
 				    
          			iconElementRight={
-         				<Logged/>
+         				this.state.logged?<Logged/>:<Login/>
          			}
 				/>
-			</MuiThemeProvider>
 			
-
-			</div>
 
 		)
 	}

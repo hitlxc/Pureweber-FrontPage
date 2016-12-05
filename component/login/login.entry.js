@@ -6,12 +6,12 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-import injectTapEventPlugin from 'react-tap-event-plugin';
-injectTapEventPlugin();
+import $ from 'jquery'
+
 //import Marker from 'marked';
 
 const Login = React.createClass({
-  
+
 	getInitialState: function() {
     	return {open: false,ac:'',pw:''};
   	},
@@ -26,6 +26,7 @@ const Login = React.createClass({
   		$.post('/login',{ac:this.state.ac,pw:this.state.pw},function(result){
   			console.log(result);
   		});
+  		
   	},
   	change_ac: function(event){
 		this.setState({
@@ -46,11 +47,17 @@ const Login = React.createClass({
 	        	onClick={this.submit}
 	      	/>
     	]
+
+    	const muiName = 'FlatButton';
+
   		return ( 	
 		  	<div id='login-container'>
-		  		<MuiThemeProvider  muiTheme={getMuiTheme()}>
-		  		<div>
-			  		<RaisedButton label="登陆" onClick={this.handleOpen} />
+		  		
+			  		<FlatButton 
+			  			label="登陆" 
+			  			style={{color:'white' , fontFamily: 'Roboto, sans-serif'}}
+			  			onClick={this.handleOpen} 
+			  		/>
 
 			        <Dialog
 			        	actions={actions}
@@ -70,8 +77,6 @@ const Login = React.createClass({
 						    onChange = {this.change_pw}
 						/><br />
 			        </Dialog>
-			        </div>
-				</MuiThemeProvider>
 				
 		    </div>
 		)
