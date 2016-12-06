@@ -39,8 +39,17 @@ const Invite = React.createClass({
   	submit: function(){
   		if (this.IsEmail(this.state.em)) {
 	  		this.handleClose();
-	  		$.post('/invite',{em:this.state.em},function(result){
+	  		var tomail = this.state.em;
+	  		$.post('http://localhost:3000/users/intro',{email:tomail},
+	  			function(result){
 	  			console.log(result);
+	  			$.post('http://localhost:3000/mail/signup',{
+	  				code:result.acode,
+	  				id:result.id,
+	  				tomail:tomail
+	  			},function(result){
+	  				console.log(result);
+	  			})
 	  		});
 	  		this.setState({
 		      	snackbar_success_open: true,

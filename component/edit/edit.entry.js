@@ -88,10 +88,11 @@ const Edit = React.createClass({
   		//console.log(newcontent)
   	},
   	submit:function(){
-  		$.post('/save',{title:this.state.title , content:this.state.content , tag:this.state.tag }, function(result){
+  		$.post('http://localhost:3000/blog/save',
+  			{title:this.state.title , content:this.state.content , cid:this.state.tag},
+  			 function(result){
   			console.log(result);
   		});
-
   	},
   	tag_change:function(event, index, value){
   		this.setState({tag:value});

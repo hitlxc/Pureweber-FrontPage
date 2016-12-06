@@ -6,8 +6,14 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+<<<<<<< HEAD
 import $ from 'jquery'
 
+=======
+import injectTapEventPlugin from 'react-tap-event-plugin';
+import $ from 'jquery';
+injectTapEventPlugin();
+>>>>>>> bea6286440403f7cfe8227452f5ab306f3a2e466
 //import Marker from 'marked';
 
 const Login = React.createClass({
@@ -23,7 +29,8 @@ const Login = React.createClass({
   	},
   	submit: function(){
   		this.handleClose();
-  		$.post('/login',{ac:this.state.ac,pw:this.state.pw},function(result){
+  		// name=Tmn07&pwd=q
+  		$.post('http://localhost:3000/users/api/login',{name:this.state.ac,pwd:this.state.pw},function(result){
   			console.log(result);
   		});
   		
