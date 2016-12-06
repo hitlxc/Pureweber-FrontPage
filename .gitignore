@@ -28,6 +28,7 @@ node_modules
 
 # Debug log from npm
 npm-debug.log
-dist/
+
+/public/dist/
 
 conf/mail.js

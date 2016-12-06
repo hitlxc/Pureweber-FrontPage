@@ -1,0 +1,23 @@
+extends layout
+
+block content
+	h1 写你妹的博客啦
+	form(method='post', action='blog/save')
+		div.form-row
+			label
+				span content
+				textarea(name='content')
+		div.form-row
+			label
+				span title
+				input(type='text',name='title')
+		div.form-row
+			label
+				span uid
+				input(type='text',name='uid')
+		div.form-row
+			label
+				span cid
+				input(type='text',name='cid')
+		div.form-row
+			input(type='submit')

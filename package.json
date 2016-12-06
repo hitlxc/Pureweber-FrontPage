@@ -1,11 +1,12 @@
 {
-  "name": "view",
+  "name": "myapp",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
-    "build-dev": "webpack -w -d"
+    "build-dev": "webpack -w -d",
+    "start": "node ./bin/www"
   },
   "author": "",
   "license": "ISC",
@@ -18,7 +19,18 @@
     "react": "^15.4.1",
     "react-dom": "^15.4.1",
     "react-fileupload": "^2.4.0",
-    "react-tap-event-plugin": "^2.0.1"
+    "react-tap-event-plugin": "^2.0.1",
+    "body-parser": "~1.15.2",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.2.0",
+    "express": "~4.14.0",
+    "jade": "~1.11.0",
+    "morgan": "~1.7.0",
+    "serve-favicon": "~2.3.0",
+    "mysql": "latest",
+    "nodemailer": "0.7.1",
+    "crypto": "0.0.3",
+    "express-session": "1.14.2"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",
