@@ -6,14 +6,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
-<<<<<<< HEAD
-import $ from 'jquery'
-
-=======
-import injectTapEventPlugin from 'react-tap-event-plugin';
 import $ from 'jquery';
-injectTapEventPlugin();
->>>>>>> bea6286440403f7cfe8227452f5ab306f3a2e466
+
 //import Marker from 'marked';
 
 const Login = React.createClass({
