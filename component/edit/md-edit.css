@@ -1,0 +1,18 @@
+
+#edit-content-container{
+	display: flex;
+	flex-direction: row ;
+}
+
+#preview{
+	margin-top: 10px;
+}
+
+#edit-header-container{
+	display: -webkit-flex;
+  	display:         flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+}

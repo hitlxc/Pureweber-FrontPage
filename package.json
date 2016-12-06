@@ -1,11 +1,25 @@
 {
   "name": "myapp",
-  "version": "0.0.0",
-  "private": true,
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "scripts": {
+    "build": "webpack",
+    "build-dev": "webpack -w -d",
     "start": "node ./bin/www"
   },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
+    "highlight.js": "latest",
+    "jquery": "^3.1.1",
+    "json-loader": "^0.5.4",
+    "marked": "latest",
+    "material-ui": "^0.16.4",
+    "react": "^15.4.1",
+    "react-dom": "^15.4.1",
+    "react-fileupload": "^2.4.0",
+    "react-tap-event-plugin": "^2.0.1",
     "body-parser": "~1.15.2",
     "cookie-parser": "~1.4.3",
     "debug": "~2.2.0",
@@ -14,9 +28,25 @@
     "morgan": "~1.7.0",
     "serve-favicon": "~2.3.0",
     "mysql": "latest",
-    "marked": "latest",
     "nodemailer": "0.7.1",
     "crypto": "0.0.3",
     "express-session": "1.14.2"
+  },
+  "devDependencies": {
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.8",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-stage-1": "^6.16.0",
+    "css-loader": "^0.26.1",
+    "style-loader": "^0.13.1"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "react",
+      "stage-1"
+    ],
+    "plugins": []
   }
 }

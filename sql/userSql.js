@@ -98,7 +98,7 @@ module.exports = {
 			// console.log(rpwd);
 			pool.getConnection(function(err, connection) {
 				connection.query($sql.login, [name, rpwd], function(err, result) {
-					// console.log(result);
+					console.log(err);
 					if (result.length == 0) {
 						jsonWrite(res, {
 							code:'1',
