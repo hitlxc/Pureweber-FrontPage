@@ -61,6 +61,7 @@ module.exports = {
 
 			connection.query($sql.update, [param.name, d, param.code, +param.id], function(err, result) {
 				console.log(err);
+				console.log($sql.update);
 				if(result) {
 					result = {
 						code: 200,

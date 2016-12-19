@@ -82,7 +82,10 @@ const Invite = React.createClass({
   		return ( 	
 		  	<div id='login-container'>
 		  		
-				  		<FlatButton label="邀请新成员" onClick={this.handleOpen} />
+				  		<FlatButton label="邀请新成员"
+				  			onClick={this.handleOpen} 
+				  			style={{width: '100%','marginTop':0}}
+				  		/>
 
 				        <Dialog
 				        	actions={actions}

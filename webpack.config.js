@@ -2,12 +2,12 @@ var path = require('path');
 
 module.exports = {
     entry: {
-        app:'./view/app.entry.js'
-        //edit:'./component/edit/edit.app.js',
-        //login:'./component/login/login.app.js',
-        //articlecard:'./component/articlecard/articlecard.app.js',
-        //invite:'./component/invite/invite.app.js',
-        //appbar:'./component/appbar/appbar.app.js',
+        app:'./public/js/app.entry.js', 
+        //edit:'./public/component/edit/edit.app.js',
+        //login:'./public/component/login/login.app.js',
+        //articlecard:'./public/component/articlecard/articlecard.app.js',
+        //invite:'./public/component/invite/invite.app.js',
+        //appbar:'./public/component/appbar/appbar.app.js',
     },
     output: {
         path: path.join(__dirname, '/public/dist'),

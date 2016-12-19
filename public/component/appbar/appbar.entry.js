@@ -12,7 +12,7 @@ import Login from '../login/login.entry';
 import Invite from '../invite/invite.entry' 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import FlatButton from 'material-ui/FlatButton';
-
+import Drawer from 'material-ui/Drawer';
 
 class Login2 extends Component {
   static muiName = 'FlatButton';
@@ -47,23 +47,41 @@ Logged.muiName = 'IconMenu';
 
 
 const MyAppBar = React.createClass({
-	getInitialState: function() {
+  getInitialState: function() {
     	return {
-    		logged : true
+    		logged : true,
+        open:false,
     	};
   	},
+  handleToggle: function(){
+    console.log('123')
+    this.setState({open: !this.state.open})
+  },
+  handleClose: function(){
+    this.setState({open: false});
+  },
+
   	render: function(){
   		return ( 	
-  		
+  		  <div>
 		  		<AppBar
 		  			style={{width:'100%',boxShadow:'none',   position: 'fixed'}}
-				    
+				    onLeftIconButtonTouchTap={this.handleToggle}
          			iconElementRight={
          				this.state.logged?<Logged/>:<Login/>
          			}
-				/>
-			
-
+				  />
+  			  <Drawer
+            docked={false}
+            width={300}
+            open={this.state.open}
+            onRequestChange={(open) => this.setState({open})} //点外部隐藏
+          >
+            <MenuItem onTouchTap={this.handleClose}>Menu Item</MenuItem>
+            <MenuItem onTouchTap={this.handleClose}>Menu Item 2</MenuItem>
+            <FlatButton label="Default"/>
+          </Drawer>
+        </div>
 		)
 	}
 });
