@@ -68,7 +68,7 @@ const MyAppBar = React.createClass({
 		  			style={{width:'100%',boxShadow:'none',   position: 'fixed'}}
 				    onLeftIconButtonTouchTap={this.handleToggle}
          			iconElementRight={
-         				this.state.logged?<Logged/>:<Login/>
+         				this.props.logged?<Logged/>:<Login/>
          			}
 				  />
   			  <Drawer

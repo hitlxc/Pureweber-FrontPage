@@ -16,12 +16,17 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
+import $ from 'jquery';
+
 injectTapEventPlugin();
 
 //let appbar = document.getElementById('appbar');
+
+var logged = ( $('#appbar').attr('logged') == 'true' ? true:false) ;
+
 ReactDOM.render(
 	<MuiThemeProvider  muiTheme={getMuiTheme()}>
-		<MyAppBar  />
+		<MyAppBar logged={logged}  />
 	</MuiThemeProvider>, 
 	document.getElementById('appbar')
 	);
