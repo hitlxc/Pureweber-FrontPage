@@ -40,17 +40,47 @@ const Logged = (props) => (
     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
   >
     
-    	
-
-     
-    
-    <MenuItem primaryText="编辑新文章"/>
+     <a href="https://www.baidu.com"></a>
+    <MenuItem primaryText="编辑新文章"
+      onClick = {Logged.alertfunc}
+    />
     <MenuItem primaryText="管理文章" />
   </IconMenu>
   </div>
 );
 Logged.muiName = 'IconMenu';
+Logged.alertfunc = function(){
+        console.log('1');
+      }
 
+/*const Logged = React.createClass({
+  alertfunc : function(){
+        console.log('1');
+      },
+  render:function(){
+    return (
+      <div
+        style={{display: 'flex'}}
+      >
+      <Invite />
+      <IconMenu
+        {...props}
+        iconButtonElement={
+          <IconButton><MoreVertIcon /></IconButton>
+        }
+        targetOrigin={{horizontal: 'right', vertical: 'top'}}
+        anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+      >
+        
+        <MenuItem primaryText="编辑新文章"
+          onClick = {this.alertfunc}
+        />
+        <MenuItem primaryText="管理文章" />
+      </IconMenu>
+      </div>
+    )
+  }
+})*/
 
 const MyAppBar = React.createClass({
   getInitialState: function() {

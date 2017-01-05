@@ -33,6 +33,14 @@ ReactDOM.render(
 	document.getElementById('appbar')
 	);
 
+$.get('blog/gets',function(res){
+	console.log(res);
+	for(var i=0;i<res.length;i++){
+		var title = res[i].title;
+		var author = res[i].uid;
+		
+	}
+});
 
 for (var i = 0; i < 10; i++) {
 	var app = document.createElement('div');
