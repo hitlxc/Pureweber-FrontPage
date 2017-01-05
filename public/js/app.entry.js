@@ -10,6 +10,8 @@ import Login from '../component/login/login.entry'
 
 import MyAppBar from '../component/appbar/appbar.entry' 
 
+import Footer from '../component/footer/footer' 
+
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
@@ -92,6 +94,22 @@ var app = document.createElement('div');
 
 	document.getElementById('articles').appendChild(app);
 	
+var app = document.createElement('div');
+	app.style.width = '46%';
+	ReactDOM.render(
+	<MuiThemeProvider  muiTheme={getMuiTheme()}>
+		<ArticleCard author='hitlxc' tag='js' avatar='http://p3.wmpic.me/article/2015/03/16/1426483394_eJakzHWr.jpeg' title='文章标题' abstract='文章摘要。。。。。。。。' pic='https://sophosnews.files.wordpress.com/2016/04/js-640.png?w=640' />
+	</MuiThemeProvider>, 
+	app
+	);
+
+	document.getElementById('articles').appendChild(app);
+
+ReactDOM.render(
+	<Footer />, 
+	document.getElementById('footer')
+);
+
 // Enable the tab character onkeypress (onkeydown) inside textarea...
 // ... for a textarea that has an `id="my-textarea"`
 //enableTab('text-input');

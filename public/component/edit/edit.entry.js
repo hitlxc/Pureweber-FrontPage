@@ -73,13 +73,13 @@ const Edit = React.createClass({
 
   	},
   	addFileString:function(){
-  		var newcontent = this.state.content + "[file](http://127.0.0.1/file)"
+  		//var newcontent = this.state.content + "[file](http://127.0.0.1/file)"
   		return newcontent;
   	},
   	uploadFile:function(){
   		//var newcontent = this.state.content += "[file](http://127.0.0.1/file)"
   		this.setState({
-  			content: this.state.content+"[file](http://127.0.0.1/file)"
+  			//content: this.state.content+"[file](http://127.0.0.1/file)"
   				
   			//preview:  marked(this.state.content)
   		})
@@ -122,7 +122,6 @@ const Edit = React.createClass({
 	    };
     },
   	componentDidMount:function(){
-  		console.log('222')
   		this.enableTab();
   	},
   	render: function(){
@@ -132,12 +131,12 @@ const Edit = React.createClass({
 			  		<MuiThemeProvider  muiTheme={getMuiTheme()}>
 			  					<TextField
 			  						
-									hintText="在这里编辑题目000"
+									hintText="在这里编辑题目"
 			      					floatingLabelText="在这里编辑题目"
 									value = {this.state.title}
 									onChange = {this.title_change}
 									fullWidth = {true}
-									style = {{width: '50%',transform: 'translateX(50%)'}}
+									style = {{width: '100%'/*,transform: 'translateX(50%)'*/}}
 									inputStyle = {{'textAlign': 'center'}}
 									hintStyle = {{'textAlign': 'center'}}
 									floatingLabelStyle = {{'textAlign': 'center'}}

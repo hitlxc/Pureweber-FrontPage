@@ -27,6 +27,10 @@ class Login2 extends Component {
 
 
 const Logged = (props) => (
+  <div
+    style={{display: 'flex'}}
+  >
+  <Invite />
   <IconMenu
     {...props}
     iconButtonElement={
@@ -36,12 +40,14 @@ const Logged = (props) => (
     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
   >
     
-    	<Invite />
+    	
 
      
-    <MenuItem primaryText="编辑新文章" />
+    
+    <MenuItem primaryText="编辑新文章"/>
     <MenuItem primaryText="管理文章" />
   </IconMenu>
+  </div>
 );
 Logged.muiName = 'IconMenu';
 
@@ -51,10 +57,10 @@ const MyAppBar = React.createClass({
     	return {
     		logged : true,
         open:false,
+        openMenu:true,
     	};
   	},
   handleToggle: function(){
-    console.log('123')
     this.setState({open: !this.state.open})
   },
   handleClose: function(){
@@ -71,7 +77,10 @@ const MyAppBar = React.createClass({
          				this.props.logged?<Logged/>:<Login/>
          			}
 				  />
-  			  <Drawer
+          <div id="invite">
+            <Invite />
+  			  </div>
+          <Drawer
             docked={false}
             width={300}
             open={this.state.open}
@@ -81,6 +90,7 @@ const MyAppBar = React.createClass({
             <MenuItem onTouchTap={this.handleClose}>Menu Item 2</MenuItem>
             <FlatButton label="Default"/>
           </Drawer>
+
         </div>
 		)
 	}

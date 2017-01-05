@@ -36,4 +36,9 @@ router.get('/show', function(req, res, next) {
 	blogSql.queryById(req, res, next);
 });
 
+router.get('/edit', function(req, res, next) {
+	//blogSql.queryById(req, res, next);
+	res.render('edit');
+});
+
 module.exports = router;

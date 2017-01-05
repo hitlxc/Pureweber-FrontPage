@@ -7,6 +7,8 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
 import $ from 'jquery';
 
 //import Marker from 'marked';
@@ -38,7 +40,7 @@ const Invite = React.createClass({
   	},
   	submit: function(){
   		if (this.IsEmail(this.state.em)) {
-	  		this.handleClose();
+	  		//this.handleClose();
 	  		var tomail = this.state.em;
 	  		$.post('http://localhost:3000/users/intro',{email:tomail},
 	  			function(result){
@@ -82,11 +84,11 @@ const Invite = React.createClass({
   		return ( 	
 		  	<div id='login-container'>
 		  		
-				  		<FlatButton label="邀请新成员"
-				  			onClick={this.handleOpen} 
-				  			style={{width: '100%','marginTop':0}}
-				  		/>
-
+				  		
+						<MenuItem primaryText="邀请新成员" 
+							onClick={this.handleOpen} 
+							
+						 />
 				        <Dialog
 				        	actions={actions}
 				          	modal={false}

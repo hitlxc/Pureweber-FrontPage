@@ -16,7 +16,7 @@ injectTapEventPlugin();
 let app = document.createElement('div');
 ReactDOM.render(
 	<MuiThemeProvider  muiTheme={getMuiTheme()}>
-		<MyAppBar  />
+		<MyAppBar  logged={true}/>
 	</MuiThemeProvider>
 	, app);
 document.body.appendChild(app);
