@@ -21,6 +21,11 @@ router.get('/cat', function(req, res, next) {
 router.get('/tag', function(req, res, next) {
 	res.render('tag');
 });
+
+router.get('/signup', function(req, res, next) {
+	res.render('signup');
+});
+
 // 直播入口
 router.get('/live', function(req, res, next) {
 	res.render('live');

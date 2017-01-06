@@ -159,6 +159,34 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `name`, `pwd`, `email`, `state`, `auth`, `code`, `time`) VALUES
 (1, 'Tmn07', '7ed8be64baf1b71211bc7bfc954824d4', '519403202@qq.com', 1, 1, 'bejewu5vwgxy9zfr', '2016-11-28 06:44:21');
 
+
+
+-- --------------------------------------------------------
+-- or this?
+-- CREATE VIEW vblog AS select b.id,u.name as author,b.title,c.name as category,b.time,b.content FROM blog as b INNER JOIN user as u ON u.id = b.uid INNER JOIN category as c ON c.id = b.cid
+--
+-- 替换视图以便查看 `vblog`
+--
+CREATE TABLE `vblog` (
+`id` int(11)
+,`author` varchar(20)
+,`title` varchar(30)
+,`category` varchar(20)
+,`cid` int(11)
+,`time` timestamp
+,`content` text
+);
+
+-- --------------------------------------------------------
+
+--
+-- 视图结构 `vblog`
+--
+DROP TABLE IF EXISTS `vblog`;
+
+CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vblog`  AS  select `b`.`id` AS `id`,`u`.`name` AS `author`,`b`.`title` AS `title`,`c`.`name` AS `category`,`b`.`cid` AS `cid`,`b`.`time` AS `time`,`b`.`content` AS `content` from ((`blog` `b` join `user` `u` on((`u`.`id` = `b`.`uid`))) join `category` `c` on((`c`.`id` = `b`.`cid`))) ;
+
+
 --
 -- Indexes for dumped tables
 --
