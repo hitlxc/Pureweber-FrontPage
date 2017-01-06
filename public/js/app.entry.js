@@ -33,7 +33,10 @@ ReactDOM.render(
 	document.getElementById('appbar')
 	);
 
-$.get('blog/gets',function(res){
+$.get('blog/gets',{
+	num:10,
+	page:1
+},function(res){
 	console.log(res);
 	for(var i=0;i<res.length;i++){
 		var title = res[i].title;
