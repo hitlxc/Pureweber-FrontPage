@@ -13,6 +13,7 @@ var blog = require('./routes/blog');
 var tag = require('./routes/tag');
 var cat = require('./routes/cat');
 var mail = require('./routes/mail');
+var live = require('./routes/live');
 //set DEBUG=myapp & npm start
 var app = express();
 
@@ -38,7 +39,7 @@ app.use('/test', test);
 app.use('/tag',tag);
 app.use('/cat',cat);
 app.use('/mail',mail);
-
+app.use('/live',live);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

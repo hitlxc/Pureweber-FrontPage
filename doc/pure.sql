@@ -188,6 +188,36 @@ CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW 
 
 
 --
+-- 表的结构 `live_code`
+--
+
+CREATE TABLE `live_code` (
+  `id` int(11) NOT NULL,
+  `uid` int(11) NOT NULL,
+  `code` varchar(20) COLLATE utf8_bin NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `live_code`
+--
+ALTER TABLE `live_code`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- 在导出的表使用AUTO_INCREMENT
+--
+
+--
+-- 使用表AUTO_INCREMENT `live_code`
+--
+ALTER TABLE `live_code`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+--
 -- Indexes for dumped tables
 --
 
