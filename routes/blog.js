@@ -38,7 +38,15 @@ router.get('/show', function(req, res, next) {
 
 router.get('/edit', function(req, res, next) {
 	//blogSql.queryById(req, res, next);
-	res.render('edit');
+	if (typeof req.session.uid === 'undefined') {
+		log_status = false;
+	}
+	else{
+		log_status = true;
+	}
+
+	res.render('edit',{logged:log_status});
+	
 });
 
 module.exports = router;

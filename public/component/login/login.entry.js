@@ -26,6 +26,9 @@ const Login = React.createClass({
   		// name=Tmn07&pwd=q
   		$.post('http://localhost:3000/users/api/login',{name:this.state.ac,pwd:this.state.pw},function(result){
   			console.log(result);
+  			if (result.code == '200') {
+  				window.location.reload();
+  			}
   		});
   		
   	},

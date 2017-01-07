@@ -40,9 +40,9 @@ const Logged = (props) => (
     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
   >
     
-     <a href="https://www.baidu.com"></a>
+    
     <MenuItem primaryText="编辑新文章"
-      onClick = {Logged.alertfunc}
+      href="/blog/edit"
     />
     <MenuItem primaryText="管理文章" />
   </IconMenu>
@@ -116,7 +116,20 @@ const MyAppBar = React.createClass({
             open={this.state.open}
             onRequestChange={(open) => this.setState({open})} //点外部隐藏
           >
-            <MenuItem onTouchTap={this.handleClose}>Menu Item</MenuItem>
+            <MenuItem onTouchTap={this.handleClose} primaryText="PureWeber"
+              href='/'
+              style={{
+                height:'64px',
+                color:'white',
+                backgroundColor: 'rgb(0, 188, 212)',
+                lineHeight: '64px',
+                fontWeight: '300',
+                fontSize:'24px',
+                cursor: 'pointer',
+              }}
+            />
+            
+
             <MenuItem onTouchTap={this.handleClose}>Menu Item 2</MenuItem>
             <FlatButton label="Default"/>
           </Drawer>

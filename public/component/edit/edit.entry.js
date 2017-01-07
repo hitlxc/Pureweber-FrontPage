@@ -41,11 +41,11 @@ const Edit = React.createClass({
 	getInitialState: function() {
     	return {
     		title: '',
-    		content: '[file](http://127.0.0.1/file)',
+    		content: '',
     		preview:'',
     		tag:1 ,
     		uploadOption : {
-		        baseUrl:'http://127.0.0.1',
+		        baseUrl:'/file/upload',
 		        param:{
 		            fid:0
 		        },
@@ -53,7 +53,15 @@ const Edit = React.createClass({
 			    numberLimit: 9,
 			    chooseAndUpload: true
 		    },
-		    
+		    uploadSuccess:function(){
+
+		    },
+		    uploadError:function(){
+
+		    },
+		    uploadFail:function(){
+
+		    }
     	};
   	},
 
@@ -88,7 +96,7 @@ const Edit = React.createClass({
   		//console.log(newcontent)
   	},
   	submit:function(){
-  		$.post('http://localhost:3000/blog/save',
+  		$.post('/blog/save',
   			{title:this.state.title , content:this.state.content , cid:this.state.tag},
   			 function(result){
   			console.log(result);
