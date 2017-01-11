@@ -1,0 +1,27 @@
+body{
+	margin: 0;
+	padding:0;
+}
+
+#appbar{
+	height: 48px;
+}
+
+@media screen and (min-width:660px) {
+	#invite{
+		margin-top: 30px;
+		margin-bottom: 30px;
+		margin-left: 80px;
+		width: 60%;
+	}
+
+}
+
+@media screen and (max-width:660px) {
+	#invite{
+		margin-top: 30px;
+		margin-bottom: 30px;
+		width: 100%;
+	}
+
+}

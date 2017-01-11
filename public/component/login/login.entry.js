@@ -29,6 +29,9 @@ const Login = React.createClass({
   			if (result.code == '200') {
   				window.location.reload();
   			}
+  			if (result[0].state == '1') {
+  				window.location.reload();
+  			}
   		});
   		
   	},

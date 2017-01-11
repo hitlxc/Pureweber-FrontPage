@@ -9,8 +9,6 @@ import RaisedButton from 'material-ui/RaisedButton';
 import Snackbar from 'material-ui/Snackbar';
 import Menu from 'material-ui/Menu';
 import MenuItem from 'material-ui/MenuItem';
-
-import Paper from 'material-ui/Paper';
 import $ from 'jquery';
 
 //import Marker from 'marked';
@@ -41,34 +39,28 @@ const Invite = React.createClass({
 		});
   	},
   	submit: function(){
-  		var emList = this.state.em.split(';')
-  		for (var i=0;i<emList.length;i++){
-  			var email = emList[i];
-  			if (this.IsEmail(email)) {
+  		if (this.IsEmail(this.state.em)) {
 	  		//this.handleClose();
 	  		var tomail = this.state.em;
-	  		$.post('/users/intro',{email:tomail},
+	  		$.post('http://localhost:3000/users/intro',{email:tomail},
 	  			function(result){
 	  			console.log(result);
-	  			$.post('/mail/signup',{
+	  			$.post('http://localhost:3000/mail/signup',{
 	  				code:result.acode,
 	  				id:result.id,
 	  				tomail:tomail
 	  			},function(result){
 	  				console.log(result);
-	  				this.setState({
-				      	snackbar_success_open: true,
-				    });
 	  			})
 	  		});
-	  		
+	  		this.setState({
+		      	snackbar_success_open: true,
+		    });
   		}else{
   			this.setState({
 		      	snackbar_error_open: true,
 		    });
   		}
-  		}
-  		
   	},
   	change_ac: function(event){
 		this.setState({
@@ -81,45 +73,51 @@ const Invite = React.createClass({
 		});
   	},
   	render: function(){
-  		
-    	const paper_style = {
-		  	height: 50,
-		  	width: '100%',
-		  	textAlign: 'center',
-		  	
-		}
-		const preview_style = {
-			height: 300,
-		  	width: '100%',
-		  	marginTop: '30px'
-		}
-  		return ( 
-  			<div>	
-			  	<Paper 
-			  		style={paper_style} 
-			  		zDepth={2} 
-			  	>
-					<TextField
-						hintText="邮箱"
-						onChange = {this.change_ac}
-						style={{float: 'left',marginLeft:'5px',width:'60%'}}
-					/>
+  		const actions = [
+	  		<FlatButton
+	  			label="邀请"
+	        	primary={true}
+	        	keyboardFocused={true}
+	        	onClick={this.submit}
+	      	/>
+    	]
+  		return ( 	
+		  	<div id='login-container'>
+		  		
+				  		
+						<MenuItem primaryText="邀请新成员" 
+							onClick={this.handleOpen} 
+							
+						 />
+				        <Dialog
+				        	actions={actions}
+				          	modal={false}
+				          	open={this.state.open}
+				          	onRequestClose={this.handleClose}
+				        >
+				        	
+					        <TextField
+							    hintText="邮箱"
+							    onChange = {this.change_ac}
+							/><br />
+							
+				        </Dialog>
 
-					<FlatButton
-			  			label="邀请"
-			        	primary={true}
-			        	keyboardFocused={true}
-			        	onClick={this.submit}
-			        	style={{float: 'right',marginRight:'5px',marginTop:'5px'}}
-			      	/>
-			  	</Paper>
-			  	<Paper 
-			  		style={preview_style} 
-			  		zDepth={2} 
-			  	>
-					
-			  	</Paper>
-			</div>
+				        <Snackbar
+				        	open={this.state.snackbar_success_open}
+				          	message="邀请成功"
+				          	autoHideDuration={2000}
+				          	onRequestClose={this.handleSnackbarClose}
+				        />
+
+				        <Snackbar
+				        	open={this.state.snackbar_error_open}
+				          	message="请输入正确的邮箱"
+				          	autoHideDuration={2000}
+				          	onRequestClose={this.handleSnackbarClose}
+				        />
+				
+		    </div>
 		)
 	}
 });

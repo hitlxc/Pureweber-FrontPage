@@ -40,7 +40,9 @@ const Logged = (props) => (
     anchorOrigin={{horizontal: 'right', vertical: 'top'}}
   >
     
-    
+    <MenuItem primaryText="邀请新成员"
+      href="/invite"
+    />
     <MenuItem primaryText="编辑新文章"
       href="/blog/edit"
     />
@@ -107,9 +109,7 @@ const MyAppBar = React.createClass({
          				this.props.logged?<Logged/>:<Login/>
          			}
 				  />
-          <div id="invite">
-            <Invite />
-  			  </div>
+          
           <Drawer
             docked={false}
             width={300}
