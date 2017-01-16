@@ -11,7 +11,7 @@ router.get('/', function(req, res, next) {
 		log_status = true;
 	}
 
-	res.render('index', { title: 'Pureweber' , article:['文章1','文章2','文章3'], logged:log_status});
+	res.render('index', { title: 'Pureweber' , logged:log_status});
 });
 
 router.get('/cat', function(req, res, next) {

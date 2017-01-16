@@ -40,25 +40,38 @@ router.all('*', function(req, res, next) {
 router.get('/state', function(req, res, next) {
 	request('http://localhost/stat', function (error, response, body) {
 	    if (!error && response.statusCode == 200) {
-	      	// console.log(body);
+	      	console.log(body);
 	      	var parseString = require('xml2js').parseString;
 			parseString(body, function (err, result) {
-			    // console.log(result);
-			    data = result.rtmp.server[0].application[0].live[0].stream[0];
-			    if (typeof data.active === 'undefined') {
-		    		jsonWrite(res, {
+				// console.log(parseString(result));
+				console.dir(JSON.stringify(result));
+			    console.log(result);
+
+			    data = result.rtmp.server[0].application[0].live[0];
+			    if (typeof data.stream === 'undefined'){
+			    	jsonWrite(res, {
 						code: 200,
 						state: 0
 					});
 			    }
-			    else
-			    {
-			    	jsonWrite(res, {
-						code: 200,
-						nclients: parseInt(data.nclients),
-						state: 1
-					});	
+			    else{
+					if (typeof data.stream[0].active === 'undefined') {
+			    		jsonWrite(res, {
+							code: 200,
+							state: 0
+						});
+				    }
+				    else
+				    {
+				    	jsonWrite(res, {
+							code: 200,
+							nclients: parseInt(data.stream[0].nclients),
+							state: 1
+						});	
+				    }
 			    }
+			  // .stream[0];
+
 			});
 	    }
 	})

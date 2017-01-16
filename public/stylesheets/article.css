@@ -1,0 +1,18 @@
+body{
+	margin: 0;
+	padding:0;
+}
+
+@media screen and (min-width:660px) {
+	#article{
+		margin-top: 20px;
+	}
+
+}
+
+@media screen and (max-width:660px) {
+	#article{
+		margin-top: 80px;
+	}
+
+}
