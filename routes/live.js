@@ -19,10 +19,65 @@ var jsonWrite = function (res, ret) {
 		res.json(ret);
 	}
 };
-// 
-// router.get('/on', function(req, res, next) {
 
-// });
+// var cheerio = require('cheerio');
+var request = require('request');
+
+router.all('*', function(req, res, next) {
+    // res.header("Access-Control-Allow-Origin", "null");
+    // if(req.method=="OPTIONS") res.send(200);/*让options请求快速返回*/
+    // else  next();
+    console.log(req.ip);
+    if (req.ip=="::ffff:127.0.0.1") {
+    	next();
+    }
+    else{
+    	res.send(403);
+    }
+});
+
+// 判断是否在直播
+router.get('/state', function(req, res, next) {
+	request('http://localhost/stat', function (error, response, body) {
+	    if (!error && response.statusCode == 200) {
+	      	// console.log(body);
+	      	var parseString = require('xml2js').parseString;
+			parseString(body, function (err, result) {
+			    // console.log(result);
+			    data = result.rtmp.server[0].application[0].live[0].stream[0];
+			    if (typeof data.active === 'undefined') {
+		    		jsonWrite(res, {
+						code: 200,
+						state: 0
+					});
+			    }
+			    else
+			    {
+			    	jsonWrite(res, {
+						code: 200,
+						nclients: parseInt(data.nclients),
+						state: 1
+					});	
+			    }
+			});
+	    }
+	})
+});
+
+router.post('/onplay', function(req, res, next) {
+	// res.header("Access-Control-Allow-Origin", "*");
+	res.sendStatus(200);
+	console.log("welcome");
+});
+
+router.post('/onplaydone', function(req, res, next) {
+	res.sendStatus(200);
+	console.log("watch over");
+});
+router.post('/publishdone', function(req, res, next) {
+	res.sendStatus(200);
+	console.log("live over");
+});
 
 router.get('/getpwd', function(req, res, next) {
 
