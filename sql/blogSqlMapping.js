@@ -9,6 +9,10 @@ var blog = {
 	queryById: 'SELECT * FROM vblog where id=?',
 	queryAll: 'SELECT * FROM vblog ORDER BY time DESC',
 	querys: 'SELECT * FROM vblog ORDER BY time DESC limit ? , ?',
+	queryByY: 'SELECT * FROM vblog  WHERE `y` = ? ',
+	queryByYM: 'SELECT * FROM vblog WHERE `ym` = ? ',
 };
- 
+
+// CREATE VIEW `vblog` AS  select `b`.`id` AS `id`,`u`.`name` AS `author`,`b`.`title` AS `title`,`c`.`name` AS `category`,`b`.`cid` AS `cid`,`b`.`time` AS `time`,date_format(`b`.`time`,'%Y%m') AS `ym`,date_format(`b`.`time`,'%Y') AS `y`,`b`.`content` AS `content` from ((`blog` `b` join `user` `u` on((`u`.`id` = `b`.`uid`))) join `category` `c` on((`c`.`id` = `b`.`cid`)));
+
 module.exports = blog;

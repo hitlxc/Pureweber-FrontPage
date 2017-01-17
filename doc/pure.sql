@@ -161,22 +161,9 @@ INSERT INTO `user` (`id`, `name`, `pwd`, `email`, `state`, `auth`, `code`, `time
 
 
 
--- --------------------------------------------------------
--- or this?
--- CREATE VIEW vblog AS select b.id,u.name as author,b.title,c.name as category,b.time,b.content FROM blog as b INNER JOIN user as u ON u.id = b.uid INNER JOIN category as c ON c.id = b.cid
---
--- 替换视图以便查看 `vblog`
---
-CREATE TABLE `vblog` (
-`id` int(11)
-,`author` varchar(20)
-,`title` varchar(30)
-,`category` varchar(20)
-,`cid` int(11)
-,`time` timestamp
-,`content` text
-);
 
+-- 创建tag相关的视图
+CREATE VIEW tblog AS SELECT b.id,b.title,u.name as author,b.content,b.time,t.id as tid,t.name FROM blog AS b INNER JOIN blogtags as bt on bt.bid = b.id INNER JOIN tag as t ON t.id = bt.tid INNER JOIN user as u ON u.id = b.uid
 -- --------------------------------------------------------
 
 --
@@ -184,7 +171,8 @@ CREATE TABLE `vblog` (
 --
 DROP TABLE IF EXISTS `vblog`;
 
-CREATE ALGORITHM=UNDEFINED DEFINER=`root`@`localhost` SQL SECURITY DEFINER VIEW `vblog`  AS  select `b`.`id` AS `id`,`u`.`name` AS `author`,`b`.`title` AS `title`,`c`.`name` AS `category`,`b`.`cid` AS `cid`,`b`.`time` AS `time`,`b`.`content` AS `content` from ((`blog` `b` join `user` `u` on((`u`.`id` = `b`.`uid`))) join `category` `c` on((`c`.`id` = `b`.`cid`))) ;
+CREATE VIEW `vblog` AS  select `b`.`id` AS `id`,`u`.`name` AS `author`,`b`.`title` AS `title`,`c`.`name` AS `category`,`b`.`cid` AS `cid`,`b`.`time` AS `time`,date_format(`b`.`time`,'%Y%m') AS `ym`,date_format(`b`.`time`,'%Y') AS `y`,`b`.`content` AS `content` from ((`blog` `b` join `user` `u` on((`u`.`id` = `b`.`uid`))) join `category` `c` on((`c`.`id` = `b`.`cid`)));
+
 
 
 --

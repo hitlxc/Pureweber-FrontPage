@@ -42,4 +42,15 @@ router.get('/get', function(req, res, next) {
 	});
 });
 
+router.get('/getBytid', function(req, res, next) {
+	pool.getConnection(function(err, connection) {
+		var param = req.query || req.params;
+		connection.query("select * from tblog where tid= ?"
+			,[param.tid], function(err, result) {
+			jsonWrite(res, result);
+			connection.release();
+		});
+	});
+});
+
 module.exports = router;
