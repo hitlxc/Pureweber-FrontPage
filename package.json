@@ -32,7 +32,9 @@
     "crypto": "0.0.3",
     "express-session": "1.14.2",
     "formidable": "1.0.14",
-    "node-uuid" : "latest"
+    "node-uuid" : "latest",
+    "request": "2.79.0",
+    "xml2js": "0.4.17"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",

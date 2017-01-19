@@ -37,6 +37,10 @@ router.get('/show', function(req, res, next) {
 	//console.log(res);
 });
 
+router.get('/getByTime', function(req, res, next) {
+	blogSql.queryByTime(req, res, next);
+});
+
 router.get('/edit', function(req, res, next) {
 	//blogSql.queryById(req, res, next);
 	if (typeof req.session.uid === 'undefined') {

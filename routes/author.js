@@ -20,34 +20,23 @@ var jsonWrite = function (res, ret) {
 	}
 };
 
+
 router.get('/getAll', function(req, res, next) {
 	pool.getConnection(function(err, connection) {
-		connection.query("SELECT name, count(name) as times FROM  category c inner join blog as b on c.id = b.cid  group by name"
+		connection.query("SELECT name, count(name) as times FROM  user u inner join blog as b on u.id = b.uid  group by name"
 			, function(err, result) {
 			jsonWrite(res, result);
 			connection.release();
 		});
 	});
 });
-
-router.get('/get', function(req, res, next) {
+router.get('/getByname', function(req, res, next) {
 	pool.getConnection(function(err, connection) {
 		var param = req.query || req.params;
-		connection.query("select c.name from category c inner join blog b on c.id = b.cid where b.id= ?"
-			,[param.bid], function(err, result) {
-			jsonWrite(res, result);
-			connection.release();
-		});
-	});
-});
-
-router.get('/getBycid', function(req, res, next) {
-	pool.getConnection(function(err, connection) {
-		var param = req.query || req.params;
-		connection.query("select * from vblog where cid= ?"
-			,[param.cid], function(err, result) {
-			jsonWrite(res, result);
-			connection.release();
+		connection.query("SELECT * FROM `vblog` WHERE `author` LIKE ?"
+			,["%"+param.name+"%"], function(err, result) {
+				jsonWrite(res, result);
+				connection.release();
 		});
 	});
 });

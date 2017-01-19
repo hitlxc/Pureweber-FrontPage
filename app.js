@@ -12,6 +12,7 @@ var test = require('./routes/test');
 var blog = require('./routes/blog');
 var tag = require('./routes/tag');
 var cat = require('./routes/cat');
+var aut = require('./routes/author');
 var mail = require('./routes/mail');
 
 var file = require('./routes/file');
@@ -43,7 +44,7 @@ app.use('/test', test);
 app.use('/tag',tag);
 app.use('/cat',cat);
 app.use('/mail',mail);
-
+app.use('/aut',aut);
 app.use('/file',file);
 
 app.use('/live',live);

@@ -123,5 +123,22 @@ module.exports = {
 			}
 
 		});
+	},
+	queryByTime: function (req, res, next) {
+		pool.getConnection(function(err, connection) {
+			var param = req.query || req.params;
+			if (param.y == null) {
+				connection.query($sql.queryByYM, [param.ym], function(err, result) {
+					jsonWrite(res, result);
+					connection.release();
+				});
+			}
+			else{
+				connection.query($sql.queryByY, [param.y], function(err, result) {
+					jsonWrite(res, result);
+					connection.release();
+				});
+			}
+		});
 	}
 };
