@@ -1,0 +1,25 @@
+input(type="file", name="file" id="file1")
+button(id="upload", name="upload") submit
+script(src='/jquery-3.1.1.min.js')
+script(type='text/javascript').
+	$(function(){
+		$('#upload').click(function() {
+			var data = new FormData();
+			var files = $("#file1")[0].files;
+			if(files) {
+				data.append("file", files[0]);
+			}
+			$.ajax({
+				type: 'post',
+				dataType: 'json',
+				url: '/file/upload',
+				data: data,
+				contentType: false,
+				processData: false,
+				success: function(err,result) {
+					console.log(err);
+					console.log(result);
+				}
+			});
+		});
+	});

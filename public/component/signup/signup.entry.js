@@ -23,6 +23,7 @@ const Signup = React.createClass({
     		id : '',
     		name : '',
     		studentId : '',
+    		avatar : '',
     		major : '',
     		intro : '',
     		pw : '',
@@ -46,8 +47,38 @@ const Signup = React.createClass({
   		this.setState({[event.target.id]:event.target.value})
 
   	},
+  	uploadAvatar : function(){
+  		var data = new FormData();
+		var files = $("#avatar")[0].files;
+		if(files) {
+			data.append("file", files[0]);
+		}
+		$.ajax({
+			type: 'post',
+			dataType: 'json',
+			url: '/file/upload',
+			data: data,
+			contentType: false,
+			processData: false,
+			success: function(err,result) {
+				console.log(err);
+				console.log(result);
+				this.setState({avatar: result.avatarName});
+			}
+		});
+  	},
   	submit : function(){
-  		console.log(this.state.id +this.state.pwAgain)
+  		if(this.state.pw != this.state.pwAgain){
+  			alert('请确认密码');
+  			return;
+  		}
+  		else{
+  			var data = this.state;
+	  		$.post("/signup",data,function(res){
+
+	  		})
+  		}
+  		
   	},
 	renderStepActions : function(step) {
 	    return (
@@ -88,6 +119,16 @@ const Signup = React.createClass({
   	render: function(){
 		const style = {
 		  marginLeft: 20,
+		}
+		const imageInput = {
+		    cursor: 'pointer',
+		    position: 'absolute',
+		    top: 0,
+		    bottom: 0,
+		    right: 0,
+		    left: 0,
+		    width: '100%',
+		    opacity: 0,
 		}
   		return ( 	
 		  	<div style={{maxWidth: 380, maxHeight: 400, margin: 'auto'}}>
@@ -156,11 +197,16 @@ const Signup = React.createClass({
 			             	上传头像
 			            </StepButton>
 		            	<StepContent>
-			              	<p>
-			                	For each ad campaign that you create, you can control how much
-			                	you're willing to spend on clicks and conversions, which networks
-			                	and geographical locations you want your ads to show on, and more.
-			              	</p>
+						    <FlatButton label="选择图片" labelPosition="before">
+						      	<input type="file" style={imageInput} name="file" id="avatar"/>
+						    </FlatButton>
+						    <FlatButton
+						      	label="上传"
+						      	primary={true}
+						      	id="upload"
+						      	name="upload"
+						      	onClick={this.uploadAvatar}
+						    />
 		              		{this.renderStepActions(1)}
 		            	</StepContent>
 		          	</Step>

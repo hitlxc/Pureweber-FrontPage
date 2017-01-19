@@ -30,7 +30,9 @@
     "mysql": "latest",
     "nodemailer": "0.7.1",
     "crypto": "0.0.3",
-    "express-session": "1.14.2"
+    "express-session": "1.14.2",
+    "formidable": "1.0.14",
+    "node-uuid" : "latest"
   },
   "devDependencies": {
     "babel-core": "^6.18.2",
