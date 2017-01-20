@@ -1,3 +1,9 @@
+form(role="form", method="post", enctype='multipart/form-data', action="/file/upload")
+	input(type="text", name="name")
+	input(type="file", name="file" id="file")
+	button(id="submit", type="submit") upload
+
+
 input(type="file", name="file" id="file1")
 button(id="upload", name="upload") submit
 script(src='/jquery-3.1.1.min.js')

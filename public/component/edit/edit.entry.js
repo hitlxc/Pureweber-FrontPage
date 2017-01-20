@@ -9,7 +9,6 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import $ from 'jquery';
 import marked from 'marked';
-import FileUpload from 'react-fileupload';
 
 require('./md-edit.css');
 require('./github-markdown.css');
@@ -44,24 +43,7 @@ const Edit = React.createClass({
     		content: '',
     		preview:'',
     		tag:1 ,
-    		uploadOption : {
-		        baseUrl:'/file/upload',
-		        param:{
-		            fid:0
-		        },
-		        multiple:true,
-			    numberLimit: 9,
-			    chooseAndUpload: true
-		    },
-		    uploadSuccess:function(){
-
-		    },
-		    uploadError:function(){
-
-		    },
-		    uploadFail:function(){
-
-		    }
+    		
     	};
   	},
 
@@ -85,15 +67,24 @@ const Edit = React.createClass({
   		return newcontent;
   	},
   	uploadFile:function(){
-  		//var newcontent = this.state.content += "[file](http://127.0.0.1/file)"
-  		this.setState({
-  			//content: this.state.content+"[file](http://127.0.0.1/file)"
-  				
-  			//preview:  marked(this.state.content)
-  		})
-  		
-
-  		//console.log(newcontent)
+  		var data = new FormData();
+		var files = $("#file")[0].files;
+		if(files) {
+			data.append("file", files[0]);
+		}
+		$.ajax({
+			type: 'post',
+			dataType: 'json',
+			url: '/file/upload',
+			data: data,
+			contentType: false,
+			processData: false,
+			success: function(err,result) {
+				console.log(err);
+				console.log(result);
+				this.setState({avatar: result.avatarName});
+			}
+		});
   	},
   	submit:function(){
   		$.post('/blog/save',
@@ -133,6 +124,16 @@ const Edit = React.createClass({
   		this.enableTab();
   	},
   	render: function(){
+  		const fileInput = {
+		    cursor: 'pointer',
+		    position: 'absolute',
+		    top: 0,
+		    bottom: 0,
+		    right: 0,
+		    left: 0,
+		    width: '100%',
+		    opacity: 0,
+		}
   		return (
 		  	<div id='edit-container'>
 		  		<div id="edit-title-container">
@@ -154,20 +155,17 @@ const Edit = React.createClass({
 				</div>
 
 				<div id="edit-header-container">
-					<FileUpload options={this.state.uploadOption} ref="fileUpload">
-			            <div ref="chooseAndUpload">
-			            	<MuiThemeProvider  muiTheme={getMuiTheme()}>
-				            	<FlatButton 
-									label="上传附件"
-									primary={true} 
-									onClick={this.uploadFile}
-									//onClick = {this.submit}
-								/>
-							</MuiThemeProvider>
-			            </div>
-			            
-			        </FileUpload>
-
+					
+			        <FlatButton label="选择附件" labelPosition="before">
+						 <input type="file" style={fileInput} name="file" id="file"/>
+					</FlatButton>
+					<FlatButton
+						label="上传"
+						primary={true}
+						id="upload"
+						name="upload"
+						onClick={this.uploadFile}
+					/>
 
 					<MuiThemeProvider  muiTheme={getMuiTheme()}>
 

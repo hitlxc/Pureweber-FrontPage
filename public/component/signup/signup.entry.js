@@ -75,7 +75,7 @@ const Signup = React.createClass({
   		else{
   			var data = this.state;
 	  		$.post("/signup",data,function(res){
-
+	  			
 	  		})
   		}
   		

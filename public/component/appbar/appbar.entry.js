@@ -30,7 +30,6 @@ const Logged = (props) => (
   <div
     style={{display: 'flex'}}
   >
-  <Invite />
   <IconMenu
     {...props}
     iconButtonElement={
@@ -41,7 +40,7 @@ const Logged = (props) => (
   >
     
     <MenuItem primaryText="邀请新成员"
-      href="/invite"
+      href="/users/invite"
     />
     <MenuItem primaryText="编辑新文章"
       href="/blog/edit"

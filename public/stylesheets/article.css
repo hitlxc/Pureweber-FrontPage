@@ -3,6 +3,10 @@ body{
 	padding:0;
 }
 
+#appbar{
+	height: 48px;
+}
+
 @media screen and (min-width:660px) {
 	#article{
 		margin-top: 20px;

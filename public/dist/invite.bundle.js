@@ -61,11 +61,11 @@
 	
 	var _invite2 = _interopRequireDefault(_invite);
 	
-	var _login = __webpack_require__(/*! ../component/login/login.entry */ 426);
+	var _login = __webpack_require__(/*! ../component/login/login.entry */ 418);
 	
 	var _login2 = _interopRequireDefault(_login);
 	
-	var _appbar = __webpack_require__(/*! ../component/appbar/appbar.entry */ 418);
+	var _appbar = __webpack_require__(/*! ../component/appbar/appbar.entry */ 419);
 	
 	var _appbar2 = _interopRequireDefault(_appbar);
 	
@@ -22233,6 +22233,7 @@
 	
 			};
 			var preview_style = {
+				padding: '10px',
 				height: 300,
 				width: '100%',
 				marginTop: '30px'
@@ -22259,10 +22260,14 @@
 						style: { float: 'right', marginRight: '5px', marginTop: '5px' }
 					})
 				),
-				_react2.default.createElement(_Paper2.default, {
-					style: preview_style,
-					zDepth: 2
-				})
+				_react2.default.createElement(
+					_Paper2.default,
+					{
+						style: preview_style,
+						zDepth: 2
+					},
+					'\u6B22\u8FCE\u6765\u5230pureweber\uFF0C\u6210\u4E3A\u6B63\u4E49\u7684\u4E00\u5458\uFF0C\u70B9\u51FB\u94FE\u63A5\u52A0\u5165\u6211\u4EEC'
+				)
 			);
 		}
 	});
@@ -44738,6 +44743,137 @@
 
 /***/ },
 /* 418 */
+/*!***********************************************!*\
+  !*** ./public/component/login/login.entry.js ***!
+  \***********************************************/
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _react = __webpack_require__(/*! react */ 1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(/*! react-dom */ 32);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _Dialog = __webpack_require__(/*! material-ui/Dialog */ 179);
+	
+	var _Dialog2 = _interopRequireDefault(_Dialog);
+	
+	var _getMuiTheme = __webpack_require__(/*! material-ui/styles/getMuiTheme */ 298);
+	
+	var _getMuiTheme2 = _interopRequireDefault(_getMuiTheme);
+	
+	var _MuiThemeProvider = __webpack_require__(/*! material-ui/styles/MuiThemeProvider */ 355);
+	
+	var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
+	
+	var _TextField = __webpack_require__(/*! material-ui/TextField */ 356);
+	
+	var _TextField2 = _interopRequireDefault(_TextField);
+	
+	var _FlatButton = __webpack_require__(/*! material-ui/FlatButton */ 363);
+	
+	var _FlatButton2 = _interopRequireDefault(_FlatButton);
+	
+	var _RaisedButton = __webpack_require__(/*! material-ui/RaisedButton */ 378);
+	
+	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
+	
+	var _jquery = __webpack_require__(/*! jquery */ 417);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	//import Marker from 'marked';
+	
+	var Login = _react2.default.createClass({
+		displayName: 'Login',
+	
+	
+		getInitialState: function getInitialState() {
+			return { open: false, ac: '', pw: '' };
+		},
+		handleOpen: function handleOpen() {
+			this.setState({ open: true });
+		},
+		handleClose: function handleClose() {
+			this.setState({ open: false });
+		},
+		submit: function submit() {
+			this.handleClose();
+			// name=Tmn07&pwd=q
+			_jquery2.default.post('http://localhost:3000/users/api/login', { name: this.state.ac, pwd: this.state.pw }, function (result) {
+				console.log(result);
+				if (result.code == '200') {
+					window.location.reload();
+				}
+				if (result[0].state == '1') {
+					window.location.reload();
+				}
+			});
+		},
+		change_ac: function change_ac(event) {
+			this.setState({
+				ac: event.target.value
+			});
+		},
+		change_pw: function change_pw(event) {
+			this.setState({
+				pw: event.target.value
+			});
+		},
+		render: function render() {
+			var actions = [_react2.default.createElement(_FlatButton2.default, {
+				label: '\u767B\u9646',
+				primary: true,
+				keyboardFocused: true,
+				onClick: this.submit
+			})];
+	
+			var muiName = 'FlatButton';
+	
+			return _react2.default.createElement(
+				'div',
+				{ id: 'login-container' },
+				_react2.default.createElement(_FlatButton2.default, {
+					label: '\u767B\u9646',
+					style: { color: 'white', fontFamily: 'Roboto, sans-serif' },
+					onClick: this.handleOpen
+				}),
+				_react2.default.createElement(
+					_Dialog2.default,
+					{
+						actions: actions,
+						modal: false,
+						open: this.state.open,
+						onRequestClose: this.handleClose
+					},
+					'\u8D26\u53F7',
+					_react2.default.createElement(_TextField2.default, {
+						hintText: '\u8D26\u53F7',
+						onChange: this.change_ac
+					}),
+					_react2.default.createElement('br', null),
+					'\u5BC6\u7801',
+					_react2.default.createElement(_TextField2.default, {
+						hintText: '\u5BC6\u7801',
+						type: 'password',
+						onChange: this.change_pw
+					}),
+					_react2.default.createElement('br', null)
+				)
+			);
+		}
+	});
+	
+	module.exports = Login;
+
+/***/ },
+/* 419 */
 /*!*************************************************!*\
   !*** ./public/component/appbar/appbar.entry.js ***!
   \*************************************************/
@@ -44765,11 +44901,11 @@
 	
 	var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
 	
-	var _AppBar = __webpack_require__(/*! material-ui/AppBar */ 419);
+	var _AppBar = __webpack_require__(/*! material-ui/AppBar */ 420);
 	
 	var _AppBar2 = _interopRequireDefault(_AppBar);
 	
-	var _IconMenu = __webpack_require__(/*! material-ui/IconMenu */ 422);
+	var _IconMenu = __webpack_require__(/*! material-ui/IconMenu */ 423);
 	
 	var _IconMenu2 = _interopRequireDefault(_IconMenu);
 	
@@ -44781,15 +44917,15 @@
 	
 	var _IconButton2 = _interopRequireDefault(_IconButton);
 	
-	var _moreVert = __webpack_require__(/*! material-ui/svg-icons/navigation/more-vert */ 424);
+	var _moreVert = __webpack_require__(/*! material-ui/svg-icons/navigation/more-vert */ 425);
 	
 	var _moreVert2 = _interopRequireDefault(_moreVert);
 	
-	var _close = __webpack_require__(/*! material-ui/svg-icons/navigation/close */ 425);
+	var _close = __webpack_require__(/*! material-ui/svg-icons/navigation/close */ 426);
 	
 	var _close2 = _interopRequireDefault(_close);
 	
-	var _login = __webpack_require__(/*! ../login/login.entry */ 426);
+	var _login = __webpack_require__(/*! ../login/login.entry */ 418);
 	
 	var _login2 = _interopRequireDefault(_login);
 	
@@ -44848,7 +44984,6 @@
 	    {
 	      style: { display: 'flex' }
 	    },
-	    _react2.default.createElement(_invite2.default, null),
 	    _react2.default.createElement(
 	      _IconMenu2.default,
 	      _extends({}, props, {
@@ -44861,7 +44996,7 @@
 	        anchorOrigin: { horizontal: 'right', vertical: 'top' }
 	      }),
 	      _react2.default.createElement(_MenuItem2.default, { primaryText: '\u9080\u8BF7\u65B0\u6210\u5458',
-	        href: '/invite'
+	        href: '/users/invite'
 	      }),
 	      _react2.default.createElement(_MenuItem2.default, { primaryText: '\u7F16\u8F91\u65B0\u6587\u7AE0',
 	        href: '/blog/edit'
@@ -44968,7 +45103,7 @@
 	module.exports = MyAppBar;
 
 /***/ },
-/* 419 */
+/* 420 */
 /*!***************************************!*\
   !*** ./~/material-ui/AppBar/index.js ***!
   \***************************************/
@@ -44981,7 +45116,7 @@
 	});
 	exports.default = undefined;
 	
-	var _AppBar = __webpack_require__(/*! ./AppBar */ 420);
+	var _AppBar = __webpack_require__(/*! ./AppBar */ 421);
 	
 	var _AppBar2 = _interopRequireDefault(_AppBar);
 	
@@ -44992,7 +45127,7 @@
 	exports.default = _AppBar2.default;
 
 /***/ },
-/* 420 */
+/* 421 */
 /*!****************************************!*\
   !*** ./~/material-ui/AppBar/AppBar.js ***!
   \****************************************/
@@ -45050,7 +45185,7 @@
 	
 	var _IconButton2 = _interopRequireDefault(_IconButton);
 	
-	var _menu = __webpack_require__(/*! ../svg-icons/navigation/menu */ 421);
+	var _menu = __webpack_require__(/*! ../svg-icons/navigation/menu */ 422);
 	
 	var _menu2 = _interopRequireDefault(_menu);
 	
@@ -45363,7 +45498,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/process/browser.js */ 3)))
 
 /***/ },
-/* 421 */
+/* 422 */
 /*!****************************************************!*\
   !*** ./~/material-ui/svg-icons/navigation/menu.js ***!
   \****************************************************/
@@ -45401,7 +45536,7 @@
 	exports.default = NavigationMenu;
 
 /***/ },
-/* 422 */
+/* 423 */
 /*!*****************************************!*\
   !*** ./~/material-ui/IconMenu/index.js ***!
   \*****************************************/
@@ -45414,7 +45549,7 @@
 	});
 	exports.default = exports.MenuItem = exports.IconMenu = undefined;
 	
-	var _IconMenu2 = __webpack_require__(/*! ./IconMenu */ 423);
+	var _IconMenu2 = __webpack_require__(/*! ./IconMenu */ 424);
 	
 	var _IconMenu3 = _interopRequireDefault(_IconMenu2);
 	
@@ -45431,7 +45566,7 @@
 	exports.default = _IconMenu3.default;
 
 /***/ },
-/* 423 */
+/* 424 */
 /*!********************************************!*\
   !*** ./~/material-ui/IconMenu/IconMenu.js ***!
   \********************************************/
@@ -45834,7 +45969,7 @@
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(/*! ./~/process/browser.js */ 3)))
 
 /***/ },
-/* 424 */
+/* 425 */
 /*!*********************************************************!*\
   !*** ./~/material-ui/svg-icons/navigation/more-vert.js ***!
   \*********************************************************/
@@ -45872,7 +46007,7 @@
 	exports.default = NavigationMoreVert;
 
 /***/ },
-/* 425 */
+/* 426 */
 /*!*****************************************************!*\
   !*** ./~/material-ui/svg-icons/navigation/close.js ***!
   \*****************************************************/
@@ -45908,137 +46043,6 @@
 	NavigationClose.muiName = 'SvgIcon';
 	
 	exports.default = NavigationClose;
-
-/***/ },
-/* 426 */
-/*!***********************************************!*\
-  !*** ./public/component/login/login.entry.js ***!
-  \***********************************************/
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
-	var _react = __webpack_require__(/*! react */ 1);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDom = __webpack_require__(/*! react-dom */ 32);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
-	var _Dialog = __webpack_require__(/*! material-ui/Dialog */ 179);
-	
-	var _Dialog2 = _interopRequireDefault(_Dialog);
-	
-	var _getMuiTheme = __webpack_require__(/*! material-ui/styles/getMuiTheme */ 298);
-	
-	var _getMuiTheme2 = _interopRequireDefault(_getMuiTheme);
-	
-	var _MuiThemeProvider = __webpack_require__(/*! material-ui/styles/MuiThemeProvider */ 355);
-	
-	var _MuiThemeProvider2 = _interopRequireDefault(_MuiThemeProvider);
-	
-	var _TextField = __webpack_require__(/*! material-ui/TextField */ 356);
-	
-	var _TextField2 = _interopRequireDefault(_TextField);
-	
-	var _FlatButton = __webpack_require__(/*! material-ui/FlatButton */ 363);
-	
-	var _FlatButton2 = _interopRequireDefault(_FlatButton);
-	
-	var _RaisedButton = __webpack_require__(/*! material-ui/RaisedButton */ 378);
-	
-	var _RaisedButton2 = _interopRequireDefault(_RaisedButton);
-	
-	var _jquery = __webpack_require__(/*! jquery */ 417);
-	
-	var _jquery2 = _interopRequireDefault(_jquery);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	//import Marker from 'marked';
-	
-	var Login = _react2.default.createClass({
-		displayName: 'Login',
-	
-	
-		getInitialState: function getInitialState() {
-			return { open: false, ac: '', pw: '' };
-		},
-		handleOpen: function handleOpen() {
-			this.setState({ open: true });
-		},
-		handleClose: function handleClose() {
-			this.setState({ open: false });
-		},
-		submit: function submit() {
-			this.handleClose();
-			// name=Tmn07&pwd=q
-			_jquery2.default.post('http://localhost:3000/users/api/login', { name: this.state.ac, pwd: this.state.pw }, function (result) {
-				console.log(result);
-				if (result.code == '200') {
-					window.location.reload();
-				}
-				if (result[0].state == '1') {
-					window.location.reload();
-				}
-			});
-		},
-		change_ac: function change_ac(event) {
-			this.setState({
-				ac: event.target.value
-			});
-		},
-		change_pw: function change_pw(event) {
-			this.setState({
-				pw: event.target.value
-			});
-		},
-		render: function render() {
-			var actions = [_react2.default.createElement(_FlatButton2.default, {
-				label: '\u767B\u9646',
-				primary: true,
-				keyboardFocused: true,
-				onClick: this.submit
-			})];
-	
-			var muiName = 'FlatButton';
-	
-			return _react2.default.createElement(
-				'div',
-				{ id: 'login-container' },
-				_react2.default.createElement(_FlatButton2.default, {
-					label: '\u767B\u9646',
-					style: { color: 'white', fontFamily: 'Roboto, sans-serif' },
-					onClick: this.handleOpen
-				}),
-				_react2.default.createElement(
-					_Dialog2.default,
-					{
-						actions: actions,
-						modal: false,
-						open: this.state.open,
-						onRequestClose: this.handleClose
-					},
-					'\u8D26\u53F7',
-					_react2.default.createElement(_TextField2.default, {
-						hintText: '\u8D26\u53F7',
-						onChange: this.change_ac
-					}),
-					_react2.default.createElement('br', null),
-					'\u5BC6\u7801',
-					_react2.default.createElement(_TextField2.default, {
-						hintText: '\u5BC6\u7801',
-						type: 'password',
-						onChange: this.change_pw
-					}),
-					_react2.default.createElement('br', null)
-				)
-			);
-		}
-	});
-	
-	module.exports = Login;
 
 /***/ },
 /* 427 */
@@ -46897,7 +46901,7 @@
 	
 	
 	// module
-	exports.push([module.id, "footer{\r\n\tbackground-color: rgb(33, 33, 33);\r\n\tpadding: 50px;\r\n\tcolor: white;\r\n\tfont-family: 'Roboto', sans-serif;\r\n\ttext-align: center;\r\n\tletter-spacing: 3px;\r\n}", ""]);
+	exports.push([module.id, "footer{\n\tbackground-color: rgb(33, 33, 33);\n\tpadding: 50px;\n\tcolor: white;\n\tfont-family: 'Roboto', sans-serif;\n\ttext-align: center;\n\tletter-spacing: 3px;\n}", ""]);
 	
 	// exports
 

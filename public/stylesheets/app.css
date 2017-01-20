@@ -3,6 +3,10 @@ body{
 	padding:0;
 }
 
+#appbar{
+	height: 48px;
+}
+
 #banner{
 	padding-top: 100px;
 	padding-bottom: 200px;

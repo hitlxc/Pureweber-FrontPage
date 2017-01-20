@@ -89,6 +89,7 @@ const Invite = React.createClass({
 		  	
 		}
 		const preview_style = {
+			padding: '10px',
 			height: 300,
 		  	width: '100%',
 		  	marginTop: '30px'
@@ -117,7 +118,7 @@ const Invite = React.createClass({
 			  		style={preview_style} 
 			  		zDepth={2} 
 			  	>
-					
+					欢迎来到pureweber，成为正义的一员，点击链接加入我们
 			  	</Paper>
 			</div>
 		)
