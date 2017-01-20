@@ -7,17 +7,8 @@ var session = require('express-session')
 var bodyParser = require('body-parser');
 
 var index = require('./routes/index');
-var users = require('./routes/users');
-var test = require('./routes/test');
-var blog = require('./routes/blog');
-var tag = require('./routes/tag');
-var cat = require('./routes/cat');
-var aut = require('./routes/author');
-var mail = require('./routes/mail');
-
 var file = require('./routes/file');
-
-var live = require('./routes/live');
+var api = require('./routes/api');
 
 //set DEBUG=myapp & npm start
 var app = express();
@@ -37,17 +28,13 @@ app.use(express.static(path.join(__dirname, 'public')));
 // 加密..
 app.use(session({secret:"test"}));
 
-app.use('/', index);
-app.use('/users', users);
-app.use('/blog', blog);
-app.use('/test', test);
-app.use('/tag',tag);
-app.use('/cat',cat);
-app.use('/mail',mail);
-app.use('/aut',aut);
 app.use('/file',file);
 
-app.use('/live',live);
+// 后端api路由
+app.use('/',api);
+
+// 前端路由
+app.use('/', index);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
