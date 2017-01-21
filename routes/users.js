@@ -1,14 +1,11 @@
 var express = require('express');
 var router = express.Router();
 var userSql = require('../sql/userSql');
+var lib = require('./lib');
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   	res.render('updateUser');
-});
-
-router.get('/login', function(req, res, next) {
-	res.render('login');
 });
 
 router.get('/invite', function(req, res, next) {
@@ -19,6 +16,12 @@ router.all('/api/login', function(req, res, next) {
 	// 验证
 	userSql.login(req, res, next);
 });
+
+
+router.all('/status', function(req, res, next) {
+	res.send(lib.log_status(req));
+});
+
 
 router.get('/logout', function(req, res, next) {
 	// 验证

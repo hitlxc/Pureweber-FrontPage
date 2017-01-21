@@ -1,30 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
-var blogSql = require('../sql/blogSql');
+var lib = require('./lib');
 
-// var marked = require('marked');
-// console.log(marked('I am using __markdown__.'));
-
-/* GET blog page. */
-
-/*router.all('/upload', function(req, res, next) {
-	// res.render('writedown');
-	//res.render('md');
-	console.log(req);
-	res.json({
-			code:'1',
-			msg: '上传成功'
-		});
-});*/
 router.get('/', function(req, res, next) {
 	// res.render('writedown');
 	res.render('file');
 });
-
-
-
-
 
 
 var formidable = require('formidable');
@@ -46,18 +28,32 @@ router.post('/upload', function(req, res, next) {
 			res.send(err);
 			return;
 		}
-		console.log(fields);
 		var extName = /\.[^\.]+/.exec(files.file.name);
 		var ext = Array.isArray(extName)
 			? extName[0]
 			: '';
-		//重命名，以防文件重复
-		var avatarName = uuid() + ext;
-		//移动的文件目录
-		var newPath = form.uploadDir + avatarName;
-		fs.renameSync(files.file.path, newPath);
-		console.log(avatarName);
-		res.send('success');
+		// ext 后缀
+		// console.log(ext);
+
+		if (ext == ".gif" ||ext == ".jpg" ||ext == ".png") {
+			var avatarName = uuid() + ext;
+			//移动的文件目录
+			var newPath = form.uploadDir + avatarName;
+			fs.renameSync(files.file.path, newPath);
+			result = {
+				code: 200,
+				msg: avatarName,
+			};
+		}
+		else{
+			var newPath = form.uploadDir + files.file.name
+			fs.renameSync(files.file.path, newPath);
+			result = {
+				code: 200,
+				msg: files.file.name,
+			};
+		}
+		lib.jsonWrite(res, result);
 	});
 });
 

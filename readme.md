@@ -15,5 +15,13 @@
 `npm run build/npm run build-dev`
 
 ### 配置
+
 修改conf/db.js.bak里的配置项，另存为一份db.js即可
+
 修改conf/mail.js.bak里的配置项，另存为一份mail.js即可
+
+### 其他说明
+
+routes/index.js 前端路由
+routes/api.js 各api导入，api路由
+routes/lib.js 公共函数库
