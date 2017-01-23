@@ -2,13 +2,9 @@ import React from 'react';
 
 import ReactDOM from 'react-dom';
 
-import { Router , Route, browserHistory, hashHistory} from 'react-router';
-
 import Login from '../component/login/login.entry' 
 
 import MyAppBar from '../component/appbar/appbar.entry' 
-
-import Article from '../component/article/article.entry' ;
 
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 
@@ -16,9 +12,13 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
+import Edit from '../component/edit/edit.entry' ;
+
 import Footer from '../component/footer/footer' ;
 
-import marked from 'marked';
+import BlogList from '../component/blog-list/blog-list' ;
+
+import Divider from 'material-ui/Divider';
 
 import $ from 'jquery';
 
@@ -28,14 +28,6 @@ injectTapEventPlugin();
 
 var logged = ( $('#appbar').attr('logged') == 'true' ? true:false) ;
 
-function getUrlParam(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-    var r = window.location.search.substr(1).match(reg);  //匹配目标参数
-    if (r != null) return unescape(r[2]); return null; //返回参数值
-}
-
-var id = getUrlParam('id');
-
 ReactDOM.render(
 	<MuiThemeProvider  muiTheme={getMuiTheme()}>
 		<MyAppBar logged={logged}  />
@@ -43,19 +35,22 @@ ReactDOM.render(
 	document.getElementById('appbar')
 	);
 
-ReactDOM.render(
-	<Router history={hashHistory}>
-		<Route path="/" component={Article} />
-	</Router>, 
-	document.getElementById('article')
+$.get('/blog/gets',{
+	num:10,
+	page:1
+},function(res){
+	console.log(res);
+	
+	ReactDOM.render(
+		<BlogList blogs={res} />, 
+	document.getElementById('blog-list')
 	);
+});
 
-/*ReactDOM.render(
-	<Route path="inbox/messages/:id" component={Article} />
-		<Article className="article" />
-, 
-	document.getElementById('article')
-	);*/
+
+
+
+
 
 ReactDOM.render(
 	<Footer />, 

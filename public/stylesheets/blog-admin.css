@@ -13,7 +13,7 @@ body{
 	position: relative;
 }
 
-#container{
+#blog-admin-page{
 	padding-bottom: 60px;
 }
 
@@ -21,16 +21,11 @@ body{
 	height: 48px;
 }
 
-@media screen and (min-width:660px) {
-	#article{
-		margin-top: 20px;
-	}
-
+#blog-list{
+	margin-top: 20px;
+	width: 60%;
 }
 
-@media screen and (max-width:660px) {
-	#article{
-		margin-top: 80px;
-	}
-
+#aside{
+	width: 40%;
 }

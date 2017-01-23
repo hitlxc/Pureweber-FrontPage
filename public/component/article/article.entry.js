@@ -46,32 +46,12 @@ const Article = React.createClass({
     	};
   	},
 
-  	/*marked: function(event){
-  		this.setState({
-  			content: event.target.value,
-      		preview:  marked(event.target.value)
-		});
-		document.getElementById('preview').innerHTML = marked(event.target.value);
-  		//this.preview = Marker(event.target.value)
-  	},*/
-
-
-  	/*componentDidMount: function() {
-    	$.get(this.props.source, function(result) {
-	      	var lastGist = result[0];
-	      	if (this.isMounted()) {
-	        	this.setState({
-	          		title: lastGist.title,
-	          		content: marked(lastGist.content),
-	          		front_pic: lastGist.front_pic,
-	          		author: lastGist.author,
-	        	});
-	      	}
-    	}.bind(this));
-  	},*/
   	componentDidMount:function() {
   		var dom = $('#content');
   		dom[0].innerHTML = marked(this.state.content);
+  		var id = this.props.params.id;
+  		console.log(id);
+  		console.log('123')
   	},
   	render: function(){
   		return (
