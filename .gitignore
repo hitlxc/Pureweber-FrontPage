@@ -35,3 +35,5 @@ conf/mail.js
 conf/db.js
 
 public/upload/
+
+*.sh

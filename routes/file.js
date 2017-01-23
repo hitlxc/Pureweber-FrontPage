@@ -1,25 +1,24 @@
 var express = require('express');
 var router = express.Router();
 
-var lib = require('./lib');
-
-router.get('/', function(req, res, next) {
-	// res.render('writedown');
-	res.render('file');
-});
-
-
 var formidable = require('formidable');
 var uuid = require('node-uuid');
 var fs = require('fs');
 
-router.post('/upload', function(req, res, next) {
+var lib = require('./lib');
+
+upload = function(req, res, dirname){
 	//创建上传表单
 	var form = new formidable.IncomingForm();
 	//设置编辑
 	form.encoding = 'utf-8';
 	//设置上传目录
-	form.uploadDir = 'public/upload/';
+	form.uploadDir = 'public/'+dirname+"/";
+	//检查目录是否存在
+	if (fs.existsSync(form.uploadDir) == false) {
+		fs.mkdirSync(form.uploadDir);
+	}
+	
 	form.keepExtensions = true;
 	//文件大小
 	form.maxFieldsSize = 10 * 1024 * 1024;
@@ -55,6 +54,18 @@ router.post('/upload', function(req, res, next) {
 		}
 		lib.jsonWrite(res, result);
 	});
+}
+
+router.get('/', function(req, res, next) {
+	// res.render('writedown');
+	res.render('file');
+});
+
+router.post('/avatar', function(req, res, next) {
+	upload(req, res,"avatar");
+});
+router.post('/upload', function(req, res, next) {
+	upload(req, res,"upload");
 });
 
 

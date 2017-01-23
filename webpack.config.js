@@ -11,8 +11,8 @@ module.exports = {
         //appbar:'./public/component/appbar/appbar.app.js',
         //edit:'./public/js/edit.entry.js',
         //article:'./public/js/article.entry.js',
-        //invite:'./public/js/invite.entry.js',
-        signup:'./public/js/signup.entry.js'
+        invite:'./public/js/invite.entry.js'
+        // signup:'./public/js/signup.entry.js'
     },
     output: {
         path: path.join(__dirname, '/public/dist'),
