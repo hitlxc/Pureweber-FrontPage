@@ -1,24 +1,36 @@
 var express = require('express');
 var router = express.Router();
 var userSql = require('../sql/userSql');
+var lib = require('./lib');
+
+router.all('/api/login', function(req, res, next) {
+	userSql.login(req, res, next);
+});
+
+router.all('/status', function(req, res, next) {
+	res.send(lib.log_status(req));
+});
+
+// 检查登陆状态
+router.use(function check(req, res, next) {
+	if(lib.log_status(req)){
+		next();
+	}
+	else{
+		res.send(400);
+	}
+});
+
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
   	res.render('updateUser');
 });
 
-router.get('/login', function(req, res, next) {
-	res.render('login');
-});
-
 router.get('/invite', function(req, res, next) {
 	res.render('invite');
 });
 
-router.all('/api/login', function(req, res, next) {
-	// 验证
-	userSql.login(req, res, next);
-});
 
 router.get('/logout', function(req, res, next) {
 	// 验证
@@ -29,7 +41,6 @@ router.get('/addUser', function(req, res, next) {
 	userSql.add(req, res, next);
 });
 router.all('/intro', function(req, res, next) {
-	// 验证
 	userSql.intro(req, res, next);
 });
 

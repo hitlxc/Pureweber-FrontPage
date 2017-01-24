@@ -4,10 +4,12 @@ var mysql = require('mysql');
 var $conf = require('../conf/db');
 //var $util = require('../util/util');
 var $sql = require('./userSqlMapping');
- 
+var lib = require("../routes/lib") 
+
 var crypto = require('crypto');
 // 使用连接池，提升性能
 var pool  = mysql.createPool($conf.mysql);
+
  
 // 向前台返回JSON方法的简单封装
 var jsonWrite = function (res, ret) {
@@ -26,10 +28,11 @@ module.exports = {
 		pool.getConnection(function(err, connection) {
 			// 获取前台页面传过来的参数
 			// var param = req.query || req.params;
+			// console.log(param);
 			// 验证权限auth
 			var param = req.body;
 			var code = Math.random().toString(36).substr(2)
-			console.log(code);
+			// console.log(code);
 			connection.query($sql.intro, [param.email, code], function(err, result) {
 				console.log(err);
 				if(result) {
@@ -40,6 +43,8 @@ module.exports = {
 						acode: code
 					};    
 				}
+				var urlparam = "?code=" + code + "&id=" +result.insertId;
+				lib.send_mail(param.email, urlparam);
  
 				// 以json形式，把操作结果返回给前台页面
 				jsonWrite(res, result);

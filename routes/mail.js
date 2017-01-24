@@ -4,16 +4,7 @@ var router = express.Router();
 
 var $mail_conf = require('../conf/mail');
 
-var jsonWrite = function (res, ret) {
-	if(typeof ret === 'undefined') {
-		res.json({
-			code:'1',
-			msg: '操作失败'
-		});
-	} else {
-		res.json(ret);
-	}
-};
+var lib = require('./lib');
 
 router.all('/signup', function(req, res, next) {
 	var smtpTransport = nodemailer.createTransport("SMTP",$mail_conf.mailsetting);
@@ -43,7 +34,7 @@ router.all('/signup', function(req, res, next) {
 		
 	  }
 	  smtpTransport.close(); // 如果没用，关闭连接池
-	  jsonWrite(res, result);
+	  lib.jsonWrite(res, result);
 	});
 });
 

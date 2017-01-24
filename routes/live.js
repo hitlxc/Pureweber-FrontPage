@@ -8,17 +8,7 @@ var $conf = require('../conf/db');
 // 使用连接池，提升性能
 var pool  = mysql.createPool($conf.mysql);
 
-// 向前台返回JSON方法的简单封装
-var jsonWrite = function (res, ret) {
-	if(typeof ret === 'undefined') {
-		res.json({
-			code:'1',
-			msg: '操作失败'
-		});
-	} else {
-		res.json(ret);
-	}
-};
+var lib = require('./lib');
 
 // var cheerio = require('cheerio');
 var request = require('request');
@@ -49,21 +39,21 @@ router.get('/state', function(req, res, next) {
 
 			    data = result.rtmp.server[0].application[0].live[0];
 			    if (typeof data.stream === 'undefined'){
-			    	jsonWrite(res, {
+			    	lib.jsonWrite(res, {
 						code: 200,
 						state: 0
 					});
 			    }
 			    else{
 					if (typeof data.stream[0].active === 'undefined') {
-			    		jsonWrite(res, {
+			    		lib.jsonWrite(res, {
 							code: 200,
 							state: 0
 						});
 				    }
 				    else
 				    {
-				    	jsonWrite(res, {
+				    	lib.jsonWrite(res, {
 							code: 200,
 							nclients: parseInt(data.stream[0].nclients),
 							state: 1
@@ -106,13 +96,13 @@ router.get('/getpwd', function(req, res, next) {
 				, function(err, result) {
 					console.log(err);
 					if (err == null) {
-						jsonWrite(res, {
+						lib.jsonWrite(res, {
 							code: 200,
 							rtmpcode: code
 						});
 					}
 					else{
-						jsonWrite(res, {
+						lib.jsonWrite(res, {
 							code: 1,
 							err: err
 						});

@@ -48,19 +48,25 @@ const Invite = React.createClass({
 	  		//this.handleClose();
 	  		var tomail = this.state.em;
 	  		$.post('/users/intro',{email:tomail},
-	  			function(result){
-	  			console.log(result);
-	  			$.post('/mail/signup',{
-	  				code:result.acode,
-	  				id:result.id,
-	  				tomail:tomail
-	  			},function(result){
+				function(result){
 	  				console.log(result);
-	  				this.setState({
-				      	snackbar_success_open: true,
-				    });
-	  			})
-	  		});
+	  			}
+	  		);
+
+	  		// $.post('/users/intro',{email:tomail},
+	  		// 	function(result){
+	  		// 	console.log(result);
+	  		// 	$.post('/mail/signup',{
+	  		// 		code:result.acode,
+	  		// 		id:result.id,
+	  		// 		tomail:tomail
+	  		// 	},function(result){
+	  		// 		console.log(result);
+	  		// 		this.setState({
+				 //      	snackbar_success_open: true,
+				 //    });
+	  		// 	})
+	  		// });
 	  		
   		}else{
   			this.setState({
