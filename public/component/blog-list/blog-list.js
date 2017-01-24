@@ -38,7 +38,7 @@ const BlogList = React.createClass({
 
 						    return (
 						        <ListItem
-						        	href = {"/blog/show?id="+data.id}
+						        	href = {"/blog/article?id="+data.id}
 						        >
 								    <span className="blog-title"> {data.title} </span>
 								    <span className="blog-time"> {this.stampToTime(data.time)}</span>

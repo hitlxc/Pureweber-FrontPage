@@ -48,10 +48,7 @@ const Article = React.createClass({
 
   	componentDidMount:function() {
   		var dom = $('#content');
-  		dom[0].innerHTML = marked(this.state.content);
-  		var id = this.props.params.id;
-  		console.log(id);
-  		console.log('123')
+  		dom[0].innerHTML = marked(this.props.article.content);
   	},
   	render: function(){
   		return (
@@ -60,15 +57,15 @@ const Article = React.createClass({
 					<img id='article-front-img' src={this.state.front_pic} />
 			  		
 			  		<div className='article-title'>
-			  			{this.state.title}
+			  			{this.props.article.title}
 			  		</div>
 					
 					<div className='article-author'>
-			  			{this.state.author}
+			  			{this.props.article.author}
 			  		</div>
 
 					<div id="content" className='article-content markdown-body'>
-						{this.state.content}
+						{this.props.article.content}
 					</div>
 				</div>
 		)

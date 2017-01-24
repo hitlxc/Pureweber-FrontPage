@@ -44,9 +44,15 @@ router.get('/gets', function(req, res, next) {
 	blogSql.querys(req, res, next);
 });
 
-router.get('/show', function(req, res, next) {
+router.get('/article', function(req, res, next) {
 	//blogSql.queryById(req, res, next);
 	res.render("article");
+	//console.log(res);
+});
+
+router.get('/show', function(req, res, next) {
+	blogSql.queryById(req, res, next);
+	//res.render("article");
 	//console.log(res);
 });
 

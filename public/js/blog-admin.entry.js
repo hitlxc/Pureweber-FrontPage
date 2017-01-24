@@ -39,7 +39,7 @@ $.get('/blog/gets',{
 	num:10,
 	page:1
 },function(res){
-	console.log(res);
+	//console.log(res);
 	
 	ReactDOM.render(
 		<BlogList blogs={res} />, 

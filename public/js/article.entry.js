@@ -36,6 +36,13 @@ function getUrlParam(name) {
 
 var id = getUrlParam('id');
 
+$.get("/blog/show?id="+id,function(res){
+	ReactDOM.render(
+	<Article article={res[0]}/>, 
+	document.getElementById('article')
+	);
+})
+
 ReactDOM.render(
 	<MuiThemeProvider  muiTheme={getMuiTheme()}>
 		<MyAppBar logged={logged}  />
@@ -43,12 +50,12 @@ ReactDOM.render(
 	document.getElementById('appbar')
 	);
 
-ReactDOM.render(
+/*ReactDOM.render(
 	<Router history={hashHistory}>
 		<Route path="/" component={Article} />
 	</Router>, 
 	document.getElementById('article')
-	);
+	);*/
 
 /*ReactDOM.render(
 	<Route path="inbox/messages/:id" component={Article} />
