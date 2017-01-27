@@ -39516,14 +39516,13 @@
 	      _react2.default.createElement(_MenuItem2.default, { primaryText: '\u7F16\u8F91\u65B0\u6587\u7AE0',
 	        href: '/blog/edit'
 	      }),
-	      _react2.default.createElement(_MenuItem2.default, { primaryText: '\u7BA1\u7406\u6587\u7AE0' })
+	      _react2.default.createElement(_MenuItem2.default, { primaryText: '\u7BA1\u7406\u6587\u7AE0',
+	        href: '/blog/admin'
+	      })
 	    )
 	  );
 	};
 	Logged.muiName = 'IconMenu';
-	Logged.alertfunc = function () {
-	  console.log('1');
-	};
 	
 	/*const Logged = React.createClass({
 	  alertfunc : function(){
@@ -45294,16 +45293,6 @@
 					var tomail = this.state.em;
 					_jquery2.default.post('/users/intro', { email: tomail }, function (result) {
 						console.log(result);
-						_jquery2.default.post('/mail/signup', {
-							code: result.acode,
-							id: result.id,
-							tomail: tomail
-						}, function (result) {
-							console.log(result);
-							this.setState({
-								snackbar_success_open: true
-							});
-						});
 					});
 				} else {
 					this.setState({
@@ -46909,8 +46898,8 @@
 				title: '',
 				content: '',
 				preview: '',
-				tag: 1
-	
+				tag: 1,
+				cover: ''
 			};
 		},
 	
@@ -46928,16 +46917,19 @@
 				title: event.target.value
 			});
 		},
-		addFileString: function addFileString() {
-			//var newcontent = this.state.content + "[file](http://127.0.0.1/file)"
-			return newcontent;
+		addFileString: function addFileString(str) {
+			var newcontent = this.state.content + "[" + str + "](/upload/" + str + ")";
+			this.setState({
+				content: newcontent
+			});
 		},
-		uploadFile: function uploadFile() {
+		uploadCover: function uploadCover() {
 			var data = new FormData();
-			var files = (0, _jquery2.default)("#file")[0].files;
+			var files = (0, _jquery2.default)("#cover")[0].files;
 			if (files) {
 				data.append("file", files[0]);
 			}
+			var self = this;
 			_jquery2.default.ajax({
 				type: 'post',
 				dataType: 'json',
@@ -46945,15 +46937,40 @@
 				data: data,
 				contentType: false,
 				processData: false,
-				success: function success(err, result) {
-					console.log(err);
+				success: function success(result) {
+					var cover = result.msg;
+					self.setState({
+						cover: cover
+					});
+				}
+			});
+		},
+		uploadFile: function uploadFile() {
+			var data = new FormData();
+			var files = (0, _jquery2.default)("#file")[0].files;
+			if (files) {
+				data.append("file", files[0]);
+			}
+			var self = this;
+			_jquery2.default.ajax({
+				type: 'post',
+				dataType: 'json',
+				url: '/file/upload',
+				data: data,
+				contentType: false,
+				processData: false,
+				success: function success(result) {
+	
 					console.log(result);
-					this.setState({ avatar: result.avatarName });
+					//console.log(result.code);
+					//console.log(result.msg);
+					//console.log(data);
+					self.addFileString(result.msg);
 				}
 			});
 		},
 		submit: function submit() {
-			_jquery2.default.post('/blog/save', { title: this.state.title, content: this.state.content, cid: this.state.tag }, function (result) {
+			_jquery2.default.post('/blog/save', { title: this.state.title, content: this.state.content, cid: this.state.tag, cover: this.state.cover }, function (result) {
 				console.log(result);
 			});
 		},
@@ -47027,16 +47044,14 @@
 					{ id: 'edit-header-container' },
 					_react2.default.createElement(
 						_FlatButton2.default,
-						{ label: '\u9009\u62E9\u9644\u4EF6', labelPosition: 'before' },
-						_react2.default.createElement('input', { type: 'file', style: fileInput, name: 'file', id: 'file' })
+						{ label: '\u4E0A\u4F20\u5C01\u9762', labelPosition: 'before' },
+						_react2.default.createElement('input', { type: 'file', style: fileInput, name: 'cover', id: 'cover', onChange: this.uploadCover })
 					),
-					_react2.default.createElement(_FlatButton2.default, {
-						label: '\u4E0A\u4F20',
-						primary: true,
-						id: 'upload',
-						name: 'upload',
-						onClick: this.uploadFile
-					}),
+					_react2.default.createElement(
+						_FlatButton2.default,
+						{ label: '\u9009\u62E9\u9644\u4EF6', labelPosition: 'before' },
+						_react2.default.createElement('input', { type: 'file', style: fileInput, name: 'file', id: 'file', onChange: this.uploadFile })
+					),
 					_react2.default.createElement(
 						_MuiThemeProvider2.default,
 						{ muiTheme: (0, _getMuiTheme2.default)() },
@@ -62606,7 +62621,7 @@
 	
 	
 	// module
-	exports.push([module.id, "footer{\n\tbackground-color: rgb(33, 33, 33);\n\tpadding: 50px;\n\tcolor: white;\n\tfont-family: 'Roboto', sans-serif;\n\ttext-align: center;\n\tletter-spacing: 3px;\n}", ""]);
+	exports.push([module.id, "footer{\n\tbackground-color: rgb(33, 33, 33);\n\tpadding-top: 30px;\n\tpadding-bottom: 30px;\n\tcolor: white;\n\tfont-family: 'Roboto', sans-serif;\n\ttext-align: center;\n\tletter-spacing: 3px;\n\tbottom: 0; \n\twidth: 100%; \n\theight: 20px;\n}", ""]);
 	
 	// exports
 

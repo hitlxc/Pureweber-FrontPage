@@ -53,21 +53,6 @@ const Invite = React.createClass({
 	  			}
 	  		);
 
-	  		// $.post('/users/intro',{email:tomail},
-	  		// 	function(result){
-	  		// 	console.log(result);
-	  		// 	$.post('/mail/signup',{
-	  		// 		code:result.acode,
-	  		// 		id:result.id,
-	  		// 		tomail:tomail
-	  		// 	},function(result){
-	  		// 		console.log(result);
-	  		// 		this.setState({
-				 //      	snackbar_success_open: true,
-				 //    });
-	  		// 	})
-	  		// });
-	  		
   		}else{
   			this.setState({
 		      	snackbar_error_open: true,

@@ -31,6 +31,9 @@ router.get('/invite', function(req, res, next) {
 	res.render('invite');
 });
 
+router.get('/signup', function(req, res, next) {
+	res.render('signup');
+});
 
 router.get('/logout', function(req, res, next) {
 	// 验证

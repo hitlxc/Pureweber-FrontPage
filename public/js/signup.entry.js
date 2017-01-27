@@ -58,7 +58,3 @@ ReactDOM.render(
 	document.getElementById('footer')
 );
 
-
-// Enable the tab character onkeypress (onkeydown) inside textarea...
-// ... for a textarea that has an `id="my-textarea"`
-//enableTab('text-input');

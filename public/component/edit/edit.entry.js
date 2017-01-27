@@ -43,7 +43,7 @@ const Edit = React.createClass({
     		content: '',
     		preview:'',
     		tag:1 ,
-    		
+    		cover:'',
     	};
   	},
 
@@ -62,16 +62,19 @@ const Edit = React.createClass({
 		});
 
   	},
-  	addFileString:function(){
-  		//var newcontent = this.state.content + "[file](http://127.0.0.1/file)"
-  		return newcontent;
+  	addFileString:function(str){
+  		var newcontent = this.state.content + "["+str+"](/upload/"+str+")";
+  		this.setState({
+  			content : newcontent
+  		})
   	},
-  	uploadFile:function(){
+  	uploadCover:function(){
   		var data = new FormData();
-		var files = $("#file")[0].files;
+		var files = $("#cover")[0].files;
 		if(files) {
 			data.append("file", files[0]);
 		}
+		var self = this;
 		$.ajax({
 			type: 'post',
 			dataType: 'json',
@@ -79,16 +82,41 @@ const Edit = React.createClass({
 			data: data,
 			contentType: false,
 			processData: false,
-			success: function(err,result) {
-				console.log(err);
+			success: function(result) {
+				var cover = result.msg;
+				self.setState({
+					cover:cover
+				})		
+			}
+		});
+  	},
+  	uploadFile:function(){
+  		var data = new FormData();
+		var files = $("#file")[0].files;
+		if(files) {
+			data.append("file", files[0]);
+		}
+		var self = this;
+		$.ajax({
+			type: 'post',
+			dataType: 'json',
+			url: '/file/upload',
+			data: data,
+			contentType: false,
+			processData: false,
+			success: function(result) {
+				
 				console.log(result);
-				this.setState({avatar: result.avatarName});
+				//console.log(result.code);
+				//console.log(result.msg);
+				//console.log(data);
+				self.addFileString(result.msg);			
 			}
 		});
   	},
   	submit:function(){
   		$.post('/blog/save',
-  			{title:this.state.title , content:this.state.content , cid:this.state.tag},
+  			{title:this.state.title , content:this.state.content , cid:this.state.tag ,cover:this.state.cover},
   			 function(result){
   			console.log(result);
   		});
@@ -155,17 +183,20 @@ const Edit = React.createClass({
 				</div>
 
 				<div id="edit-header-container">
-					
-			        <FlatButton label="选择附件" labelPosition="before">
-						 <input type="file" style={fileInput} name="file" id="file"/>
+					<FlatButton label="上传封面" labelPosition="before">
+						<input type="file" style={fileInput} name="cover" id="cover" onChange={this.uploadCover}/>
 					</FlatButton>
-					<FlatButton
+
+			        <FlatButton label="选择附件" labelPosition="before">
+						<input type="file" style={fileInput} name="file" id="file" onChange={this.uploadFile}/>
+					</FlatButton>
+					{/*<FlatButton
 						label="上传"
 						primary={true}
 						id="upload"
 						name="upload"
 						onClick={this.uploadFile}
-					/>
+					/>*/}
 
 					<MuiThemeProvider  muiTheme={getMuiTheme()}>
 

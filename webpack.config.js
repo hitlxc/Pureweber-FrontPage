@@ -9,12 +9,12 @@ module.exports = {
         //articlecard:'./public/component/articlecard/articlecard.app.js',
         //invite:'./public/component/invite/invite.app.js',
         //appbar:'./public/component/appbar/appbar.app.js',
-        //edit:'./public/js/edit.entry.js',
+        edit:'./public/js/edit.entry.js',
         //article:'./public/js/article.entry.js',
         //invite:'./public/js/invite.entry.js',
         //signup:'./public/js/signup.entry.js',
-        ['blog-admin']:'./public/js/blog-admin.entry.js',
-        // signup:'./public/js/signup.entry.js'
+        //['blog-admin']:'./public/js/blog-admin.entry.js',
+        //signup:'./public/js/signup.entry.js'
     },
     output: {
         path: path.join(__dirname, '/public/dist'),

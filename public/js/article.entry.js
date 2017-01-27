@@ -37,6 +37,7 @@ function getUrlParam(name) {
 var id = getUrlParam('id');
 
 $.get("/blog/show?id="+id,function(res){
+	console.log(res);
 	ReactDOM.render(
 	<Article article={res[0]}/>, 
 	document.getElementById('article')

@@ -45,14 +45,13 @@ const Logged = (props) => (
     <MenuItem primaryText="编辑新文章"
       href="/blog/edit"
     />
-    <MenuItem primaryText="管理文章" />
+    <MenuItem primaryText="管理文章" 
+      href="/blog/admin"
+    />
   </IconMenu>
   </div>
 );
 Logged.muiName = 'IconMenu';
-Logged.alertfunc = function(){
-        console.log('1');
-      }
 
 /*const Logged = React.createClass({
   alertfunc : function(){
