@@ -1,7 +1,7 @@
 // dao/userSqlMapping.js
 // CRUD SQL语句
 var blog = {
-	insert:'INSERT INTO blog(id, title,time,uid,cid,content) VALUES(null , ?, CURRENT_TIMESTAMP , ? , ? , ?)',
+	insert:'INSERT INTO blog(id, title,time,uid,cid,content,cover) VALUES(null , ?, CURRENT_TIMESTAMP , ? , ? , ?, ?)',
 	// update:'update user set name=?, age=? where id=?',
 	delete: 'delete from blog where id=?',
 	// view: vblog => 

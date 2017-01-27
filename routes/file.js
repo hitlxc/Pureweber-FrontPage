@@ -64,6 +64,10 @@ router.get('/', function(req, res, next) {
 router.post('/avatar', function(req, res, next) {
 	upload(req, res,"avatar");
 });
+
+router.post('/cover', function(req, res, next) {
+	upload(req, res,"cover");
+});
 router.post('/upload', function(req, res, next) {
 	upload(req, res,"upload");
 });

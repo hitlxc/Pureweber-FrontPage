@@ -32,7 +32,7 @@ module.exports = {
 			// 'INSERT INTO user(id, name, age) VALUES(0,?,?)',
 			
 			console.log(param);
-			connection.query($sql.insert, [param.title, req.session.uid, param.cid, param.content], function(err, result) {
+			connection.query($sql.insert, [param.title, req.session.uid, param.cid, param.content, param.cover], function(err, result) {
 				if(result) {
 					result = {
 						code: 200,
