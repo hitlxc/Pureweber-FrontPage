@@ -21,10 +21,17 @@ const Login = React.createClass({
   	handleClose: function(){
   		this.setState({open: false});
   	},
+  	keyDown: function(event){
+        var keynum;
+        keynum = window.event ? event.keyCode : event.which;
+        if (keynum == 13 ) {
+            this.submit();
+        }
+    },
   	submit: function(){
   		this.handleClose();
   		// name=Tmn07&pwd=q
-  		$.post('http://localhost:3000/users/api/login',{name:this.state.ac,pwd:this.state.pw},function(result){
+  		$.post('/users/api/login',{name:this.state.ac,pwd:this.state.pw},function(result){
   			console.log(result);
   			if (result.code == '200') {
   				window.location.reload();
@@ -82,6 +89,7 @@ const Login = React.createClass({
 						    hintText="密码"
 						    type="password"
 						    onChange = {this.change_pw}
+						    onKeyDown={this.keyDown}
 						/><br />
 			        </Dialog>
 				

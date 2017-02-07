@@ -35,9 +35,12 @@ ReactDOM.render(
 	document.getElementById('appbar')
 	);
 
+var page = 1;
+var numPerPage = 10;
+
 $.get('/blog/gets',{
-	num:10,
-	page:1
+	num:numPerPage,
+	page:page
 },function(res){
 	//console.log(res);
 	

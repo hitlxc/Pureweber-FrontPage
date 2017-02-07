@@ -39,10 +39,7 @@ const Article = React.createClass({
   
 	getInitialState: function() {
     	return {
-    		title: '一个文章',
-    		content: '>我还能说什么呢 \n >我还能说什么呢 \n **** \n ``` \n  var x = 1; \n  console.log(x); \n ```',
-    		front_pic: 'http://react-etc.net/files/2016-07/logo-578x270.png',
-    		author:'hitlxc'
+    		
     	};
   	},
 
@@ -53,8 +50,11 @@ const Article = React.createClass({
   	render: function(){
   		return (
 				<div id="article-content-container">
-				
-					<img id='article-front-img' src={this.state.front_pic} />
+					<div id='article-front-img' style={{
+						background:'url(/upload/'+this.props.article.cover+') no-repeat center center',
+						backgroundSize: 'cover',
+					}}	>		
+					</div>
 			  		
 			  		<div className='article-title'>
 			  			{this.props.article.title}

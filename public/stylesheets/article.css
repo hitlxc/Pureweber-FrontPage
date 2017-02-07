@@ -23,14 +23,13 @@ body{
 
 @media screen and (min-width:660px) {
 	#article{
-		margin-top: 20px;
+		margin-top: 10px;
 	}
 
 }
 
 @media screen and (max-width:660px) {
 	#article{
-		margin-top: 80px;
 	}
 
 }
