@@ -39,6 +39,29 @@ router.get('/admin', function(req, res, next) {
 	res.render("blog-admin" ,{logged:log_status});
 });
 
+router.get('/admin/cat', function(req, res, next) {
+	// blogSql.querys(req, res, next);
+	if (typeof req.session.uid === 'undefined') {
+		log_status = false;
+	}
+	else{
+		log_status = true;
+	}
+
+	res.render("blog-admin" ,{logged:log_status});
+});
+
+router.get('/admin/tag', function(req, res, next) {
+	// blogSql.querys(req, res, next);
+	if (typeof req.session.uid === 'undefined') {
+		log_status = false;
+	}
+	else{
+		log_status = true;
+	}
+
+	res.render("blog-admin" ,{logged:log_status});
+});
 
 router.get('/gets', function(req, res, next) {
 	blogSql.querys(req, res, next);

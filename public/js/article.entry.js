@@ -51,20 +51,6 @@ ReactDOM.render(
 	document.getElementById('appbar')
 	);
 
-/*ReactDOM.render(
-	<Router history={hashHistory}>
-		<Route path="/" component={Article} />
-	</Router>, 
-	document.getElementById('article')
-	);*/
-
-/*ReactDOM.render(
-	<Route path="inbox/messages/:id" component={Article} />
-		<Article className="article" />
-, 
-	document.getElementById('article')
-	);*/
-
 ReactDOM.render(
 	<Footer />, 
 	document.getElementById('footer')

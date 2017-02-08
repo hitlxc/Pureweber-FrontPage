@@ -25,6 +25,12 @@
 		height: 500px;
 	}
 
+	#article-front-no-img{
+		width: 80%;
+		margin-left: 10%;
+		margin-bottom: 200px;
+	}
+
 	.article-title{
 	    margin-top: -155px;
 	    text-align: center;
@@ -55,6 +61,11 @@
 	#article-front-img{
 		width: 100%;
 		height: 300px;
+	}
+
+	#article-front-no-img{
+		width: 100%;
+		margin-bottom: 20px;
 	}
 
 	.article-title{

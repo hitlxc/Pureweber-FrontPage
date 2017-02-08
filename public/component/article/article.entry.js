@@ -50,10 +50,11 @@ const Article = React.createClass({
   	render: function(){
   		return (
 				<div id="article-content-container">
-					<div id='article-front-img' style={{
+					<div id={this.props.article.cover?'article-front-img':'article-front-no-img'} style={{
 						background:'url(/upload/'+this.props.article.cover+') no-repeat center center',
 						backgroundSize: 'cover',
-					}}	>		
+					}}	>	
+						
 					</div>
 			  		
 			  		<div className='article-title'>

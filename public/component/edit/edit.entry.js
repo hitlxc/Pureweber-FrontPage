@@ -13,14 +13,10 @@ import marked from 'marked';
 require('./md-edit.css');
 require('./github-markdown.css');
 require('./monokai_sublime.min.css'); 
-//var FileUpload = require('react-fileupload');
 
+require("babel-core/register");
+require("babel-polyfill");
 
-//import Marker from 'marked';
-
-
-
-//var marked = require('marked');
 marked.setOptions({
   renderer: new marked.Renderer(),
   gfm: true,
@@ -44,9 +40,10 @@ const Edit = React.createClass({
     		preview:'',
     		tag:1 ,
     		cover:'',
+    		update:false
     	};
   	},
-
+  	/*markdown转HTML*/
   	marked: function(event){
   		this.setState({
   			content: event.target.value,
@@ -55,19 +52,21 @@ const Edit = React.createClass({
 		document.getElementById('preview').innerHTML = marked(event.target.value);
   		//this.preview = Marker(event.target.value)
   	},
-
+  	/*标题更改*/
   	title_change:function(event){
   		this.setState({
   			title: event.target.value
 		});
 
   	},
+  	/*上传文件成功后在文本中添加文件链接*/
   	addFileString:function(str){
   		var newcontent = this.state.content + "["+str+"](/upload/"+str+")";
   		this.setState({
   			content : newcontent
   		})
   	},
+  	/*上传封面*/
   	uploadCover:function(){
   		var data = new FormData();
 		var files = $("#cover")[0].files;
@@ -90,6 +89,7 @@ const Edit = React.createClass({
 			}
 		});
   	},
+  	/*上传文件*/
   	uploadFile:function(){
   		var data = new FormData();
 		var files = $("#file")[0].files;
@@ -107,13 +107,11 @@ const Edit = React.createClass({
 			success: function(result) {
 				
 				console.log(result);
-				//console.log(result.code);
-				//console.log(result.msg);
-				//console.log(data);
 				self.addFileString(result.msg);			
 			}
 		});
   	},
+  	/*提交*/
   	submit:function(){
   		$.post('/blog/save',
   			{title:this.state.title , content:this.state.content , cid:this.state.tag ,cover:this.state.cover},
@@ -124,32 +122,32 @@ const Edit = React.createClass({
   	tag_change:function(event, index, value){
   		this.setState({tag:value});
   	},
+  	/*编辑文章可以使用tab键进行缩进*/
   	enableTab : function() {
   		var el = ReactDOM.findDOMNode(this.refs.textInput);
-  		//var el = document.getElementById(id);
 	    el.onkeydown = function(e) {
-	        if (e.keyCode === 9) { // tab was pressed
-
-	            // get caret position/selection
-	            var val = event.target.value,
-	                start = event.target.selectionStart,
-	                end = event.target.selectionEnd;
-
-	            // set textarea value to: text before caret + tab + text after caret
+	        if (e.keyCode === 9) { // tab 键
+	            var val = event.target.value;
+	            var start = event.target.selectionStart;
+	            var end = event.target.selectionEnd;
 	            event.target.value = val.substring(0, start) + '\t' + val.substring(end);
-				///console.log(val)
-	            //console.log(event.target.value)
-	            // put caret at right position again
 	            event.target.selectionStart = event.target.selectionEnd = start + 1;
-
-	            // prevent the focus lose
 	            return false;
-
 	        }
 	    };
     },
-  	componentDidMount:function(){
+  	componentDidMount:async function(){
   		this.enableTab();
+  		if(this.props.article){
+  			console.log(this.props.article)
+			await this.setState({
+				title: this.props.article.title,
+	    		content: this.props.article.content,
+	    		tag:this.props.article.category ,
+	    		update:true
+			})
+			document.getElementById('preview').innerHTML = marked(this.state.content);
+  		}
   	},
   	render: function(){
   		const fileInput = {
@@ -163,23 +161,21 @@ const Edit = React.createClass({
 		    opacity: 0,
 		}
   		return (
+  			<MuiThemeProvider  muiTheme={getMuiTheme()}>
 		  	<div id='edit-container'>
 		  		<div id="edit-title-container">
-			  		<MuiThemeProvider  muiTheme={getMuiTheme()}>
-			  					<TextField
-			  						
-									hintText="在这里编辑题目"
-			      					floatingLabelText="在这里编辑题目"
-									value = {this.state.title}
-									onChange = {this.title_change}
-									fullWidth = {true}
-									style = {{width: '100%'/*,transform: 'translateX(50%)'*/}}
-									inputStyle = {{'textAlign': 'center'}}
-									hintStyle = {{'textAlign': 'center'}}
-									floatingLabelStyle = {{'textAlign': 'center'}}
-									floatingLabelFocusStyle = {{'textAlign': 'center'}}
-								/>
-					</MuiThemeProvider>
+			  		<TextField
+			  			hintText="在这里编辑题目"
+			      		floatingLabelText="在这里编辑题目"
+						value = {this.state.title}
+						onChange = {this.title_change}
+						fullWidth = {true}
+						style = {{width: '100%'/*,transform: 'translateX(50%)'*/}}
+						inputStyle = {{'textAlign': 'center'}}
+						hintStyle = {{'textAlign': 'center'}}
+						floatingLabelStyle = {{'textAlign': 'center'}}
+						floatingLabelFocusStyle = {{'textAlign': 'center'}}
+					/>
 				</div>
 
 				<div id="edit-header-container">
@@ -190,46 +186,30 @@ const Edit = React.createClass({
 			        <FlatButton label="选择附件" labelPosition="before">
 						<input type="file" style={fileInput} name="file" id="file" onChange={this.uploadFile}/>
 					</FlatButton>
-					{/*<FlatButton
-						label="上传"
-						primary={true}
-						id="upload"
-						name="upload"
-						onClick={this.uploadFile}
-					/>*/}
 
-					<MuiThemeProvider  muiTheme={getMuiTheme()}>
+					<SelectField
+				        value={this.state.tag}
+				        onChange={this.tag_change}
+				        maxHeight={200} 
+				        style={{width: 150}}
+				    >
+				        <MenuItem value={1} primaryText="前端" />
+				        <MenuItem value={2} primaryText="后端" />
+				        <MenuItem value={3} primaryText="数据库" />
+				        <MenuItem value={4} primaryText="运维" />
+				        <MenuItem value={5} primaryText="杂谈" />
+				    </SelectField>
 
-						<SelectField
-				          	value={this.state.tag}
-				          	onChange={this.tag_change}
-				          	maxHeight={200} 
-				          	style={{width: 150}}
-				        >
-				          	<MenuItem value={1} primaryText="前端" />
-				          	<MenuItem value={2} primaryText="后端" />
-				          	<MenuItem value={3} primaryText="数据库" />
-				          	<MenuItem value={4} primaryText="运维" />
-				          	<MenuItem value={5} primaryText="杂谈" />
-				        </SelectField>
-				    </MuiThemeProvider>
-
-				    
-
-				    <MuiThemeProvider  muiTheme={getMuiTheme()}>
-						<FlatButton 
-							label="提交"
-							primary={true} 
-							onClick = {this.submit}
-						/>
-
-					</MuiThemeProvider>
+				    <FlatButton 
+						label="提交"
+						primary={true} 
+						onClick = {this.submit}
+					/>
 				</div>
 
-				<div id="edit-content-container">
-		  		<MuiThemeProvider  muiTheme={getMuiTheme()}>			
+				<div id="edit-content-container">		
 			  		<Card style = {{width: '50%'}}>
-							<br/>
+						<br/>
 			    		<TextField
 				      		value={this.state.content}
 				     	 	multiLine={true}
@@ -244,10 +224,7 @@ const Edit = React.createClass({
 		      				fullWidth={true}
 		    			/>
 		    		</Card>
-				</MuiThemeProvider>
-				<MuiThemeProvider  muiTheme={getMuiTheme()}>
 					<Card style = {{width: '50%'}}>
-						
 					    <CardText 
 					        id = "preview"
 					        className = "markdown-body"
@@ -255,16 +232,11 @@ const Edit = React.createClass({
 					    >
 					    </CardText>
 					</Card>
-				</MuiThemeProvider>
 				</div>
-				
 		    </div>
+		    </MuiThemeProvider>
 		)
 	}
 });
 
 module.exports = Edit;
-
-/*let app = document.createElement('div');
-ReactDOM.render(<App  />, app);
-document.body.appendChild(app);*/

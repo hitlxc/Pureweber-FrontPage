@@ -17,9 +17,21 @@ const BlogList = React.createClass({
     		selectLast :'',
     		selectAll: [],
     		select:[],
-    		
+    		canEdit : false,
+
     	};
   	},
+  	/*根据state.select获取选取文章的id数组*/
+  	getSelect : function(){
+  		var array = [];
+  		for (var i=0;i<this.state.select.length;i++){
+  			if (this.state.select[i]) {
+  				array.push(this.props.blogs[i].id);
+  			}
+  		}
+  		return array;
+  	},
+  	/*时间戳转时间*/
 	stampToTime : function(stamp){
 		var date = new Date(stamp);
 		var Y = date.getFullYear() + '-';
@@ -31,48 +43,79 @@ const BlogList = React.createClass({
 		var time = Y+M+D+h+m+s;
 		return time;
 	},
-	selectAll : function(selectedRows){
-		var self = this
+	/*选取文章时间*/
+	select : function(selectedRows){
+		var self = this;
 		var len = this.props.blogs.length;
 	  	var selected = new Array(len);
-
 	  	for (var i=0;i<selected.length; i++) {
 	  		selected[i] = false;
 	  	}
+	  	/*全部选取*/
 		if(selectedRows == 'all'){
 			this.setState({
-				select:this.state.selectAll
+				select:this.state.selectAll,
 			})
 		}else if(selectedRows == 'none'){
+		/*全部不选取*/
 			for (var i=0;i<selected.length; i++) {
 		  		selected[i] = false;
 		  	}
 			self.setState({
-				select:selected
+				select:selected,
 			})
 		}else{
 			if (self.state.selectLast == 'all') {
+		/*之前一次全部选取，则当前选取任何文章都为全部不选取*/
 				for (var i=0;i<selected.length; i++) {
 			  		selected[i] = false;
 			  	}
 				self.setState({
-					select:selected
+					select:selected,
 				})
-				return false;
+			}else{
+				for (var i=0;i<selectedRows.length;i++){
+		  			selected[selectedRows[i]] = true;
+		  		}
+				self.setState({
+					select : selected
+				})
 			}
-	  		for (var i=0;i<selectedRows.length;i++){
-	  			selected[selectedRows[i]] = true;
-	  		}
-			//console.log(select)
-			self.setState({
-				select : selected
-			})
 		}
+		/*选择多个文章时不能进行编辑*/
+		if (this.props.blogs.length > 1 ) {
+			if (selectedRows == 'none' ||  selectedRows.length <= 1) {
+				self.setState({
+					canEdit : false
+				})
+			}else{
+				self.setState({
+					canEdit : true
+				})
+			}
+		}
+		
 		this.setState({selectLast:selectedRows});
 		console.log(selectedRows)
 	},
 	delete : function(){
 		console.log(this.state.select)
+	},
+	edit : function(){
+		var select = this.getSelect();
+
+		select.forEach(function(data,index){
+			window.open('/blog/edit?id='+data,'edit'+data)
+		})
+	},
+	read : function(){
+
+		var select = this.getSelect();
+
+		select.forEach(function(data,index){
+			window.open('/blog/article?id='+data,'read'+data)
+		})
+		
 	},
 	componentDidMount:function(){
   		var len = this.props.blogs.length;
@@ -113,7 +156,7 @@ const BlogList = React.createClass({
   				width:150
   			},
   			button:{
-  				margin:'10px 15px 10px 15px'
+  				margin:'10px 15px 10px 15px',
   			}
   		}
   		return ( 	
@@ -121,11 +164,15 @@ const BlogList = React.createClass({
 			<div>	
 				<div className="tools">
 					<RaisedButton label="删除" primary={true} style={style.button} onClick={this.delete}/>
-					<RaisedButton label="编辑" primary={true} style={style.button} />
+					<RaisedButton label="编辑" primary={true} style={style.button} disabled={this.state.canEdit} onClick={this.edit}/>
+					<RaisedButton label="查看" primary={true} style={style.button} onClick={this.read}/>
+					<RaisedButton label="分类管理" primary={true} style={style.button}  href='/blog/admin/cat' />
+					<RaisedButton label="Tag管理" primary={true} style={style.button}  href='/blog/admin/tag'/>
+
 				</div>
 				<Table
 					multiSelectable = {true}
-					onRowSelection = {this.selectAll}
+					onRowSelection = {this.select}
 				>
     				<TableHeader
     					enableSelectAll = {true}
