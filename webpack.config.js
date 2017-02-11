@@ -8,7 +8,8 @@ module.exports = {
         //article:'./public/js/article.entry.js',
         // invite:'./public/js/invite.entry.js',
         // signup:'./public/js/signup.entry.js',
-         ['blog-admin']:'./public/js/blog-admin.entry.js',
+        // ['blog-admin']:'./public/js/blog-admin.entry.js',
+         ['blog-admin-cat']:'./public/js/blog-admin-cat.entry.js',
         // signup:'./public/js/signup.entry.js'
     },
     output: {

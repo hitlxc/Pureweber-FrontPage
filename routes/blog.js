@@ -48,7 +48,7 @@ router.get('/admin/cat', function(req, res, next) {
 		log_status = true;
 	}
 
-	res.render("blog-admin" ,{logged:log_status});
+	res.render("blog-admin-cat" ,{logged:log_status});
 });
 
 router.get('/admin/tag', function(req, res, next) {
