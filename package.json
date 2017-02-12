@@ -26,6 +26,7 @@
     "marked": "latest",
     "material-design-icons": "latest",
     "material-ui": "^0.16.7",
+    "material-ui-table-edit": "^3.0.0",
     "morgan": "~1.7.0",
     "mysql": "latest",
     "node-uuid": "latest",

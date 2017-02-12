@@ -6,18 +6,22 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
+import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
+import $ from 'jquery';
+
 
 //import Marker from 'marked';
 
-require('./blog-list.css');
+require('./cat-list.css');
 
-const BlogList = React.createClass({
+const CatList = React.createClass({
 	getInitialState: function() {
+		const self = this
     	return {
     		selectLast :'',
     		selectAll: [],
     		select:[],
-    		canEdit : true
+    		cats:self.props.cats,
     	};
   	},
   	/*根据state.select获取选取文章的id数组*/
@@ -104,6 +108,20 @@ const BlogList = React.createClass({
 		})
 		
 	},
+	showEditBoard : function(){
+		$('#edit-box').slideDown();
+	},
+	/*取消编辑*/
+	cancelEdit :  function(){
+		$('#edit-box').slideUp();
+	},
+	/*保存更改*/
+	save : function(){
+		var cats = this.state.cats;
+		 
+		this.setState({
+		})
+	},
 	componentDidMount:function(){
   		var len = this.props.cats.length;
   		var init_select = new Array(len);
@@ -112,12 +130,15 @@ const BlogList = React.createClass({
   			init_select[i] = false;
   			all_select[i] = true;
   		}
+  		var self = this;
 		this.setState({
 			select:init_select,
-			selectAll:all_select
+			selectAll:all_select,
+			cats:self.props.cats
 		})
-		
+
   	},
+  	
   	render: function(){
   		const cats = this.props.cats;
   		const style={
@@ -125,38 +146,93 @@ const BlogList = React.createClass({
 
   			},
   			id:{
-  				width:30
   			},
-  			title:{
-  				width:150
+  			name:{
   			},
-  			author:{
-				width:60
-  			},
-  			category:{
-				width:60
-  			},
-  			tag:{
-  				width:60
-  			},
-  			time:{
-  				width:150
+  			times:{
   			},
   			button:{
   				margin:'10px 15px 10px 15px',
+  			},
+  			editHeader:{
+  				width : '30%',
+  				margin : '1.6%',
+  				color: 'rgb(158, 158, 158)',
+  				fontSize : 12,
+  				textAlign : 'center',
+				display: 'inline-block',
+  			},
+  			editCell:{
+  				margin : '1.6%',
+  				width : '30%'
+  			},
+  			editCellInner:{
+  				
   			}
   		}
+  		var catsEdit = this.state.cats;
   		return ( 	
 			<MuiThemeProvider  muiTheme={getMuiTheme()}>
+
 			<div>	
+				
 				<div className="tools">
 					<RaisedButton label="删除" primary={true} style={style.button} onClick={this.delete}/>
-					<RaisedButton label="编辑" primary={true} style={style.button} disabled={this.state.canEdit} onClick={this.edit}/>
+					<RaisedButton label="编辑" primary={true} style={style.button} onClick={this.showEditBoard}/>
 					<RaisedButton label="查看" primary={true} style={style.button} onClick={this.read}/>
 					<RaisedButton label="文章管理" primary={true} style={style.button}  href='/blog/admin' />
 					<RaisedButton label="Tag管理" primary={true} style={style.button}  href='/blog/admin/tag'/>
 
 				</div>
+				<div id="edit-box" style={{
+					display : 'none',
+					width : '100%',
+					marginBottom : 10
+				}}>
+					<Card style = {{
+						width: '96%',
+						marginLeft:'2%',
+						marginRight:'2%'
+					}}>
+						<div style={style.editHeader}>ID</div>
+						<div style={style.editHeader}>分类</div>
+						<div style={style.editHeader}>数量</div>
+						{
+							this.state.cats.map((data , i) => {
+								return (
+									<div className='edit-list' id={i} key={i} style={{
+										width : '100%',
+
+									}}>
+										<TextField
+									      	disabled={true}
+									      	defaultValue={data.cid}
+									      	style={style.editCell}
+									    />
+									    <TextField
+									      	defaultValue={data.name}
+									      	style={style.editCell}
+									    />
+									    <TextField
+									      	disabled={true}
+									      	defaultValue={data.times}
+									      	style={style.editCell}
+									    />
+								    </div>
+								)
+							})
+						
+						}
+						<div style={{
+							width : 240,
+							margin: 'auto'
+						}}>
+							<RaisedButton label="保存更改" style={style.button} onClick={this.save}/>
+							<RaisedButton label="取消" style={style.button} onClick={this.cancelEdit}/>
+						</div>
+					</Card>
+				</div>
+
 				<Table
 					multiSelectable = {true}
 					onRowSelection = {this.select}
@@ -165,6 +241,7 @@ const BlogList = React.createClass({
     					enableSelectAll = {true}
     				>
 	      				<TableRow>
+	      					<TableHeaderColumn style={style.id}>ID</TableHeaderColumn>
 	        				<TableHeaderColumn style={style.name}>分类</TableHeaderColumn>
 	        				<TableHeaderColumn style={style.times}>数量</TableHeaderColumn>
 	      				</TableRow>
@@ -176,6 +253,7 @@ const BlogList = React.createClass({
 							cats.map((data, i) => {
 						    return (
 								<TableRow key={i}>
+									<TableRowColumn style={style.id}>{data.cid}</TableRowColumn>
 						        	<TableRowColumn style={style.name}>{data.name}</TableRowColumn>
 						        	<TableRowColumn style={style.times}  >{data.times} </TableRowColumn>
 						      	</TableRow>
@@ -191,5 +269,5 @@ const BlogList = React.createClass({
 	}
 });
 
-module.exports = BlogList;
+module.exports = CatList;
 

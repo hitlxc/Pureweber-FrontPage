@@ -12,7 +12,7 @@ var lib = require('./lib');
 
 router.get('/getAll', function(req, res, next) {
 	pool.getConnection(function(err, connection) {
-		connection.query("SELECT name, count(name) as times FROM  category c inner join blog as b on c.id = b.cid  group by name"
+		connection.query("SELECT cid, name, count(name) as times FROM  category c inner join blog as b on c.id = b.cid  group by cid"
 			, function(err, result) {
 			lib.jsonWrite(res, result);
 			connection.release();
