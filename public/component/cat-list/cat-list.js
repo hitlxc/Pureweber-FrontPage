@@ -5,6 +5,7 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
+import Dialog from 'material-ui/Dialog';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import $ from 'jquery';
@@ -22,7 +23,16 @@ const CatList = React.createClass({
     		selectAll: [],
     		select:[],
     		cats:self.props.cats,
+    		open:false,
+    		newCat:'',
     	};
+  	},
+  	change : function(event){
+  		var cats = this.state.cats;
+  		cats[event.target.id].name=event.target.value
+  		this.setState({
+	      	cats : cats,
+	    });
   	},
   	/*根据state.select获取选取文章的id数组*/
   	getSelect : function(){
@@ -89,16 +99,11 @@ const CatList = React.createClass({
 		this.setState({selectLast:selectedRows});
 		console.log(selectedRows)
 	},
+	/*删除事件*/
 	delete : function(){
 		console.log(this.state.select)
 	},
-	edit : function(){
-		var select = this.getSelect();
-
-		select.forEach(function(data,index){
-			window.open('/blog/edit?id='+data,'edit'+data)
-		})
-	},
+	/*查看*/
 	read : function(){
 
 		var select = this.getSelect();
@@ -108,8 +113,9 @@ const CatList = React.createClass({
 		})
 		
 	},
+	/*打开编辑面板*/
 	showEditBoard : function(){
-		$('#edit-box').slideDown();
+		$('#edit-box').slideToggle();
 	},
 	/*取消编辑*/
 	cancelEdit :  function(){
@@ -119,9 +125,43 @@ const CatList = React.createClass({
 	save : function(){
 		var cats = this.state.cats;
 		 
-		this.setState({
-		})
+		console.log(this.state.cats)
 	},
+	/*打开新增分类面板*/
+	handleOpen: function(){
+  		this.setState({open: true});
+  	},
+  	/*关闭新增分类面板*/
+  	handleClose: function(){
+  		this.setState({open: false});
+  	},
+  	/*键盘事件*/
+  	keyDown: function(event){
+        var keynum;
+        keynum = window.event ? event.keyCode : event.which;
+        if (keynum == 13 ) {
+            this.submit();
+        }
+    },
+  	addCat : function(){
+  		this.handleClose();
+  		// name=Tmn07&pwd=q
+  		/*$.post('/users/api/login',{name:this.state.ac,pwd:this.state.pw},function(result){
+  			console.log(result);
+  			if (result.code == '200') {
+  				window.location.reload();
+  			}
+  			if (result[0].state == '1') {
+  				window.location.reload();
+  			}
+  		});*/
+  		console.log(this.state.newCat);
+  	},
+  	changeAddCat: function(event){
+		this.setState({
+  			newCat: event.target.value
+		});
+  	},
 	componentDidMount:function(){
   		var len = this.props.cats.length;
   		var init_select = new Array(len);
@@ -131,16 +171,28 @@ const CatList = React.createClass({
   			all_select[i] = true;
   		}
   		var self = this;
+  		var test = new Object();
+  		test.x = 'testx'
+  		test.y = 'testy'
 		this.setState({
 			select:init_select,
 			selectAll:all_select,
-			cats:self.props.cats
+			cats:self.props.cats,
+			test:test
 		})
 
   	},
   	
   	render: function(){
   		const cats = this.props.cats;
+  		const actions = [
+	  		<FlatButton
+	  			label="提交"
+	        	primary={true}
+	        	keyboardFocused={true}
+	        	onClick={this.addCat}
+	      	/>
+    	]
   		const style={
   			table:{
 
@@ -180,6 +232,7 @@ const CatList = React.createClass({
 					<RaisedButton label="删除" primary={true} style={style.button} onClick={this.delete}/>
 					<RaisedButton label="编辑" primary={true} style={style.button} onClick={this.showEditBoard}/>
 					<RaisedButton label="查看" primary={true} style={style.button} onClick={this.read}/>
+					<RaisedButton label="添加分类" primary={true} style={style.button} onClick={this.handleOpen}/>
 					<RaisedButton label="文章管理" primary={true} style={style.button}  href='/blog/admin' />
 					<RaisedButton label="Tag管理" primary={true} style={style.button}  href='/blog/admin/tag'/>
 
@@ -208,15 +261,19 @@ const CatList = React.createClass({
 									      	disabled={true}
 									      	defaultValue={data.cid}
 									      	style={style.editCell}
+									      	id={'cid'+i}
 									    />
 									    <TextField
 									      	defaultValue={data.name}
 									      	style={style.editCell}
+									      	id={i.toString()}
+									      	onChange={this.change}
 									    />
 									    <TextField
 									      	disabled={true}
 									      	defaultValue={data.times}
 									      	style={style.editCell}
+									      	id={'times'+i}
 									    />
 								    </div>
 								)
@@ -262,7 +319,20 @@ const CatList = React.createClass({
 					}
     				</TableBody>
   				</Table>
-
+  					<Dialog
+			        	actions={actions}
+			          	modal={false}
+			          	open={this.state.open}
+			          	onRequestClose={this.handleClose}
+			        >
+			        	
+				        <TextField
+						    hintText="分类名"
+						    onChange = {this.changeAddCat}
+						    onKeyDown={this.keyDown}
+						/>
+				        
+			    	</Dialog>
 			</div>
 			</MuiThemeProvider>
 		)
