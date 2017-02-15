@@ -17,14 +17,16 @@ require('./cat-list.css');
 
 const CatList = React.createClass({
 	getInitialState: function() {
-		const self = this
+		var self = this;
+		var cats = this.props.cats;
     	return {
     		selectLast :'',
     		selectAll: [],
     		select:[],
-    		cats:self.props.cats,
+    		cats:cats,
+    		oldCats:'',
     		open:false,
-    		newCat:'',
+    		addCat:'',
     	};
   	},
   	change : function(event){
@@ -122,10 +124,27 @@ const CatList = React.createClass({
 		$('#edit-box').slideUp();
 	},
 	/*保存更改*/
-	save : function(){
-		var cats = this.state.cats;
-		 
-		console.log(this.state.cats)
+	save :function(){
+		var newCats = this.state.cats;
+		var oldCats = this.state.oldCats;
+		var self = this;
+		if (newCats.length != oldCats.length) {return false}
+		for(let i=0;i<newCats.length;i++){
+			if (newCats[i].name != oldCats[i].name) {
+				$.get('/cat/updateBycid',{name:newCats[i].name , cid:newCats[i].cid},function(res){
+					if(res.serverStatus == 2){
+						oldCats[i].name = newCats[i].name;
+						var tempCats = $.parseJSON(JSON.stringify(oldCats))
+						self.setState({
+							cats : tempCats
+						})
+
+					}
+				})
+				
+			}
+		}
+		$('#edit-box').slideUp();
 	},
 	/*打开新增分类面板*/
 	handleOpen: function(){
@@ -143,23 +162,19 @@ const CatList = React.createClass({
             this.submit();
         }
     },
+    /*增加新分类*/
   	addCat : function(){
   		this.handleClose();
-  		// name=Tmn07&pwd=q
-  		/*$.post('/users/api/login',{name:this.state.ac,pwd:this.state.pw},function(result){
-  			console.log(result);
-  			if (result.code == '200') {
-  				window.location.reload();
-  			}
-  			if (result[0].state == '1') {
-  				window.location.reload();
-  			}
-  		});*/
-  		console.log(this.state.newCat);
+  		
+  		$.post('/cat/add',{name:this.state.addCat},function(res){
+  			console.log(res);
+  		})
+  		//console.log(this.state.addCat);
   	},
+  	/*监听dialog中输入框的变化*/
   	changeAddCat: function(event){
 		this.setState({
-  			newCat: event.target.value
+  			addCat: event.target.value
 		});
   	},
 	componentDidMount:function(){
@@ -171,20 +186,20 @@ const CatList = React.createClass({
   			all_select[i] = true;
   		}
   		var self = this;
-  		var test = new Object();
-  		test.x = 'testx'
-  		test.y = 'testy'
+  		//oldCats = self.props.cats;
+  		var cats = $.parseJSON(JSON.stringify(self.props.cats))
+  		var oldCats = $.parseJSON(JSON.stringify(self.props.cats))
 		this.setState({
 			select:init_select,
 			selectAll:all_select,
-			cats:self.props.cats,
-			test:test
+			oldCats:oldCats,
+			cats:self.props.cats
 		})
-
   	},
   	
   	render: function(){
   		const cats = this.props.cats;
+  		/*dialog的提交按钮*/
   		const actions = [
 	  		<FlatButton
 	  			label="提交"
@@ -222,7 +237,6 @@ const CatList = React.createClass({
   				
   			}
   		}
-  		var catsEdit = this.state.cats;
   		return ( 	
 			<MuiThemeProvider  muiTheme={getMuiTheme()}>
 
@@ -251,7 +265,7 @@ const CatList = React.createClass({
 						<div style={style.editHeader}>分类</div>
 						<div style={style.editHeader}>数量</div>
 						{
-							this.state.cats.map((data , i) => {
+							this.props.cats.map((data , i) => {
 								return (
 									<div className='edit-list' id={i} key={i} style={{
 										width : '100%',
