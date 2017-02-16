@@ -20,8 +20,6 @@ const CatList = React.createClass({
 		var self = this;
 		var cats = this.props.cats;
     	return {
-    		selectLast :'',
-    		selectAll: [],
     		select:[],
     		cats:cats,
     		oldCats:'',
@@ -48,62 +46,23 @@ const CatList = React.createClass({
   	},
 	/*选取事件*/
 	select : function(selectedRows){
-		var self = this;
-		var len = this.props.cats.length;
-	  	var selected = new Array(len);
-	  	for (var i=0;i<selected.length; i++) {
-	  		selected[i] = false;
-	  	}
-	  	/*全部选取*/
-		if(selectedRows == 'all'){
-			this.setState({
-				select:this.state.selectAll,
-			})
-		}else if(selectedRows == 'none'){
-		/*全部不选取*/
-			for (var i=0;i<selected.length; i++) {
-		  		selected[i] = false;
-		  	}
-			self.setState({
-				select:selected,
-			})
-		}else{
-			if (self.state.selectLast == 'all') {
-		/*之前一次全部选取，则当前选取任何文章都为全部不选取*/
-				for (var i=0;i<selected.length; i++) {
-			  		selected[i] = false;
-			  	}
-				self.setState({
-					select:selected,
-				})
-			}else{
-				for (var i=0;i<selectedRows.length;i++){
-		  			selected[selectedRows[i]] = true;
-		  		}
-				self.setState({
-					select : selected
-				})
-			}
-		}
-		/*选择多个文章时不能进行编辑*/
-		if (this.props.cats.length > 1 ) {
-			if (selectedRows == 'none' ||  selectedRows.length <= 1) {
-				self.setState({
-					canEdit : false
-				})
-			}else{
-				self.setState({
-					canEdit : true
-				})
-			}
-		}
 		
-		this.setState({selectLast:selectedRows});
-		console.log(selectedRows)
+		
+		
+		this.setState({select:selectedRows[0]});
+		//console.log(selectedRows)
 	},
 	/*删除事件*/
 	delete : function(){
-		console.log(this.state.select)
+		var cid = this.props.cats[this.state.select].id;
+		console.log(cid)
+		$.post('/cat/delete',{cid:cid},function(res){
+			console.log(res)
+			if(res.serverStatus == 2){
+				window.location.reload();
+			}
+		})
+		
 	},
 	/*查看*/
 	read : function(){
@@ -131,7 +90,7 @@ const CatList = React.createClass({
 		if (newCats.length != oldCats.length) {return false}
 		for(let i=0;i<newCats.length;i++){
 			if (newCats[i].name != oldCats[i].name) {
-				$.get('/cat/updateBycid',{name:newCats[i].name , cid:newCats[i].cid},function(res){
+				$.get('/cat/updateBycid',{name:newCats[i].name , cid:newCats[i].id},function(res){
 					if(res.serverStatus == 2){
 						oldCats[i].name = newCats[i].name;
 						var tempCats = $.parseJSON(JSON.stringify(oldCats))
@@ -159,7 +118,7 @@ const CatList = React.createClass({
         var keynum;
         keynum = window.event ? event.keyCode : event.which;
         if (keynum == 13 ) {
-            this.submit();
+            this.addCat();
         }
     },
     /*增加新分类*/
@@ -168,6 +127,10 @@ const CatList = React.createClass({
   		
   		$.post('/cat/add',{name:this.state.addCat},function(res){
   			console.log(res);
+  			if (res.serverStatus == 2) {
+  				window.location.reload();
+  			}
+  			//
   		})
   		//console.log(this.state.addCat);
   	},
@@ -210,7 +173,7 @@ const CatList = React.createClass({
     	]
   		const style={
   			table:{
-
+  				minWidth : 500
   			},
   			id:{
   			},
@@ -273,11 +236,13 @@ const CatList = React.createClass({
 									}}>
 										<TextField
 									      	disabled={true}
-									      	defaultValue={data.cid}
+									      	defaultValue={data.id}
 									      	style={style.editCell}
 									      	id={'cid'+i}
+
 									    />
 									    <TextField
+									    	disabled={i==0}
 									      	defaultValue={data.name}
 									      	style={style.editCell}
 									      	id={i.toString()}
@@ -305,12 +270,11 @@ const CatList = React.createClass({
 				</div>
 
 				<Table
-					multiSelectable = {true}
 					onRowSelection = {this.select}
+					style={style.table}
+					bodyStyle={{overflow:'visible'}}
 				>
-    				<TableHeader
-    					enableSelectAll = {true}
-    				>
+    				<TableHeader>
 	      				<TableRow>
 	      					<TableHeaderColumn style={style.id}>ID</TableHeaderColumn>
 	        				<TableHeaderColumn style={style.name}>分类</TableHeaderColumn>
@@ -324,7 +288,7 @@ const CatList = React.createClass({
 							cats.map((data, i) => {
 						    return (
 								<TableRow key={i}>
-									<TableRowColumn style={style.id}>{data.cid}</TableRowColumn>
+									<TableRowColumn style={style.id}>{data.id}</TableRowColumn>
 						        	<TableRowColumn style={style.name}>{data.name}</TableRowColumn>
 						        	<TableRowColumn style={style.times}  >{data.times} </TableRowColumn>
 						      	</TableRow>

@@ -96,7 +96,6 @@ const BlogList = React.createClass({
 		}
 		
 		this.setState({selectLast:selectedRows});
-		console.log(selectedRows)
 	},
 	delete : function(){
 		console.log(this.state.select)
@@ -135,25 +134,25 @@ const BlogList = React.createClass({
   		const blogs = this.props.blogs;
   		const style={
   			table:{
-
+  				minWidth : 1000
   			},
   			id:{
-  				width:30
+  				width:'8%'
   			},
   			title:{
-  				width:150
+  				width:'30%'
   			},
   			author:{
-				width:60
+				width:'20%'
   			},
   			category:{
-				width:60
+				width:'12%'
   			},
   			tag:{
-  				width:60
+  				width:'20%'
   			},
   			time:{
-  				width:150
+  				width:'20%'
   			},
   			button:{
   				margin:'10px 15px 10px 15px',
@@ -173,6 +172,8 @@ const BlogList = React.createClass({
 				<Table
 					multiSelectable = {true}
 					onRowSelection = {this.select}
+					style={style.table}
+					bodyStyle={{overflow:'visible'}}
 				>
     				<TableHeader
     					enableSelectAll = {true}
@@ -194,11 +195,11 @@ const BlogList = React.createClass({
 						    return (
 								<TableRow key={i}>
 						        	<TableRowColumn style={style.id}>{data.id}</TableRowColumn>
-						        	<TableRowColumn style={style.title} href={'/blog/article?id='+data.id} >{data.title} </TableRowColumn>
-						        	<TableRowColumn style={style.author}>{data.author}</TableRowColumn>
-						        	<TableRowColumn style={style.category}>{data.category}</TableRowColumn>
-						        	<TableRowColumn style={style.tag}>{data.tag} </TableRowColumn>
-						        	<TableRowColumn style={style.time}>{this.stampToTime(data.time)}</TableRowColumn>
+						        	<TableRowColumn style={style.title} title={data.title}>{data.title} </TableRowColumn>
+						        	<TableRowColumn style={style.author} title={data.author}>{data.author}</TableRowColumn>
+						        	<TableRowColumn style={style.category} title={data.category}>{data.category}</TableRowColumn>
+						        	<TableRowColumn style={style.tag} title={data.tag}>{data.tag} </TableRowColumn>
+						        	<TableRowColumn style={style.time} title={this.stampToTime(data.time)}>{this.stampToTime(data.time)}</TableRowColumn>
 						      	</TableRow>
 							);  // 多行箭头函数需要加括号和return
 						})
