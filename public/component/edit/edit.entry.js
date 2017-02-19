@@ -113,11 +113,21 @@ const Edit = React.createClass({
   	},
   	/*提交*/
   	submit:function(){
-  		$.post('/blog/save',
-  			{title:this.state.title , content:this.state.content , cid:this.state.tag ,cover:this.state.cover},
-  			 function(result){
-  			console.log(result);
-  		});
+  		if(this.state.update){
+  			$.post('/blog/update',
+	  		{title:this.state.title , content:this.state.content , cid:this.state.tag ,cover:this.state.cover ,id:this.props.article.id},
+	  		function(result){
+	  			console.log(result);
+	  		});
+  		}
+  		if(!this.state.update){
+  			$.post('/blog/save',
+	  		{title:this.state.title , content:this.state.content , cid:this.state.tag ,cover:this.state.cover},
+	  		function(result){
+	  			console.log(result);
+	  		});
+  		}
+  		
   	},
   	tag_change:function(event, index, value){
   		this.setState({tag:value});

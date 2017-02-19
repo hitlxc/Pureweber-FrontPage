@@ -7,6 +7,7 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn} from 'material-ui/Table';
 
+import $ from 'jquery';
 //import Marker from 'marked';
 
 require('./blog-list.css');
@@ -97,9 +98,23 @@ const BlogList = React.createClass({
 		
 		this.setState({selectLast:selectedRows});
 	},
-	delete : function(){
-		console.log(this.state.select)
+	/*删除*/
+	delete :async function(){
+		var select = this.getSelect();
+		await select.forEach(function(id,index){
+			$.post('/blog/delete',{id:id},function(res){
+				console.log(res);
+			})
+		})
+		window.location.reload();
+		/*for(var i=0;i<this.state.select;i++){
+			$.post('/blog/delete',{id:this.state.select[i]},function(res){
+				console.log(res);
+			})
+		}*/
+		
 	},
+	/*重新编辑文章*/
 	edit : function(){
 		var select = this.getSelect();
 
@@ -107,6 +122,7 @@ const BlogList = React.createClass({
 			window.open('/blog/edit?id='+data,'edit'+data)
 		})
 	},
+	/*查看文章*/
 	read : function(){
 
 		var select = this.getSelect();

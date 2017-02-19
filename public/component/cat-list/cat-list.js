@@ -204,7 +204,7 @@ const CatList = React.createClass({
 			<MuiThemeProvider  muiTheme={getMuiTheme()}>
 
 			<div>	
-				
+				{/*工具栏*/}
 				<div className="tools">
 					<RaisedButton label="删除" primary={true} style={style.button} onClick={this.delete}/>
 					<RaisedButton label="编辑" primary={true} style={style.button} onClick={this.showEditBoard}/>
@@ -214,6 +214,7 @@ const CatList = React.createClass({
 					<RaisedButton label="Tag管理" primary={true} style={style.button}  href='/blog/admin/tag'/>
 
 				</div>
+			{/*编辑面板*/}
 				<div id="edit-box" style={{
 					display : 'none',
 					width : '100%',
@@ -268,7 +269,7 @@ const CatList = React.createClass({
 						</div>
 					</Card>
 				</div>
-
+			{/*显示面板*/}
 				<Table
 					onRowSelection = {this.select}
 					style={style.table}
@@ -297,6 +298,7 @@ const CatList = React.createClass({
 					}
     				</TableBody>
   				</Table>
+  			{/*新增面板*/}
   					<Dialog
 			        	actions={actions}
 			          	modal={false}

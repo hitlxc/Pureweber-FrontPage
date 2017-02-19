@@ -59,8 +59,6 @@ router.post('/add', function(req, res, next) {
 		var param = req.body;
 		connection.query("INSERT INTO category(name) VALUES(?)"
 			,[param.name], function(err, result) {
-				console.log(err);
-				//console.log(result);
 			lib.jsonWrite(res, result);
 			connection.release();
 		});
@@ -70,20 +68,16 @@ router.post('/add', function(req, res, next) {
 router.post('/delete', function(req, res, next) {
 	pool.getConnection(function(err, connection) {
 		var param = req.body;
+		/*把原分类下的文章归到未分类下*/
 		connection.query("update blog set cid=0 WHERE cid = ?"
 			,[param.cid], function(err, result) {
 				connection.query("delete from category where id=?"
 					,[param.cid], function(err, result) {
-						//console.log(result);
 					lib.jsonWrite(res, result);
 					connection.release();
 				});
-				//console.log(result);
-				//lib.jsonWrite(res, result);
-			//connection.release();
 		});
 	});
 });
-//"DELETE FROM `category` WHERE `category`.`id` = 2"
 
 module.exports = router;
