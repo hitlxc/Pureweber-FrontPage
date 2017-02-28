@@ -47604,6 +47604,7 @@
 				});
 			}
 		},
+		/*监听tag变化*/
 		tag_change: function tag_change(event, index, value) {
 			this.setState({ tag: value });
 		},

@@ -33,18 +33,27 @@ ReactDOM.render(
 	document.getElementById('appbar')
 	);
 
-$.get('blog/gets',{
+$.get('blog/getCurt',{
 	num:10,
 	page:1
 },function(res){
 	console.log(res);
+	
 	for(var i=0;i<res.length;i++){
-		var title = res[i].title;
-		var author = res[i].uid;
-		
-	}
-});
+		var app = document.createElement('div');
+		app.style.width = '46%';
+		ReactDOM.render(
+		<MuiThemeProvider  muiTheme={getMuiTheme()}>
+			<ArticleCard article = {res[i]} />
+		</MuiThemeProvider>, 
+		app
+		);
 
+		document.getElementById('articles').appendChild(app);
+	}
+
+});
+/*
 for (var i = 0; i < 10; i++) {
 	var app = document.createElement('div');
 	app.style.width = '46%';
@@ -114,7 +123,7 @@ var app = document.createElement('div');
 	app
 	);
 
-	document.getElementById('articles').appendChild(app);
+	document.getElementById('articles').appendChild(app);*/
 
 ReactDOM.render(
 	<Footer />, 

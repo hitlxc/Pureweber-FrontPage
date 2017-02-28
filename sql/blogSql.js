@@ -21,7 +21,15 @@ var jsonWrite = function (res, ret) {
 		res.json(ret);
 	}
 };
- 
+
+var removeHTMLTag = function(str) {
+    str = str.replace(/<\/?[^>]*>/g,''); //去除HTML tag
+    str = str.replace(/[ | ]*\n/g,'\n'); //去除行尾空白
+    str = str.replace(/\n[\s| | ]*\r/g,'\n'); //去除多余空行
+    str=str.replace(/&nbsp;/ig,'');//去掉&nbsp;
+    return str;
+}
+
 module.exports = {
 	add: function (req, res, next) {
 		pool.getConnection(function(err, connection) {
@@ -78,7 +86,8 @@ module.exports = {
 						msg:'更新成功'
 					};    
 				}
- 
+
+ 				
 				// 以json形式，把操作结果返回给前台页面
 				jsonWrite(res, result);
  
@@ -100,9 +109,7 @@ module.exports = {
 	},
 	querys: function (req, res, next) {
 		pool.getConnection(function(err, connection) {
-			// var param = req.body;
 			var param = req.query || req.params;
-			console.log(param);
 			if (param.num == null) {
 				connection.query($sql.queryAll, function(err, result) {
 					jsonWrite(res, result);
@@ -112,6 +119,28 @@ module.exports = {
 			else{
 				var start = parseInt((param.page-1)*param.num);
 				connection.query($sql.querys, [start, parseInt(param.num)], function(err, result) {
+					jsonWrite(res, result);
+					connection.release();
+				});				
+			}
+
+		});
+	},
+	querysCurt: function (req, res, next) {
+		pool.getConnection(function(err, connection) {
+			var param = req.query || req.params;
+			if (param.num == null) {
+				connection.query($sql.queryAll, function(err, result) {
+					jsonWrite(res, result);
+					connection.release();
+				});
+			}
+			else{
+				var start = parseInt((param.page-1)*param.num);
+				connection.query($sql.querysCurt, [start, parseInt(param.num)], function(err, result) {
+					for(var i=0 ; i<result.length ; i++){
+ 						result[i].content = removeHTMLTag(marked(result[i].content)).length>100?removeHTMLTag(marked(result[i].content)).slice(0,100)+' ...':removeHTMLTag(marked(result[i].content));
+ 					}
 					jsonWrite(res, result);
 					connection.release();
 				});				

@@ -82,6 +82,11 @@ router.get('/gets', function(req, res, next) {
 	blogSql.querys(req, res, next);
 });
 
+/*获取文章简要信息*/
+router.get('/getCurt', function(req, res, next) {
+	blogSql.querysCurt(req, res, next);
+});
+
 /*显示一篇文章*/
 router.get('/article', function(req, res, next) {
 	//blogSql.queryById(req, res, next);

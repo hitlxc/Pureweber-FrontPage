@@ -9,6 +9,7 @@ var blog = {
 	queryById: 'SELECT * FROM vblog where id=?',
 	queryAll: 'SELECT * FROM vblog ORDER BY time DESC',
 	querys: 'SELECT * FROM vblog ORDER BY time DESC limit ? , ?',
+	querysCurt: 'SELECT id,author,title,category,content,cover,avatar FROM vblog ORDER BY time DESC limit ? , ?',
 	queryByY: 'SELECT * FROM vblog  WHERE `y` = ? ',
 	queryByYM: 'SELECT * FROM vblog WHERE `ym` = ? ',
 };

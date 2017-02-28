@@ -129,6 +129,7 @@ const Edit = React.createClass({
   		}
   		
   	},
+  	/*监听tag变化*/
   	tag_change:function(event, index, value){
   		this.setState({tag:value});
   	},

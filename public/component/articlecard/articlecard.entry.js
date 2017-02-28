@@ -7,10 +7,11 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 //import Marker from 'marked';
+require('./article-card.css');
 
 const ArticleCard = React.createClass({
-  	jump:function(){
-  		console.log('123')
+  	open:function(){
+  		window.open('/blog/article?id='+this.props.article.id);
   	},
 	
   	render: function(){
@@ -18,20 +19,30 @@ const ArticleCard = React.createClass({
 		  	
 			  		<Card
 						style = {{width: '100%',  cursor: 'pointer'}}
-						onClick = {this.jump}
+						onClick = {this.open}
 			  		>
 			  			<CardHeader
-			  				title={this.props.author}
-					      	subtitle={this.props.tag}
-					      	avatar={this.props.avatar}
+			  				title={this.props.article.author}
+					      	subtitle={this.props.article.category}
+					      	avatar={'/img/user/avatar/'+this.props.article.avatar}
+
 					    />
 					    <CardMedia
-					      	overlay={<CardTitle title={this.props.title}  />}
+					      	overlay={<CardTitle title={this.props.article.title}  />}
+					      	
+					      	overlayContainerStyle={{
+					      		padding:8
+					      	}}
+
 					    >
-					      	<img src={this.props.pic} />
+					    	<div className={this.props.article.cover?'article-front-img':'article-front-no-img'} style={{
+								background:'url(/img/cover/'+this.props.article.cover+') no-repeat center center',
+								backgroundSize: 'cover',
+							}}	>
+							</div>
 					    </CardMedia>
 					    <CardText>
-					      	{this.props.abstract}
+					      	{this.props.article.content}
 					    </CardText>
 
 			  		</Card>
