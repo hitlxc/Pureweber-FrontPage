@@ -20,14 +20,16 @@ const Signup = React.createClass({
     	return {
     		stepIndex: 0,
     		maxIndex: 3,
-    		id : '',
     		name : '',
+    		realname : '',
+    		email: '',
     		studentId : '',
     		avatar : '',
     		major : '',
     		intro : '',
     		pw : '',
-    		pwAgain :''
+    		pwAgain :'',
+    		code : this.props.code
      	};
   	},
   	handleNext : function(){
@@ -50,6 +52,7 @@ const Signup = React.createClass({
   	uploadAvatar : function(){
   		var data = new FormData();
 		var files = $("#avatar")[0].files;
+		var self = this;
 		if(files) {
 			data.append("file", files[0]);
 		}
@@ -60,10 +63,10 @@ const Signup = React.createClass({
 			data: data,
 			contentType: false,
 			processData: false,
-			success: function(err,result) {
-				console.log(err);
-				console.log(result);
-				this.setState({avatar: result.avatarName});
+			success: function(result) {
+				//console.log(err);
+				//console.log(result);
+				self.setState({avatar: result.msg});
 			}
 		});
   	},
@@ -74,7 +77,7 @@ const Signup = React.createClass({
   		}
   		else{
   			var data = this.state;
-	  		$.post("/signup",data,function(res){
+	  		$.post("/users/addUser",data,function(res){
 	  			
 	  		})
   		}
@@ -148,17 +151,17 @@ const Signup = React.createClass({
 						    		style={style} 
 						    		underlineShow={false} 
 						    		onChange = {this.change}
-						    		id = 'id'
-						    		value={this.state.id}
+						    		id = 'name'
+						    		value={this.state.name}
 						    	/>
 						    	<Divider />
 						    	<TextField 
 						    		hintText="姓名" 
 						    		style={style} 
 						    		underlineShow={false} 
-						    		id = 'name'
+						    		id = 'realname'
 						    		onChange = {this.change}
-						    		value={this.state.name}
+						    		value={this.state.realname}
 						    	/>
 						    	<Divider />
 						    	<TextField 
@@ -177,6 +180,15 @@ const Signup = React.createClass({
 						   	 		id = 'major'
 						   	 		onChange = {this.change}
 						   	 		value={this.state.major}
+						   	 	/>
+						    	<Divider />
+						    	<TextField 
+						   	 		hintText="邮箱" 
+						   	 		style={style} 
+						   	 		underlineShow={false} 
+						   	 		id = 'email'
+						   	 		onChange = {this.change}
+						   	 		value={this.state.email}
 						   	 	/>
 						    	<Divider />
 						    	<TextField 

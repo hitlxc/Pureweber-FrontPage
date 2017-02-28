@@ -39,7 +39,7 @@ router.get('/logout', function(req, res, next) {
 	// 验证
 	userSql.logout(req, res, next);
 });
-router.get('/addUser', function(req, res, next) {
+router.post('/addUser', function(req, res, next) {
 	// http://localhost:3000/users/addUser?name=qq&pwd=qq&code=xsgst2kzpxgh9f6r&id=3
 	userSql.add(req, res, next);
 });

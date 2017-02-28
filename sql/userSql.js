@@ -57,16 +57,17 @@ module.exports = {
 	add: function (req, res, next) {
 		pool.getConnection(function(err, connection) {
 			// 获取前台页面传过来的参数
-			var param = req.query || req.params;
+			var param = req.body;
 
-			var content = param.pwd;//加密的明文；
+			var content = param.pw;//加密的明文；
 			var md5 = crypto.createHash('md5');//定义加密方式:md5不可逆,此处的md5可以换成任意hash加密的方法名称；
 			md5.update(content);
 			var d = md5.digest('hex');  //加密后的值d
-
-			connection.query($sql.update, [param.name, d, param.code, +param.id], function(err, result) {
+			console.log(param)
+			console.log(d)
+			connection.query($sql.insert, [param.name, param.email, d, param.avatar, param.realname, param.major, param.intro, param.studentId, param.code], function(err, result) {
 				console.log(err);
-				console.log($sql.update);
+				//console.log($sql.insert);
 				if(result) {
 					result = {
 						code: 200,
