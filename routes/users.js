@@ -12,14 +12,14 @@ router.all('/status', function(req, res, next) {
 });
 
 // 检查登陆状态
-router.use(function check(req, res, next) {
+/*router.use(function check(req, res, next) {
 	if(lib.log_status(req)){
 		next();
 	}
 	else{
 		res.send(400);
 	}
-});
+});*/
 
 
 /* GET users listing. */

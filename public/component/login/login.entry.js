@@ -7,6 +7,7 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import $ from 'jquery';
+import cookie from '../../js/cookie/cookie';
 
 //import Marker from 'marked';
 
@@ -31,12 +32,17 @@ const Login = React.createClass({
   	submit: function(){
   		this.handleClose();
   		// name=Tmn07&pwd=q
+  		var self = this;
   		$.post('/users/api/login',{name:this.state.ac,pwd:this.state.pw},function(result){
   			console.log(result);
   			if (result.code == '200') {
+  				/*已登录*/
+  				cookie.setCookieUser('userid',result.id)
   				window.location.reload();
+  				return;
   			}
   			if (result[0].state == '1') {
+  				cookie.setCookieUser('userid',result[0].id)
   				window.location.reload();
   			}
   		});
