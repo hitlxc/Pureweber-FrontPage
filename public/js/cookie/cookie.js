@@ -12,11 +12,16 @@ const cookie = {
 		return ""
 	},
 	setCookieUser: function(c_name, value, expiredays){
-　　　　var exdate=new Date();
+　　　　var exdate = new Date();
 　　　　exdate.setDate(exdate.getDate() + expiredays);
 　　　　document.cookie=c_name+ "=" + escape(value) + ((expiredays==null) ? "" : ";expires="+exdate.toGMTString());
 　　},
-
+	deleteCookieUser: function(c_name){
+		var exdate = new Date();
+	    exdate.setTime(exdate.getTime() - 1);
+	    var cval = this.getCookie(c_name);
+	    if(cval != null) document.cookie = c_name + "="+cval+";expires="+exdate.toGMTString();
+	}
 }
 
 /*参考W3C*/

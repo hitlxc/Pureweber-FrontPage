@@ -123,7 +123,6 @@ module.exports = {
 					connection.release();
 				});				
 			}
-
 		});
 	},
 	querysCurt: function (req, res, next) {
@@ -139,13 +138,13 @@ module.exports = {
 				var start = parseInt((param.page-1)*param.num);
 				connection.query($sql.querysCurt, [start, parseInt(param.num)], function(err, result) {
 					for(var i=0 ; i<result.length ; i++){
- 						result[i].content = removeHTMLTag(marked(result[i].content)).length>100?removeHTMLTag(marked(result[i].content)).slice(0,100)+' ...':removeHTMLTag(marked(result[i].content));
+						var pureContent = removeHTMLTag(marked(result[i].content));
+ 						result[i].content = pureContent.length>100?pureContent.slice(0,100)+' ...':pureContent;
  					}
 					jsonWrite(res, result);
 					connection.release();
 				});				
 			}
-
 		});
 	},
 	queryByTime: function (req, res, next) {

@@ -45584,35 +45584,45 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var Logged = function Logged(props) {
-		return _react2.default.createElement(
-			'div',
-			{
-				style: { display: 'flex' }
-			},
-			_react2.default.createElement(
-				_IconMenu2.default,
-				_extends({}, props, {
-					iconButtonElement: _react2.default.createElement(
-						_IconButton2.default,
-						null,
-						_react2.default.createElement(_moreVert2.default, null)
-					),
-					targetOrigin: { horizontal: 'right', vertical: 'top' },
-					anchorOrigin: { horizontal: 'right', vertical: 'top' }
-				}),
-				_react2.default.createElement(_MenuItem2.default, { primaryText: '\u9080\u8BF7\u65B0\u6210\u5458',
-					href: '/users/invite'
-				}),
-				_react2.default.createElement(_MenuItem2.default, { primaryText: '\u7F16\u8F91\u65B0\u6587\u7AE0',
-					href: '/blog/edit'
-				}),
-				_react2.default.createElement(_MenuItem2.default, { primaryText: '\u7BA1\u7406\u6587\u7AE0',
-					href: '/blog/admin'
-				})
-			)
-		);
-	};
+	var Logged = _react2.default.createClass({
+		displayName: 'Logged',
+	
+		logout: function logout() {
+			console.log('123');
+		},
+		render: function render() {
+			return _react2.default.createElement(
+				'div',
+				{
+					style: { display: 'flex' }
+				},
+				_react2.default.createElement(
+					_IconMenu2.default,
+					_extends({}, props, {
+						iconButtonElement: _react2.default.createElement(
+							_IconButton2.default,
+							null,
+							_react2.default.createElement(_moreVert2.default, null)
+						),
+						targetOrigin: { horizontal: 'right', vertical: 'top' },
+						anchorOrigin: { horizontal: 'right', vertical: 'top' }
+					}),
+					_react2.default.createElement(_MenuItem2.default, { primaryText: '\u9080\u8BF7\u65B0\u6210\u5458',
+						href: '/users/invite'
+					}),
+					_react2.default.createElement(_MenuItem2.default, { primaryText: '\u7F16\u8F91\u65B0\u6587\u7AE0',
+						href: '/blog/edit'
+					}),
+					_react2.default.createElement(_MenuItem2.default, { primaryText: '\u7BA1\u7406\u6587\u7AE0',
+						href: '/blog/admin'
+					}),
+					_react2.default.createElement(_MenuItem2.default, { primaryText: '\u9000\u51FA',
+						onClick: this.logout
+					})
+				)
+			);
+		}
+	});
 	Logged.muiName = 'IconMenu';
 	
 	var MyAppBar = _react2.default.createClass({

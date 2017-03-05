@@ -36,7 +36,7 @@ router.get('/signup', function(req, res, next) {
 });
 
 router.get('/logout', function(req, res, next) {
-	// 验证
+	// 这个API没用了，改用cookie了，不用session了
 	userSql.logout(req, res, next);
 });
 router.post('/addUser', function(req, res, next) {

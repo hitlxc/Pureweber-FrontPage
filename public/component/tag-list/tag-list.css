@@ -1,0 +1,27 @@
+body{
+	font-family: Roboto, sans-serif;
+}
+
+.blog-title{
+	font-family: poppin,'PingFang SC',Tahoma,Arial,\5FAE\8F6F\96C5\9ED1,sans-serif;
+	letter-spacing: 1px;
+}
+
+.blog-author{
+	float: right;
+	margin-right: 20px;
+	font-family: poppin,'PingFang SC',Tahoma,Arial,\5FAE\8F6F\96C5\9ED1,sans-serif;
+}
+
+.blog-author a{
+	color: #333;
+    text-decoration: none;
+}
+
+
+.blog-time{
+	float: right;
+	color: #9B9B9B;
+	font-size: 18px;
+
+}

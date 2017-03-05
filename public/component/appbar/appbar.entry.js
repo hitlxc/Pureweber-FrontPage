@@ -14,39 +14,49 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
 import cookie from '../../js/cookie/cookie';
+import $ from '../../js/cookie/cookie';
 
-const Logged = (props) => (
-	<div
-		style={{display: 'flex'}}
-	>
-		<IconMenu
-			{...props}
-			iconButtonElement={
-				<IconButton><MoreVertIcon /></IconButton>
-			}
-			targetOrigin={{horizontal: 'right', vertical: 'top'}}
-			anchorOrigin={{horizontal: 'right', vertical: 'top'}}
-		>
-			    
-			<MenuItem primaryText="邀请新成员"
-				href="/users/invite"
-			/>
-			<MenuItem primaryText="编辑新文章"
-				href="/blog/edit"
-			/>
-			<MenuItem primaryText="管理文章" 
-				href="/blog/admin"
-			/>
-		</IconMenu>
-	</div>
-);
-Logged.muiName = 'IconMenu';
+class Logged extends Component {
+  	static muiName = 'IconMenu';
+  	logout = () => {
+    	cookie.deleteCookieUser('userid');
+    	window.location.reload();
+  	};
+  	render() {
+    	return (
+      		<div
+				style={{display: 'flex'}}
+			>
+				<IconMenu
+					{...this.props}
+					iconButtonElement={
+						<IconButton><MoreVertIcon /></IconButton>
+					}
+					targetOrigin={{horizontal: 'right', vertical: 'top'}}
+					anchorOrigin={{horizontal: 'right', vertical: 'top'}}
+				>
+					    
+					<MenuItem primaryText="邀请新成员"
+						href="/users/invite"
+					/>
+					<MenuItem primaryText="编辑新文章"
+						href="/blog/edit"
+					/>
+					<MenuItem primaryText="管理文章" 
+						href="/blog/admin"
+					/>
+					<MenuItem primaryText="退出" 
+						onClick={this.logout}
+					/>
+				</IconMenu>
+			</div>
+    	);
+  	}
+}
 
 const MyAppBar = React.createClass({
 	getInitialState: function() {
 		var logged = cookie.getCookie('userid') ? true : false ;
-		console.log(cookie.getCookie('userid'));
-		console.log(logged)
 		return {
 			logged : logged,
 			open:false,

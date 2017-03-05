@@ -21,6 +21,6 @@ body{
 	height: 48px;
 }
 
-#blog-list,#cat-list{
+#blog-list,#cat-list,#tag-list{
 	margin-top: 20px;
 }

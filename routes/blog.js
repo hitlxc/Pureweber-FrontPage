@@ -54,27 +54,13 @@ router.get('/admin', function(req, res, next) {
 /*分类管理*/
 router.get('/admin/cat', function(req, res, next) {
 	// blogSql.querys(req, res, next);
-	if (typeof req.session.uid === 'undefined') {
-		log_status = false;
-	}
-	else{
-		log_status = true;
-	}
-
-	res.render("blog-admin-cat" ,{logged:log_status});
+	res.render("blog-admin-cat");
 });
 
 /*tag管理*/
 router.get('/admin/tag', function(req, res, next) {
 	// blogSql.querys(req, res, next);
-	if (typeof req.session.uid === 'undefined') {
-		log_status = false;
-	}
-	else{
-		log_status = true;
-	}
-
-	res.render("blog-admin" ,{logged:log_status});
+	res.render("blog-admin-tag");
 });
 
 /*获取文章*/

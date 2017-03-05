@@ -44,7 +44,7 @@ const BlogList = React.createClass({
 		var time = Y+M+D+h+m+s;
 		return time;
 	},
-	/*选取文章时间*/
+	/*选取文章事件*/
 	select : function(selectedRows){
 		var self = this;
 		var len = this.props.blogs.length;
