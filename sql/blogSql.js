@@ -59,9 +59,12 @@ module.exports = {
 	delete: function (req, res, next) {
 		// delete by Id
 		pool.getConnection(function(err, connection) {
-			var id = +req.body.id;
-			console.log(id)
-			connection.query($sql.delete, id, function(err, result) {
+			var id = req.body.id.split(',');
+			var inserts = [id];
+			sql = mysql.format($sql.delete, inserts);
+			// 这个地方之所以采用mysql.format，是因为query方法的拼接有bug只能删除in(?)中的第一个文章（也可能是我用的姿势不对），文档详见https://github.com/mysqljs/mysql#multiple-statement-queries
+			connection.query(sql, function(err, result) {
+				// console.log(err)
 				if(result.affectedRows > 0) {
 					result = {
 						code: 200,

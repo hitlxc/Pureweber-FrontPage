@@ -29,6 +29,7 @@ const TagList = React.createClass({
     		selectLast :'',
     		selectAll: [],
     		select:[],
+    		canEdit : false,
     	};
   	},
   	change : function(event){
@@ -51,7 +52,7 @@ const TagList = React.createClass({
 	/*选取事件*/
 	select : function(selectedRows){
 		var self = this;
-		var len = this.props.blogs.length;
+		var len = this.props.tags.length;
 	  	var selected = new Array(len);
 	  	for (var i=0;i<selected.length; i++) {
 	  		selected[i] = false;
@@ -88,7 +89,7 @@ const TagList = React.createClass({
 			}
 		}
 		/*选择多个文章时不能进行编辑*/
-		if (this.props.blogs.length > 1 ) {
+		if (this.props.tags.length > 1 ) {
 			if (selectedRows == 'none' ||  selectedRows.length <= 1) {
 				self.setState({
 					canEdit : false
@@ -101,29 +102,20 @@ const TagList = React.createClass({
 		}
 		
 		this.setState({selectLast:selectedRows});
-	},
-	/*删除事件*//*
-	delete : function(){
-		var tid = this.props.tags[this.state.select].id;
-		console.log(tid)
-		$.post('/tag/delete',{tid:tid},function(res){
-			console.log(res)
-			if(res.serverStatus == 2){
-				window.location.reload();
-			}
-		})
-		
-	},*/
 
-	delete :async function(){
-		var select = this.getSelect();
-		await select.forEach(function(id,index){
-			$.post('/tag/delete',{tid:id},function(res){
-				console.log(res);
-			})
+		console.log(selectedRows)
+	},
+	/*删除*/
+	delete :function(){
+		var select = this.getSelect().join(',');
+		console.log(select);
+		var self = this;
+		$.post('/tag/delete',{tid:select},function(res){
+			console.log(res);
+
+			//self.render();
 		})
-		//window.location.reload();
-		
+		window.location.reload();
 	},
 	/*查看*/
 	read : function(){
@@ -167,11 +159,11 @@ const TagList = React.createClass({
 		}
 		$('#edit-box').slideUp();
 	},
-	/*打开新增分类面板*/
+	/*打开新增Tag面板*/
 	handleOpen: function(){
   		this.setState({open: true});
   	},
-  	/*关闭新增分类面板*/
+  	/*关闭新增Tag面板*/
   	handleClose: function(){
   		this.setState({open: false});
   	},
@@ -183,7 +175,7 @@ const TagList = React.createClass({
             this.addTag();
         }
     },
-    /*增加新分类*/
+    /*增加新Tag*/
   	addTag : function(){
   		this.handleClose();
   		
@@ -270,7 +262,7 @@ const TagList = React.createClass({
 					<RaisedButton label="删除" primary={true} style={style.button} onClick={this.delete}/>
 					<RaisedButton label="编辑" primary={true} style={style.button} onClick={this.showEditBoard}/>
 					<RaisedButton label="查看" primary={true} style={style.button} onClick={this.read}/>
-					<RaisedButton label="添加分类" primary={true} style={style.button} onClick={this.handleOpen}/>
+					<RaisedButton label="添加Tag" primary={true} style={style.button} onClick={this.handleOpen}/>
 					<RaisedButton label="文章管理" primary={true} style={style.button}  href='/blog/admin' />
 					<RaisedButton label="分类管理" primary={true} style={style.button}  href='/blog/admin/cat'/>
 
@@ -286,7 +278,7 @@ const TagList = React.createClass({
 						marginRight:'2%'
 					}}>
 						<div style={style.editHeader}>ID</div>
-						<div style={style.editHeader}>分类</div>
+						<div style={style.editHeader}>Tag</div>
 						<div style={style.editHeader}>数量</div>
 						{
 							this.props.tags.map((data , i) => {
@@ -341,7 +333,7 @@ const TagList = React.createClass({
     				>
 	      				<TableRow>
 	      					<TableHeaderColumn style={style.id}>ID</TableHeaderColumn>
-	        				<TableHeaderColumn style={style.name}>分类</TableHeaderColumn>
+	        				<TableHeaderColumn style={style.name}>Tag</TableHeaderColumn>
 	        				<TableHeaderColumn style={style.times}>数量</TableHeaderColumn>
 	      				</TableRow>
     				</TableHeader>
@@ -370,7 +362,7 @@ const TagList = React.createClass({
 			        >
 			        	
 				        <TextField
-						    hintText="分类名"
+						    hintText="Tag名"
 						    onChange = {this.changeAddTag}
 						    onKeyDown={this.keyDown}
 						/>

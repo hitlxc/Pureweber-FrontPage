@@ -9,8 +9,8 @@ module.exports = {
         // signup:'./public/js/signup.entry.js',
         // ['blog-admin']:'./public/js/blog-admin.entry.js',
         // ['blog-admin-cat']:'./public/js/blog-admin-cat.entry.js',
-        ['blog-admin-tag']:'./public/js/blog-admin-tag.entry.js',
-        //signup:'./public/js/signup.entry.js'
+         ['blog-admin-tag']:'./public/js/blog-admin-tag.entry.js',
+        // signup:'./public/js/signup.entry.js'
 
     },
     output: {

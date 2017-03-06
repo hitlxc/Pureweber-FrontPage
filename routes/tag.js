@@ -69,15 +69,13 @@ router.post('/add', function(req, res, next) {
 router.post('/delete', function(req, res, next) {
 	pool.getConnection(function(err, connection) {
 		var param = req.body;
-		/*把原分类下的文章归到未分类下*/
-		var cids = param.cid;
-		console.log(cids);
-		console.log(cids.join(','));
-		/*connection.query("delete from tag where id in (?)"
-			,[param.cid], function(err, result) {
+		var tids = param.tid;
+		console.log(tids)
+		connection.query("delete from tag where id in ("+tids+")"
+			, function(err, result) {
 			lib.jsonWrite(res, result);
 			connection.release();
-		});*/
+		});
 	});
 });
 

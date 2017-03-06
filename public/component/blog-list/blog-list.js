@@ -100,19 +100,12 @@ const BlogList = React.createClass({
 	},
 	/*删除*/
 	delete :async function(){
-		var select = this.getSelect();
-		await select.forEach(function(id,index){
-			$.post('/blog/delete',{id:id},function(res){
-				console.log(res);
-			})
+		var select = this.getSelect().join(',');
+		var self = this;
+		$.post('/blog/delete',{id:select},function(res){
+			console.log(res);
 		})
-		window.location.reload();
-		/*for(var i=0;i<this.state.select;i++){
-			$.post('/blog/delete',{id:this.state.select[i]},function(res){
-				console.log(res);
-			})
-		}*/
-		
+		//window.location.reload();
 	},
 	/*重新编辑文章*/
 	edit : function(){
