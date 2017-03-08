@@ -93,7 +93,7 @@ module.exports = {
 	},
 	login: function (req, res, next) {
 		// console.log(req.session.uid);
-		if (typeof req.session.uid === 'undefined') {
+		//if (typeof req.session.uid === 'undefined') {
 			// var param = req.query || req.params;
 			var param = req.body;
 			var name = param.name;
@@ -120,14 +120,15 @@ module.exports = {
 	 
 				});
 			});
-		}
+		//}
+		/*
 		else{
 		    jsonWrite(res, {
 						code: 200,
 						msg:'已登陆',
 						id: req.session.uid
 					});
-		}
+		}*/
 	},
 	delete: function (req, res, next) {
 		// delete by Id

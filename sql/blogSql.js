@@ -40,14 +40,14 @@ module.exports = {
 			// 'INSERT INTO user(id, name, age) VALUES(0,?,?)',
 			
 			//console.log(param);
-			connection.query($sql.insert, [param.title, req.session.uid, param.cid, param.content, param.cover], function(err, result) {
+			connection.query($sql.insert, [param.title, param.uid, param.cid, param.content, param.cover], function(err, result) {
 				if(result) {
 					result = {
 						code: 200,
 						msg:'增加成功'
 					};    
 				}
- 
+ 				//console.log(err)
 				// 以json形式，把操作结果返回给前台页面
 				jsonWrite(res, result);
  
@@ -58,13 +58,29 @@ module.exports = {
 	},
 	delete: function (req, res, next) {
 		// delete by Id
-		pool.getConnection(function(err, connection) {
+		/*pool.getConnection(function(err, connection) {
 			var id = req.body.id.split(',');
 			var inserts = [id];
 			sql = mysql.format($sql.delete, inserts);
 			// 这个地方之所以采用mysql.format，是因为query方法的拼接有bug只能删除in(?)中的第一个文章（也可能是我用的姿势不对），文档详见https://github.com/mysqljs/mysql#multiple-statement-queries
 			connection.query(sql, function(err, result) {
 				// console.log(err)
+				if(result.affectedRows > 0) {
+					result = {
+						code: 200,
+						msg:'删除成功'
+					};
+				} else {
+					result = void 0;
+				}
+				jsonWrite(res, result);
+				connection.release();
+			});
+		});*/
+		pool.getConnection(function(err, connection) {
+			var id = req.body.id.split(',');
+			connection.query($sql.delete,[id], function(err, result) {
+				 console.log(err)
 				if(result.affectedRows > 0) {
 					result = {
 						code: 200,

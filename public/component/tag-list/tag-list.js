@@ -112,6 +112,7 @@ const TagList = React.createClass({
 		var self = this;
 		$.post('/tag/delete',{tid:select},function(res){
 			console.log(res);
+			
 
 			//self.render();
 		})

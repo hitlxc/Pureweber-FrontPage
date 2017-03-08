@@ -9,6 +9,7 @@ import SelectField from 'material-ui/SelectField';
 import MenuItem from 'material-ui/MenuItem';
 import $ from 'jquery';
 import marked from 'marked';
+import cookie from '../../js/cookie/cookie';
 
 require('./md-edit.css');
 require('./github-markdown.css');
@@ -33,14 +34,16 @@ marked.setOptions({
 
 const Edit = React.createClass({
   
-	getInitialState: function() {
+	getInitialState:function() {
+		var uid = cookie.getCookie('userid');
     	return {
     		title: '',
     		content: '',
     		preview:'',
-    		tag:1 ,
+    		cat:0 ,
     		cover:'',
-    		update:false
+    		uid:uid,
+    		update:false,
     	};
   	},
   	/*markdown转HTML*/
@@ -53,6 +56,7 @@ const Edit = React.createClass({
   		//this.preview = Marker(event.target.value)
   	},
   	/*标题更改*/
+
   	title_change:function(event){
   		this.setState({
   			title: event.target.value
@@ -115,23 +119,23 @@ const Edit = React.createClass({
   	submit:function(){
   		if(this.state.update){
   			$.post('/blog/update',
-	  		{title:this.state.title , content:this.state.content , cid:this.state.tag ,cover:this.state.cover ,id:this.props.article.id},
+	  		{title:this.state.title , content:this.state.content , cid:this.state.cat ,cover:this.state.cover ,id:this.props.article.id},
 	  		function(result){
 	  			console.log(result);
 	  		});
   		}
   		if(!this.state.update){
   			$.post('/blog/save',
-	  		{title:this.state.title , content:this.state.content , cid:this.state.tag ,cover:this.state.cover},
+	  		{title:this.state.title , content:this.state.content , cid:this.state.cat ,cover:this.state.cover, uid:this.state.uid},
 	  		function(result){
 	  			console.log(result);
 	  		});
   		}
   		
   	},
-  	/*监听tag变化*/
-  	tag_change:function(event, index, value){
-  		this.setState({tag:value});
+  	/*监听cat变化*/
+  	cat_change:function(event, index, value){
+  		this.setState({cat:value});
   	},
   	/*编辑文章可以使用tab键进行缩进*/
   	enableTab : function() {
@@ -154,7 +158,7 @@ const Edit = React.createClass({
 			await this.setState({
 				title: this.props.article.title,
 	    		content: this.props.article.content,
-	    		tag:this.props.article.category ,
+	    		cat:this.props.article.category ,
 	    		update:true
 			})
 			document.getElementById('preview').innerHTML = marked(this.state.content);
@@ -199,16 +203,18 @@ const Edit = React.createClass({
 					</FlatButton>
 
 					<SelectField
-				        value={this.state.tag}
-				        onChange={this.tag_change}
+				        value={this.state.cat}
+				        onChange={this.cat_change}
 				        maxHeight={200} 
 				        style={{width: 150}}
-				    >
-				        <MenuItem value={1} primaryText="前端" />
-				        <MenuItem value={2} primaryText="后端" />
-				        <MenuItem value={3} primaryText="数据库" />
-				        <MenuItem value={4} primaryText="运维" />
-				        <MenuItem value={5} primaryText="杂谈" />
+				    >	
+				    	{
+				    		this.props.cat.map((data, i) => {
+							    return (
+							      	<MenuItem value={data.id} primaryText={data.name} key={i}/>
+								);  // 多行箭头函数需要加括号和return
+					    	})
+				        }
 				    </SelectField>
 
 				    <FlatButton 

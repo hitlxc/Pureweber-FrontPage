@@ -34,19 +34,25 @@ function getUrlParam(name) {
 
 var id = getUrlParam('id');
 
-/*编辑空白页*/
+
+
+	/*编辑空白页*/
 if (!id) {
-	ReactDOM.render(
-		<Edit className="edit" article={null}/>, 
-	document.getElementById('edit')
-	);
+	$.get('/cat/getAll',function(res){
+		ReactDOM.render(
+			<Edit className="edit" article={null} cat={res}/>, 
+			document.getElementById('edit')
+		);
+
+		setTimeout(function(){res = null},5000)
+	})
 } else {
 /*更新已有文章*/
 	$.get("/blog/show?id="+id,function(res){
 		console.log(res)
 		ReactDOM.render(
-			<Edit className="edit" article={res[0]}/>, 
-		document.getElementById('edit')
+			<Edit className="edit" article={res[0]} />, 
+			document.getElementById('edit')
 		);
 	})
 }
@@ -54,9 +60,11 @@ if (!id) {
 
 
 
+
+
 ReactDOM.render(
 	<MuiThemeProvider  muiTheme={getMuiTheme()}>
-		<MyAppBar logged={logged}  />
+		<MyAppBar />
 	</MuiThemeProvider>, 
 	document.getElementById('appbar')
 	);

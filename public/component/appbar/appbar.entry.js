@@ -16,11 +16,14 @@ import Drawer from 'material-ui/Drawer';
 import cookie from '../../js/cookie/cookie';
 import $ from '../../js/cookie/cookie';
 
+
+
 class Logged extends Component {
   	static muiName = 'IconMenu';
   	logout = () => {
     	cookie.deleteCookieUser('userid');
-    	window.location.reload();
+    	//window.location.reload();
+    	this.props.changeLogged();
   	};
   	render() {
     	return (
@@ -69,7 +72,9 @@ const MyAppBar = React.createClass({
 	handleClose: function(){
 		this.setState({open: false});
 	},
-
+	changeLogged: function(){
+		this.setState({logged: !this.state.logged})
+	},
 	render: function(){
 		return ( 	
 			<div>
@@ -77,7 +82,7 @@ const MyAppBar = React.createClass({
 					style={{width:'100%',boxShadow:'none',   position: 'fixed'}}
 					onLeftIconButtonTouchTap={this.handleToggle}
 					iconElementRight={
-						this.state.logged?<Logged/>:<Login/>
+						this.state.logged?<Logged changeLogged={this.changeLogged.bind(null,this)} />:<Login changeLogged={this.changeLogged.bind(null,this)} />
 					}
 				/>
 				<Drawer
