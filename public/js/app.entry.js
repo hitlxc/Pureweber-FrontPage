@@ -18,13 +18,19 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
+import getUrlParam from './getUrlParam/getUrlParam';
+
+import cookie from './cookie/cookie';
+
 import $ from 'jquery';
 
 injectTapEventPlugin();
 
 //let appbar = document.getElementById('appbar');
 
-var logged = ( $('#appbar').attr('logged') == 'true' ? true:false) ;
+//var logged = ( $('#appbar').attr('logged') == 'true' ? true:false) ;
+
+
 
 ReactDOM.render(
 	<MuiThemeProvider  muiTheme={getMuiTheme()}>
@@ -32,6 +38,9 @@ ReactDOM.render(
 	</MuiThemeProvider>, 
 	document.getElementById('appbar')
 	);
+
+
+var cat = getUrlParam('cat');
 
 $.get('blog/getCurt',{
 	num:10,

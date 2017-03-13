@@ -20,17 +20,15 @@ import Edit from '../component/edit/edit.entry' ;
 
 import Footer from '../component/footer/footer' ;
 
+import getUrlParam from './getUrlParam/getUrlParam';
+
+import cookie from './cookie/cookie';
+
 import $ from 'jquery';
 
 injectTapEventPlugin();
 
-var logged = ( $('#appbar').attr('logged') == 'true' ? true:false) ;
-
-function getUrlParam(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-    var r = window.location.search.substr(1).match(reg);  //匹配目标参数
-    if (r != null) return unescape(r[2]); return null; //返回参数值
-}
+//var logged = ( $('#appbar').attr('logged') == 'true' ? true:false) ;
 
 var id = getUrlParam('id');
 

@@ -10,6 +10,7 @@ var pool  = mysql.createPool($conf.mysql);
 
 var lib = require('./lib');
 
+/*id,名字,次数*/
 router.get('/getAll', function(req, res, next) {
 	pool.getConnection(function(err, connection) {
 		connection.query("SELECT category.*, count(cid) as times FROM  category left join blog on category.id = blog.cid  group by name ORDER by id"
@@ -20,6 +21,19 @@ router.get('/getAll', function(req, res, next) {
 	});
 });
 
+/*名字*/
+router.get('/getNames', function(req, res, next) {
+	pool.getConnection(function(err, connection) {
+		connection.query("SELECT name , id FROM category ORDER by id"
+			, function(err, result) {
+			//var names = result.map(function(data,i){return data.name});
+			lib.jsonWrite(res, result);
+			connection.release();
+		});
+	});
+});
+
+/*获取文章cat*/
 router.get('/get', function(req, res, next) {
 	pool.getConnection(function(err, connection) {
 		var param = req.query || req.params;
@@ -31,6 +45,7 @@ router.get('/get', function(req, res, next) {
 	});
 });
 
+/*通过cat获取文章*/
 router.get('/getBycid', function(req, res, next) {
 	pool.getConnection(function(err, connection) {
 		var param = req.query || req.params;

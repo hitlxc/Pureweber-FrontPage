@@ -14,7 +14,7 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
 import cookie from '../../js/cookie/cookie';
-import $ from '../../js/cookie/cookie';
+import $ from 'jquery';
 
 
 
@@ -64,6 +64,7 @@ const MyAppBar = React.createClass({
 			logged : logged,
 			open:false,
 			openMenu:true,
+			cats:[],
 		};
 	},
 	handleToggle: function(){
@@ -74,6 +75,14 @@ const MyAppBar = React.createClass({
 	},
 	changeLogged: function(){
 		this.setState({logged: !this.state.logged})
+	},
+	componentDidMount: function(){
+		var self = this;
+		$.get('/cat/getNames',function(res){
+			self.setState({
+				cats:res
+			})
+		})
 	},
 	render: function(){
 		return ( 	
@@ -103,7 +112,16 @@ const MyAppBar = React.createClass({
 						cursor: 'pointer',
 					}}
 				/>
-				<MenuItem onTouchTap={this.handleClose}>Menu Item 2</MenuItem>
+				{
+					this.state.cats.map((data, i) => {
+						return (
+							<MenuItem href={'/?cat='+data.id} key={i} onTouchTap={this.handleClose} primaryText={data.name}></MenuItem>
+						);  // 多行箭头函数需要加括号和return
+					})
+				}
+
+				
+				
 				<FlatButton label="Default"/>
 				</Drawer>
 			</div>

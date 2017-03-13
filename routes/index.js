@@ -10,14 +10,15 @@ router.use(function timeLog(req, res, next) {
 /* GET home page. */
 router.get('/', function(req, res, next) {
 
-	if (typeof req.session.uid === 'undefined') {
+/*	if (typeof req.session.uid === 'undefined') {
 		log_status = false;
 	}
 	else{
 		log_status = true;
 	}
 
-	res.render('index', { title: 'Pureweber' , logged:log_status});
+	res.render('index', { title: 'Pureweber' , logged:log_status});*/
+	res.render('index', { title: 'Pureweber' });
 });
 
 // 具体文章页面

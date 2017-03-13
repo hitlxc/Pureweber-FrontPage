@@ -85,6 +85,14 @@
 	
 	var _footer2 = _interopRequireDefault(_footer);
 	
+	var _getUrlParam = __webpack_require__(/*! ./getUrlParam/getUrlParam */ 954);
+	
+	var _getUrlParam2 = _interopRequireDefault(_getUrlParam);
+	
+	var _cookie = __webpack_require__(/*! ./cookie/cookie */ 398);
+	
+	var _cookie2 = _interopRequireDefault(_cookie);
+	
 	var _jquery = __webpack_require__(/*! jquery */ 397);
 	
 	var _jquery2 = _interopRequireDefault(_jquery);
@@ -97,15 +105,9 @@
 	
 	(0, _reactTapEventPlugin2.default)();
 	
-	var logged = (0, _jquery2.default)('#appbar').attr('logged') == 'true' ? true : false;
+	//var logged = ( $('#appbar').attr('logged') == 'true' ? true:false) ;
 	
-	function getUrlParam(name) {
-		var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
-		var r = window.location.search.substr(1).match(reg); //匹配目标参数
-		if (r != null) return unescape(r[2]);return null; //返回参数值
-	}
-	
-	var id = getUrlParam('id');
+	var id = (0, _getUrlParam2.default)('id');
 	
 	/*编辑空白页*/
 	if (!id) {
@@ -39953,6 +39955,10 @@
 	
 	var _cookie2 = _interopRequireDefault(_cookie);
 	
+	var _jquery = __webpack_require__(/*! jquery */ 397);
+	
+	var _jquery2 = _interopRequireDefault(_jquery);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -40032,7 +40038,8 @@
 			return {
 				logged: logged,
 				open: false,
-				openMenu: true
+				openMenu: true,
+				cats: []
 			};
 		},
 		handleToggle: function handleToggle() {
@@ -40043,6 +40050,14 @@
 		},
 		changeLogged: function changeLogged() {
 			this.setState({ logged: !this.state.logged });
+		},
+		componentDidMount: function componentDidMount() {
+			var self = this;
+			_jquery2.default.get('/cat/getNames', function (res) {
+				self.setState({
+					cats: res
+				});
+			});
 		},
 		render: function render() {
 			var _this2 = this;
@@ -40077,11 +40092,9 @@
 							cursor: 'pointer'
 						}
 					}),
-					_react2.default.createElement(
-						_MenuItem2.default,
-						{ onTouchTap: this.handleClose },
-						'Menu Item 2'
-					),
+					this.state.cats.map(function (data, i) {
+						return _react2.default.createElement(_MenuItem2.default, { href: '/?cat=' + data.id, key: i, onTouchTap: _this2.handleClose, primaryText: data.name }); // 多行箭头函数需要加括号和return
+					}),
 					_react2.default.createElement(_FlatButton2.default, { label: 'Default' })
 				)
 			);
@@ -72884,6 +72897,23 @@
 	
 	// exports
 
+
+/***/ },
+/* 954 */
+/*!**********************************************!*\
+  !*** ./public/js/getUrlParam/getUrlParam.js ***!
+  \**********************************************/
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	var getUrlParam = function getUrlParam(name) {
+	    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+	    var r = window.location.search.substr(1).match(reg); //匹配目标参数
+	    if (r != null) return unescape(r[2]);return null; //返回参数值
+	};
+	
+	module.exports = getUrlParam;
 
 /***/ }
 /******/ ]);
