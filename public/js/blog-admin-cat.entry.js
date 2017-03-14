@@ -20,13 +20,15 @@ import CatList from '../component/cat-list/cat-list' ;
 
 import Divider from 'material-ui/Divider';
 
+import cookie from './cookie/cookie';
+
 import $ from 'jquery';
 
 injectTapEventPlugin();
 
 //let appbar = document.getElementById('appbar');
 
-var logged = ( $('#appbar').attr('logged') == 'true' ? true:false) ;
+//var logged = ( $('#appbar').attr('logged') == 'true' ? true:false) ;
 
 ReactDOM.render(
 	<MuiThemeProvider  muiTheme={getMuiTheme()}>

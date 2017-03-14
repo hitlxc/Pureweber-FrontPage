@@ -49,8 +49,9 @@ router.get('/get', function(req, res, next) {
 router.get('/getBycid', function(req, res, next) {
 	pool.getConnection(function(err, connection) {
 		var param = req.query || req.params;
-		connection.query("select * from vblog where cid= ?"
-			,[param.cid], function(err, result) {
+		var start = parseInt((param.page-1)*param.num);
+		connection.query("select * from vblog where cid= ? ORDER BY time DESC limit ? , ?"
+			,[param.cid, start, parseInt(param.num)], function(err, result) {
 			lib.jsonWrite(res, result);
 			connection.release();
 		});

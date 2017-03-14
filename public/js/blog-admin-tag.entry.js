@@ -20,6 +20,8 @@ import TagList from '../component/tag-list/tag-list' ;
 
 import Divider from 'material-ui/Divider';
 
+import cookie from './cookie/cookie';
+
 import $ from 'jquery';
 
 injectTapEventPlugin();

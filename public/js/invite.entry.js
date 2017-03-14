@@ -16,17 +16,19 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import Footer from '../component/footer/footer' ;
 
+import cookie from './cookie/cookie';
+
 import $ from 'jquery';
 
 injectTapEventPlugin();
 
 //let appbar = document.getElementById('appbar');
 
-var logged = ( $('#appbar').attr('logged') == 'true' ? true:false) ;
+//var logged = ( $('#appbar').attr('logged') == 'true' ? true:false) ;
 
 ReactDOM.render(
 	<MuiThemeProvider  muiTheme={getMuiTheme()}>
-		<MyAppBar logged={logged}  />
+		<MyAppBar />
 	</MuiThemeProvider>, 
 	document.getElementById('appbar')
 	);

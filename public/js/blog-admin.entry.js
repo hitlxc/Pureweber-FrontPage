@@ -20,6 +20,8 @@ import BlogList from '../component/blog-list/blog-list' ;
 
 import Divider from 'material-ui/Divider';
 
+import cookie from './cookie/cookie';
+
 import $ from 'jquery';
 
 injectTapEventPlugin();

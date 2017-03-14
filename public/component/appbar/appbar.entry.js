@@ -13,6 +13,7 @@ import Invite from '../invite/invite.entry'
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import FlatButton from 'material-ui/FlatButton';
 import Drawer from 'material-ui/Drawer';
+import Divider from 'material-ui/Divider';
 import cookie from '../../js/cookie/cookie';
 import $ from 'jquery';
 
@@ -119,10 +120,14 @@ const MyAppBar = React.createClass({
 						);  // 多行箭头函数需要加括号和return
 					})
 				}
-
+				<Divider />
+				<MenuItem onTouchTap={this.handleClose} primaryText="按时间过滤"></MenuItem>
+				<Divider />
+				<MenuItem onTouchTap={this.handleClose} primaryText="关于我们"></MenuItem>
 				
 				
-				<FlatButton label="Default"/>
+				
+				
 				</Drawer>
 			</div>
 		)
