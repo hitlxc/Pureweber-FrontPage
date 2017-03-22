@@ -1,3 +1,5 @@
+// var cookie = require('../public/js/cookie/cookie');
+
 var express = require('express');
 var router = express.Router();
 
@@ -10,7 +12,6 @@ var pool  = mysql.createPool($conf.mysql);
 
 var lib = require('./lib');
 
-// var cheerio = require('cheerio');
 var request = require('request');
 
 router.all('*', function(req, res, next) {
@@ -86,13 +87,13 @@ router.get('/getpwd', function(req, res, next) {
 
 	var code = Math.random().toString(36).substr(2);
 
-	if (typeof req.session.uid === 'undefined') {
+	if (typeof req.cookies.userid === 'undefined') {
 		res.sendStatus(403);
 	}
 	else{
 		pool.getConnection(function(err, connection) {
 			connection.query("INSERT INTO `live_code` (`id`, `uid`, `code`, `time`) VALUES ('', ?, ?, CURRENT_TIMESTAMP)"
-				, [req.session.uid, code]
+				, [req.cookies.userid, code]
 				, function(err, result) {
 					console.log(err);
 					if (err == null) {

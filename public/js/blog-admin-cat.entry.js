@@ -28,11 +28,9 @@ injectTapEventPlugin();
 
 //let appbar = document.getElementById('appbar');
 
-//var logged = ( $('#appbar').attr('logged') == 'true' ? true:false) ;
-
 ReactDOM.render(
 	<MuiThemeProvider  muiTheme={getMuiTheme()}>
-		<MyAppBar logged={logged}  />
+		<MyAppBar />
 	</MuiThemeProvider>, 
 	document.getElementById('appbar')
 	);
