@@ -117,7 +117,7 @@ const MyAppBar = React.createClass({
 					this.state.cats.map((data, i) => {
 						return (
 							<MenuItem href={'/?cat='+data.id} key={i} onTouchTap={this.handleClose} primaryText={data.name}></MenuItem>
-						);  // 多行箭头函数需要加括号和return
+						);  
 					})
 				}
 				<Divider />

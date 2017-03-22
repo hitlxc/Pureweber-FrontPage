@@ -36,14 +36,14 @@ var id = getUrlParam('id');
 
 	/*编辑空白页*/
 if (!id) {
-	$.get('/cat/getAll',function(res){
-		ReactDOM.render(
-			<Edit className="edit" article={null} cat={res}/>, 
-			document.getElementById('edit')
-		);
+	
+	ReactDOM.render(
+		<Edit className="edit" article={null} />, 
+		document.getElementById('edit')
+	);
 
-		setTimeout(function(){res = null},5000)
-	})
+		//setTimeout(function(){res = null},5000)
+	
 } else {
 /*更新已有文章*/
 	$.get("/blog/show?id="+id,function(res){

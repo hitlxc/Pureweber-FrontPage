@@ -32,7 +32,7 @@ injectTapEventPlugin();
 
 ReactDOM.render(
 	<MuiThemeProvider  muiTheme={getMuiTheme()}>
-		<MyAppBar logged={logged}  />
+		<MyAppBar />
 	</MuiThemeProvider>, 
 	document.getElementById('appbar')
 	);
