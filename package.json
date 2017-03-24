@@ -20,6 +20,8 @@
     "express-session": "1.14.2",
     "formidable": "1.0.14",
     "highlight.js": "latest",
+    "intl": "^1.2.5",
+    "intl-locales-supported": "^1.0.0",
     "jade": "~1.11.0",
     "jquery": "^3.1.1",
     "json-loader": "^0.5.4",

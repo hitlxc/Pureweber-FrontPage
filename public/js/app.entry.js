@@ -74,6 +74,7 @@ if (cat){
 				<ArticleCard article = {res[i]} />
 			</MuiThemeProvider>, 
 			app
+			
 			);
 			document.getElementById('articles').appendChild(app);
 		}
