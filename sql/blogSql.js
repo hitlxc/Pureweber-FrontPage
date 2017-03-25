@@ -40,21 +40,35 @@ module.exports = {
 			// 'INSERT INTO user(id, name, age) VALUES(0,?,?)',
 			
 			//console.log(param);
-			connection.query($sql.insert, [param.title, param.uid, param.cid, param.content, param.cover], function(err, result) {
-				if(result) {
-					result = {
-						code: 200,
-						msg:'增加成功'
-					};    
+			var fs = require('fs');
+			//var suffix = param.avatar.splite('.')[param.avatar.splite('.').length-1]; //获取后缀
+			//var newAvatarName = param.name+suffix;
+			var oldCoverRoute = 'public/upload/'+param.cover;
+			var newCoverRoute = 'public/img/cover/'+param.cover;
+			
+			fs.rename(oldCoverRoute,newCoverRoute,function(err){
+				if(err){
+					console.log(err)
 				}
- 				//console.log(err)
-				// 以json形式，把操作结果返回给前台页面
-				jsonWrite(res, result);
- 
-				// 释放连接 
-				connection.release();
-			});
+				connection.query($sql.insert, [param.title, param.uid, param.cid, param.content, param.cover], function(err, result) {
+					if(result) {
+						result = {
+							code: 200,
+							msg:'增加成功'
+						};    
+					}
+	 				//console.log(err)
+					// 以json形式，把操作结果返回给前台页面
+					jsonWrite(res, result);
+	 
+					// 释放连接 
+					connection.release();
+				});
+			})
+
 		});
+
+			
 	},
 	delete: function (req, res, next) {
 		// delete by Id

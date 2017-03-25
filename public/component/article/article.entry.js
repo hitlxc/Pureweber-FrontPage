@@ -51,7 +51,7 @@ const Article = React.createClass({
   		return (
 				<div id="article-content-container">
 					<div id={this.props.article.cover?'article-front-img':'article-front-no-img'} style={{
-						background:'url(/upload/'+this.props.article.cover+') no-repeat center center',
+						background:'url(/img/cover/'+this.props.article.cover+') no-repeat center center',
 						backgroundSize: 'cover',
 					}}	>	
 						

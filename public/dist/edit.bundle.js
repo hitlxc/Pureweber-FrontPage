@@ -56284,6 +56284,7 @@
 	
 		getInitialState: function getInitialState() {
 			var uid = _cookie2.default.getCookie('userid');
+			console.log(uid);
 			if (this.props.article) {
 				//console.log(this.props.article)
 				return _defineProperty({

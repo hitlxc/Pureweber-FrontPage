@@ -63,24 +63,39 @@ module.exports = {
 			var md5 = crypto.createHash('md5');//定义加密方式:md5不可逆,此处的md5可以换成任意hash加密的方法名称；
 			md5.update(content);
 			var d = md5.digest('hex');  //加密后的值d
-			console.log(param)
-			console.log(d)
-			connection.query($sql.insert, [param.name, param.email, d, param.avatar, param.realname, param.major, param.intro, param.studentId, param.code], function(err, result) {
-				console.log(err);
-				//console.log($sql.insert);
-				if(result) {
-					result = {
-						code: 200,
-						msg:'增加成功'
-					};    
+			//console.log(param)
+			//console.log(d)
+
+			var fs = require('fs');
+			//var suffix = param.avatar.splite('.')[param.avatar.splite('.').length-1]; //获取后缀
+			//var newAvatarName = param.name+suffix;
+			var oldAvatarRoute = 'public/upload/'+param.avatar;
+			var newAvatarRoute = 'public/img/user/avatar/'+param.avatar;
+			
+			fs.rename(oldAvatarRoute,newAvatarRoute,function(err){
+				if(err){
+					//console.log(err)
 				}
- 
-				// 以json形式，把操作结果返回给前台页面
-				jsonWrite(res, result);
- 
-				// 释放连接 
-				connection.release();
-			});
+				connection.query($sql.insert, [param.name, param.email, d, param.avatar, param.realname, param.major, param.intro, param.studentId, param.code], function(err, result) {
+					//console.log(err);
+					//console.log($sql.insert);
+					if(result) {
+						result = {
+							code: 200,
+							msg:'增加成功'
+						};    
+
+					}
+	 
+					// 以json形式，把操作结果返回给前台页面
+					jsonWrite(res, result);
+	 
+					// 释放连接 
+					connection.release();
+				});
+			})
+
+			
 		});
 	},
 	logout: function (req, res, next) {

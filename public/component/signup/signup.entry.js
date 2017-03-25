@@ -77,11 +77,22 @@ const Signup = React.createClass({
   		}
   		else{
   			var data = this.state;
+  			var warning = '';
+  			var x
+  			for(x in data){
+				if(data[x] == null || data[x] == ""){
+					warning += (x+'不能为空\n');
+				}
+			}
+			if(warning!= ''){
+				alert(warning);
+				return;
+			}
+  			console.log(data);
 	  		$.post("/users/addUser",data,function(res){
-	  			
+	  			alert('注册成功')
 	  		})
   		}
-  		
   	},
 	renderStepActions : function(step) {
 	    return (

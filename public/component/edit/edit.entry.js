@@ -36,6 +36,7 @@ const Edit = React.createClass({
   
 	getInitialState:function() {
 		var uid = cookie.getCookie('userid');
+		console.log(uid);
 		if(this.props.article){
   			//console.log(this.props.article)
 			return {
