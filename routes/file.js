@@ -72,6 +72,32 @@ router.post('/upload', function(req, res, next) {
 	upload(req, res,"upload");
 });
 
+router.post('/upload', function(req, res, next) {
+	upload(req, res,"upload");
+});
+
+router.get('/move', function(req, res, next) {
+
+	// 接收 get 或 post 参数
+	var param = req.query || req.body;
+
+	// 路径在项目根目录
+	fs.rename(param.file, param.newpath, function(err){
+		if(err){
+			lib.jsonWrite(res, {
+					code: 0,
+					msg: err,
+				});
+			console.log(err);
+		}
+		else{
+			lib.jsonWrite(res, {
+				code: 200,
+				msg: "移动成功",
+			});
+		}
+	});
+});
 
 
 module.exports = router;

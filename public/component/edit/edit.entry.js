@@ -36,11 +36,26 @@ const Edit = React.createClass({
   
 	getInitialState:function() {
 		var uid = cookie.getCookie('userid');
+		if(this.props.article){
+  			//console.log(this.props.article)
+			return {
+				title: this.props.article.title,
+	    		content: this.props.article.content,
+	    		cat:this.props.article.cid,
+	    		update:true,
+	    		preview:'',
+    			allCats:[],
+    			cover:'',
+    			uid:uid,
+    			update:true,
+			};
+  		}
     	return {
     		title: '',
     		content: '',
     		preview:'',
     		cat:0 ,
+    		allCats:[],
     		cover:'',
     		uid:uid,
     		update:false,
@@ -56,7 +71,6 @@ const Edit = React.createClass({
   		//this.preview = Marker(event.target.value)
   	},
   	/*标题更改*/
-
   	title_change:function(event){
   		this.setState({
   			title: event.target.value
@@ -153,16 +167,14 @@ const Edit = React.createClass({
     },
   	componentDidMount:async function(){
   		this.enableTab();
-  		if(this.props.article){
-  			console.log(this.props.article)
-			await this.setState({
-				title: this.props.article.title,
-	    		content: this.props.article.content,
-	    		cat:this.props.article.category ,
-	    		update:true
+  		document.getElementById('preview').innerHTML = marked(this.state.content);
+  		var self = this;
+  		$.get('/cat/getAll',function(res){
+			self.setState({
+				allCats : res
 			})
-			document.getElementById('preview').innerHTML = marked(this.state.content);
-  		}
+		})
+
   	},
   	render: function(){
   		const fileInput = {
@@ -209,7 +221,7 @@ const Edit = React.createClass({
 				        style={{width: 150}}
 				    >	
 				    	{
-				    		this.props.cat.map((data, i) => {
+				    		this.state.allCats.map((data, i) => {
 							    return (
 							      	<MenuItem value={data.id} primaryText={data.name} key={i}/>
 								);  // 多行箭头函数需要加括号和return
