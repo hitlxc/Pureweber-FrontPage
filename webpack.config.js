@@ -10,7 +10,6 @@ module.exports = {
         // ['blog-admin']:'./public/js/blog-admin.entry.js',
         // ['blog-admin-cat']:'./public/js/blog-admin-cat.entry.js',
         // ['blog-admin-tag']:'./public/js/blog-admin-tag.entry.js',
-
     },
     output: {
         path: path.join(__dirname, '/public/dist'),
