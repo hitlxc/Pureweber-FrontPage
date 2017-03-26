@@ -3,8 +3,8 @@ var path = require('path');
 module.exports = {
     entry: {
         //app:'./public/js/app.entry.js', 
-        // edit:'./public/js/edit.entry.js',
-         article:'./public/js/article.entry.js',
+         edit:'./public/js/edit.entry.js',
+        // article:'./public/js/article.entry.js',
         // invite:'./public/js/invite.entry.js',
         // signup:'./public/js/signup.entry.js',
         // ['blog-admin']:'./public/js/blog-admin.entry.js',

@@ -19,75 +19,91 @@ require("babel-core/register");
 require("babel-polyfill");
 
 marked.setOptions({
-  renderer: new marked.Renderer(),
-  gfm: true,
-  tables: true,
-  breaks: true,
-  pedantic: false,
-  sanitize: false,
-  smartLists: true,
-  smartypants: false,
-  highlight: function (code) {
-    return require('highlight.js').highlightAuto(code).value;
-  }
+	renderer: new marked.Renderer(),
+	gfm: true,
+	tables: true,
+	breaks: true,
+	pedantic: false,
+	sanitize: false,
+	smartLists: true,
+	smartypants: false,
+	highlight: function (code) {
+		return require('highlight.js').highlightAuto(code).value;
+	}
 });
 
 const Edit = React.createClass({
-  
 	getInitialState:function() {
 		var uid = cookie.getCookie('userid');
 		console.log(uid);
 		if(this.props.article){
-  			//console.log(this.props.article)
+			//console.log(this.props.article)
 			return {
 				title: this.props.article.title,
-	    		content: this.props.article.content,
-	    		cat:this.props.article.cid,
-	    		update:true,
-	    		preview:'',
-    			allCats:[],
-    			cover:'',
-    			uid:uid,
-    			update:true,
+				content: this.props.article.content,
+				cat:this.props.article.cid,
+				update:true,
+				preview:'',
+				allCats:[],
+				cover:'',
+				uid:uid,
+				update:true,
 			};
-  		}
-    	return {
-    		title: '',
-    		content: '',
-    		preview:'',
-    		cat:0 ,
-    		allCats:[],
-    		cover:'',
-    		uid:uid,
-    		update:false,
-    	};
-  	},
-  	/*markdown转HTML*/
-  	marked: function(event){
-  		this.setState({
-  			content: event.target.value,
-      		preview:  marked(event.target.value)
+		}
+		return {
+			title: '',
+			content: '',
+			preview:'',
+			cat:0 ,
+			allCats:[],
+			cover:'',
+			uid:uid,
+			update:false,
+		};
+	},
+	/*markdown转HTML*/
+	HTMLtoMarked: function(value){
+		document.getElementById('preview').innerHTML = marked(value);
+	},
+	changeContent: function(event){
+		this.setState({
+			content: event.target.value,
+			preview:  marked(event.target.value)
 		});
-		document.getElementById('preview').innerHTML = marked(event.target.value);
-  		//this.preview = Marker(event.target.value)
-  	},
-  	/*标题更改*/
-  	title_change:function(event){
-  		this.setState({
-  			title: event.target.value
+		this.HTMLtoMarked(event.target.value);
+		//document.getElementById('preview').innerHTML = marked(event.target.value);
+		//this.preview = Marker(event.target.value)
+	},
+	/*标题更改*/
+	title_change:function(event){
+		this.setState({
+			title: event.target.value
 		});
 
-  	},
+	},
   	/*上传文件成功后在文本中添加文件链接*/
-  	addFileString:function(str){
-  		var newcontent = this.state.content + "["+str+"](/upload/"+str+")";
-  		this.setState({
-  			content : newcontent
-  		})
-  	},
-  	/*上传封面*/
-  	uploadCover:function(){
-  		var data = new FormData();
+	addFileString:async function(str){
+		var suffix = str.split('.')[str.split('.').length-1];
+		/*若上传附件为图片图片*/
+		if(suffix == 'jpg' || suffix == 'png' || suffix == 'gif' || suffix == 'jprg' || suffix == 'bmp' ){
+			var newcontent = this.state.content + "["+str+"](/upload/"+str+")";
+			await this.setState({
+				content : newcontent
+			})
+			this.HTMLtoMarked(newcontent);
+		} else {
+		/*其他文件格式*/
+			var newcontent = this.state.content + "<a href='/upload/" + str + "' download=''>" + str + "</a>";
+			await this.setState({
+				content : newcontent
+			})
+			this.HTMLtoMarked(newcontent);
+		}
+	
+	},
+	/*上传封面*/
+	uploadCover:function(){
+		var data = new FormData();
 		var files = $("#cover")[0].files;
 		if(files) {
 			data.append("file", files[0]);
@@ -107,10 +123,10 @@ const Edit = React.createClass({
 				})		
 			}
 		});
-  	},
-  	/*上传文件*/
-  	uploadFile:function(){
-  		var data = new FormData();
+	},
+	/*上传文件*/
+	uploadFile:function(){
+		var data = new FormData();
 		var files = $("#file")[0].files;
 		if(files) {
 			data.append("file", files[0]);
@@ -129,25 +145,24 @@ const Edit = React.createClass({
 				self.addFileString(result.msg);			
 			}
 		});
-  	},
-  	/*提交*/
-  	submit:function(){
-  		if(this.state.update){
-  			$.post('/blog/update',
-	  		{title:this.state.title , content:this.state.content , cid:this.state.cat ,cover:this.state.cover ,id:this.props.article.id},
-	  		function(result){
-	  			console.log(result);
-	  		});
-  		}
-  		if(!this.state.update){
-  			$.post('/blog/save',
-	  		{title:this.state.title , content:this.state.content , cid:this.state.cat ,cover:this.state.cover, uid:this.state.uid},
-	  		function(result){
-	  			console.log(result);
-	  		});
-  		}
-  		
-  	},
+	},
+	/*提交*/
+	submit:function(){
+		if(this.state.update){
+			$.post('/blog/update',
+			{title:this.state.title , content:this.state.content , cid:this.state.cat ,cover:this.state.cover ,id:this.props.article.id},
+			function(result){
+				console.log(result);
+			});
+		}
+		if(!this.state.update){
+			$.post('/blog/save',
+			{title:this.state.title , content:this.state.content , cid:this.state.cat ,cover:this.state.cover, uid:this.state.uid},
+			function(result){
+				console.log(result);
+			});
+		}
+	},
   	/*监听cat变化*/
   	cat_change:function(event, index, value){
   		this.setState({cat:value});
@@ -178,6 +193,7 @@ const Edit = React.createClass({
 
   	},
   	render: function(){
+
   		const fileInput = {
 		    cursor: 'pointer',
 		    position: 'absolute',
@@ -250,7 +266,7 @@ const Edit = React.createClass({
 				      		ref="textInput"
 				      		hintText="在这里编辑内容"
 		      				floatingLabelText="在这里编辑内容"
-		      				onChange={this.marked}
+		      				onChange={this.changeContent}
 		      				fullWidth={true}
 		    			/>
 		    		</Card>
