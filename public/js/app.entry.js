@@ -30,7 +30,8 @@ injectTapEventPlugin();
 
 //var logged = ( $('#appbar').attr('logged') == 'true' ? true:false) ;
 
-
+var x = 1;
+var t = 2;
 
 ReactDOM.render(
 	<MuiThemeProvider  muiTheme={getMuiTheme()}>
@@ -61,7 +62,8 @@ if (cat){
 		}
 
 	});
-} else {
+} 
+if(!cat ) {
 	$.get('blog/getCurt',{
 		num:10,
 		page:1

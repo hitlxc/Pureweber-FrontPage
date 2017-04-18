@@ -6,6 +6,7 @@ import TextField from 'material-ui/TextField';
 import {Card, CardActions, CardHeader, CardMedia, CardTitle, CardText} from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import SelectField from 'material-ui/SelectField';
+import AutoComplete from 'material-ui/AutoComplete';
 import MenuItem from 'material-ui/MenuItem';
 import $ from 'jquery';
 import marked from 'marked';
@@ -48,6 +49,8 @@ const Edit = React.createClass({
 				cover:'',
 				uid:uid,
 				update:true,
+				tag:[],
+				allTags:{},
 			};
 		}
 		return {
@@ -59,6 +62,8 @@ const Edit = React.createClass({
 			cover:'',
 			uid:uid,
 			update:false,
+			tag:[],
+			allTags:{},
 		};
 	},
 	/*markdown转HTML*/
@@ -150,14 +155,14 @@ const Edit = React.createClass({
 	submit:function(){
 		if(this.state.update){
 			$.post('/blog/update',
-			{title:this.state.title , content:this.state.content , cid:this.state.cat ,cover:this.state.cover ,id:this.props.article.id},
+			{title:this.state.title , content:this.state.content , cid:this.state.cat ,cover:this.state.cover ,id:this.props.article.id,tag:this.state.tag},
 			function(result){
 				console.log(result);
 			});
 		}
 		if(!this.state.update){
 			$.post('/blog/save',
-			{title:this.state.title , content:this.state.content , cid:this.state.cat ,cover:this.state.cover, uid:this.state.uid},
+			{title:this.state.title , content:this.state.content , cid:this.state.cat ,cover:this.state.cover, uid:this.state.uid,tag:this.state.tag},
 			function(result){
 				console.log(result);
 			});
@@ -166,6 +171,12 @@ const Edit = React.createClass({
   	/*监听cat变化*/
   	cat_change:function(event, index, value){
   		this.setState({cat:value});
+  	},
+  	tag_change:function(value, dataSource){
+  		
+  		var tags = value.split(";")
+  		this.state.tag = tags
+  		console.log(this.state.tag)
   	},
   	/*编辑文章可以使用tab键进行缩进*/
   	enableTab : function() {
@@ -185,12 +196,15 @@ const Edit = React.createClass({
   		this.enableTab();
   		document.getElementById('preview').innerHTML = marked(this.state.content);
   		var self = this;
-  		$.get('/cat/getAll',function(res){
-			self.setState({
-				allCats : res
+  		$.get('/cat/getAll',function(cats){
+  			$.get('/tag/getAll',function(tags){
+				self.setState({
+					allCats : cats,
+					allTags : tags
+				})
 			})
 		})
-
+  		//allTags
   	},
   	render: function(){
 
@@ -245,6 +259,20 @@ const Edit = React.createClass({
 					    	})
 				        }
 				    </SelectField>
+
+				    <AutoComplete
+          				hintText="Tag标签"
+          				dataSource={[1,2,3]}
+          				onUpdateInput={this.tag_change}
+          				style={{
+          					width:150,
+          					marginLeft:10
+          				}}
+          				textFieldStyle={{
+          					width:150,
+          					marginLeft:10
+          				}}
+        			/>
 
 				    <FlatButton 
 						label="提交"

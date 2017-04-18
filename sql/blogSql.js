@@ -51,6 +51,13 @@ module.exports = {
 					console.log(err)
 				}
 				connection.query($sql.insert, [param.title, param.uid, param.cid, param.content, param.cover], function(err, result) {
+
+					console.log(err)
+					console.log(result)
+					console.log(param.tag)
+					//connection.query("INSERT INTO `blogtags` (`id`, `bid`, `tid`) VALUES (NULL, '4', '5')", [bid,tid] )
+						
+
 					if(result) {
 						result = {
 							code: 200,
